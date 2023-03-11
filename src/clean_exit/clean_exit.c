@@ -1,38 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   clean_exit.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/09 15:31:03 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/11 17:42:55 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/03/11 16:25:20 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/03/11 16:57:17 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
-#include "../lib/libft.h"
+#include "../header.h"
 
-void	loop(t_shell *shell)
+void	clean_exit(t_shell *shell)
 {
-	while (1)
-	{
-		prompt(shell);
-		parsing(shell);
-	}
+	if (shell->input)
+		free(shell->input);
+	exit(EXIT_SUCCESS);
 }
 
-void	init(void)
+void	malloc_err_exit(t_shell *shell)
 {
-	t_shell	shell;
-
-	shell.last_err_code = NOT_INIT;
-	shell.input = NULL;
-	loop(&shell);
-}
-
-int	main(void)
-{
-	init();
-	return (EXIT_SUCCESS);
+	if (shell->input)
+		free(shell->input);
+	ft_printf(MSG_ERR_MALLOC, KRED, KNORMAL);
+	exit(ERR_MALLOC);
 }
