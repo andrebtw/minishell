@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:19:27 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/11 17:42:08 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:37:24 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,21 +47,23 @@
 /* LINKED LISTS */
 typedef struct s_cmd
 {
-	int	is_builtin;
-	int	is_cmd;
-	int	is_pipe;
-	int	is_redirect;
+	int		is_builtin;
+	int		is_cmd;
+	int		is_pipe;
+	int		is_redirect;
+	void	*next;
 }	t_cmd;
 
 typedef struct s_shell
 {
 	t_cmd	command;
 	char	*input;
+	char	**tab;
 	int		last_err_code;
 }	t_shell;
 
 /* PROMPT */
-# define PROMPT "🐿 ~> "
+# define PROMPT "🛸~> "
 
 void	prompt(t_shell *shell);
 

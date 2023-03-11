@@ -1,23 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   ft_free_tab.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/11 16:03:17 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/11 18:44:49 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/03/11 18:41:44 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/03/11 18:43:00 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "libft.h"
 
-void	parsing(t_shell *shell)
+void	ft_free_tab(char **tab)
 {
-	char	**tab;
+	size_t	i;
 
-	tab = ft_split(shell->input, ' ');
+	i = 0;
 	if (!tab)
-		malloc_err_exit(shell);
-	
+		return ;
+	while (tab[i])
+	{
+		free(tab[i]);
+		i++;
+	}
+	free(tab);
 }
