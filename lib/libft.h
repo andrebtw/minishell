@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 15:46:40 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/02 05:07:45 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/11 18:47:33 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size);
 char	*ft_strtrim(char const *s1, char const *set);
 // split : splits the string with the separator into multiple strings
 char	**ft_split(char const *s, char c);
+void	ft_free_tab(char **tab);
 
 // Write functions //
 void	ft_putchar_fd(char c, int fd);
