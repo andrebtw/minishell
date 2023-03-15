@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   split_shell.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/11 16:03:17 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/15 00:39:31 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/03/15 00:36:50 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/03/15 00:39:43 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../header.h"
 
-void	parsing(t_shell *shell)
+char **split_shell(char *string)
 {
-	char	**tab;
-
-	(void)tab;
-	tab = split_shell(shell->input);
+	(void)string;
+	return (NULL);
 }

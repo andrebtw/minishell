@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 15:31:03 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/11 18:35:07 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:39:12 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,11 @@ void	init(void)
 	loop(&shell);
 }
 
-int	main(void)
+int	main(int argc, char **argv, char **env)
 {
+	(void)argc;
+	(void)argv;
+	(void)env;
 	init();
 	return (EXIT_SUCCESS);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+         #
+#    By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/30 16:58:58 by anrodri2          #+#    #+#              #
-#    Updated: 2023/03/11 17:53:14 by anrodri2         ###   ########.fr        #
+#    Updated: 2023/03/15 00:38:24 by anrodri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,6 +23,8 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/parsing/parsing.c \
 		$(SRC_DIR)/clean_exit/clean_exit.c \
 		$(SRC_DIR)/builtins/exit.c \
+		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
+		
 
 OBJS = $(SRCS:.c=.o)
 HEADER = $(SRC_DIR)/header.h

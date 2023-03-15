@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   header.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:19:27 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/11 18:37:24 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/15 00:38:04 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@
 # define ERR_MALLOC -2
 
 /* ERROR MSG */
-# define MSG_ERR_MALLOC "%sAllocation has failed.\n Please make sure enough memory is dedicated to the process.\n%s"
+# define MSG_ERR_MALLOC "Allocation has failed.\n Please make sure enough memory is dedicated to the process.\n"
 
 /* CODES */
 # define NOT_INIT -1
@@ -69,6 +69,7 @@ void	prompt(t_shell *shell);
 
 /* PARSING */
 void	parsing(t_shell *shell);
+char 	**split_shell(char *string);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);
