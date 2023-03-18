@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:03:17 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/15 00:39:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/17 22:48:30 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,5 +17,5 @@ void	parsing(t_shell *shell)
 	char	**tab;
 
 	(void)tab;
-	tab = split_shell(shell->input);
+	split_shell(shell);
 }

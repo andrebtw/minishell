@@ -12,6 +12,7 @@ PRINTF_DIR = ft_printf
 
 #### SOURCE FILES ####
 SRCS = 	ft_atoi.c \
+		ft_isspace.c \
 		ft_atoi_bin.c \
 		ft_strchr.c \
 		ft_bzero.c \

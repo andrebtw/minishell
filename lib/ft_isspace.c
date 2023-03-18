@@ -1,29 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   split_shell.c                                      :+:      :+:    :+:   */
+/*   ft_isspace.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/03/15 00:36:50 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/17 23:10:38 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/03/17 23:05:10 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/03/17 23:05:14 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
-
-void	split_shell(t_shell *shell)
+int	ft_isspace(char character)
 {
-	size_t	i;
-
-	i = 0;
-	shell->tab = (char **) malloc (sizeof(char **));
-	if (!shell->tab)
-		malloc_err_exit(shell);
-	while (shell->input[i])
-	{
-		while (ft_isspace(shell->input[i]))
-			i++;
-	}
-	return (NULL);
+	if (character == ' ' || character == '\t' || character == '\n'
+		|| character == '\v' || character == '\f' || character == '\r')
+		return (1);
+	return (0);
 }

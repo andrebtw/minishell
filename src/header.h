@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/09 16:19:27 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/15 00:38:04 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/17 22:41:07 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,12 +47,16 @@
 /* LINKED LISTS */
 typedef struct s_cmd
 {
-	int		is_builtin;
-	int		is_cmd;
-	int		is_pipe;
-	int		is_redirect;
+	int		type;
+	char	**content;
 	void	*next;
 }	t_cmd;
+
+# define IS_BUILTIN 55
+# define IS_CMD 60
+# define IS_PIPE 65
+# define IS_REDIRECT 70
+# define IS_HERE_DOC 75
 
 typedef struct s_shell
 {
@@ -69,7 +73,7 @@ void	prompt(t_shell *shell);
 
 /* PARSING */
 void	parsing(t_shell *shell);
-char 	**split_shell(char *string);
+void	split_shell(t_shell *shell);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);

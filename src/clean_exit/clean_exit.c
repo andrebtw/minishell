@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/11 16:25:20 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/03/14 14:28:38 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/03/16 17:10:03 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	clean_exit(t_shell *shell)
 {
 	if (shell->input)
 		free(shell->input);
-	ft_free_tab(shell->tab);
 	exit(EXIT_SUCCESS);
 }
 
@@ -31,7 +30,6 @@ void	malloc_err_exit(t_shell *shell)
 {
 	if (shell->input)
 		free(shell->input);
-	ft_free_tab(shell->tab);
 	print_error(MSG_ERR_MALLOC);
 	exit(ERR_MALLOC);
 }
