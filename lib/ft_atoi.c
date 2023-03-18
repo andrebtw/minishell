@@ -12,14 +12,6 @@
 
 #include "libft.h"
 
-static int	ft_isspace(char character)
-{
-	if (character == ' ' || character == '\t' || character == '\n'
-		|| character == '\v' || character == '\f' || character == '\r')
-		return (1);
-	return (0);
-}
-
 static int	ft_check_if_of(long long number, int neg_mult, size_t nb_length)
 {
 	if (!number)

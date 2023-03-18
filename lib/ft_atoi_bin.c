@@ -12,14 +12,6 @@
 
 #include "libft.h"
 
-static int	ft_isspace(char character)
-{
-	if (character == ' ' || character == '\t' || character == '\n'
-		|| character == '\v' || character == '\f' || character == '\r')
-		return (1);
-	return (0);
-}
-
 int	ft_atoi_bin(const char *nptr)
 {
 	long long		number;

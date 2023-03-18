@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isspace(char character)
+int	ft_isspace(int character)
 {
 	if (character == ' ' || character == '\t' || character == '\n'
 		|| character == '\v' || character == '\f' || character == '\r')

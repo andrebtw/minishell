@@ -11,19 +11,37 @@
 /* ************************************************************************** */
 
 #include "../../header.h"
+#define DOUBLE_QUOTE -15
+#define SINGLE_QUOTE -16
+
+int 	quotes_state(t_shell *shell, size_t i, int state)
+{
+	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
+		return (NOT_INIT);
+	if (shell->input[i] == '\'' && state == NOT_INIT)
+		return (SINGLE_QUOTE);
+	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
+		return (NOT_INIT);
+	if (shell->input[i] == '\"' && state == NOT_INIT)
+		return (DOUBLE_QUOTE);
+	return (NOT_INIT);
+}
 
 void	split_shell(t_shell *shell)
 {
 	size_t	i;
+	int 	state;
+	char 	*current_str;
 
+	state = NOT_INIT;
 	i = 0;
 	shell->tab = (char **) malloc (sizeof(char **));
 	if (!shell->tab)
 		malloc_err_exit(shell);
 	while (shell->input[i])
 	{
-		while (ft_isspace(shell->input[i]))
-			i++;
+		state = quotes_state(shell, i, state);
+
+		i++;
 	}
-	return (NULL);
 }

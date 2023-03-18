@@ -51,6 +51,7 @@ SRCS = 	ft_atoi.c \
 		ft_strmapi.c \
 		ft_striteri.c \
 		ft_free_tab.c \
+		ft_add_tab.c \
 		ft_lstnew.c \
 		ft_lstadd_front.c \
 		ft_lstsize.c \
