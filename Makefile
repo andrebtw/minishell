@@ -24,6 +24,7 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/clean_exit/clean_exit.c \
 		$(SRC_DIR)/builtins/exit.c \
 		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
+		$(SRC_DIR)/linked_lists/lstcreate.c \
 		
 
 OBJS = $(SRCS:.c=.o)

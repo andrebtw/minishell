@@ -63,10 +63,14 @@ typedef struct s_cmd
 
 typedef struct s_shell
 {
-	t_cmd	command;
+	t_cmd	*command;
 	char	*input;
 	int		last_err_code;
 }	t_shell;
+
+/* LINKED LISTS */
+t_cmd		*lstcreate(int type, char **content);
+void		lstadd_back(t_cmd **lst, t_cmd *new)
 
 void	prompt(t_shell *shell);
 
