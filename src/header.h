@@ -70,7 +70,8 @@ typedef struct s_shell
 
 /* LINKED LISTS */
 t_cmd		*lstcreate(int type, char **content);
-void		lstadd_back(t_cmd **lst, t_cmd *new)
+void		lstadd_back(t_cmd **lst, t_cmd *new);
+void 		test(t_shell *shell);
 
 void	prompt(t_shell *shell);
 

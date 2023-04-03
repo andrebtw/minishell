@@ -8,6 +8,7 @@ t_cmd   *lstcreate(int type, char **content)
 	if (!r_value)
 		return (NULL);
 	r_value->content = content;
+	r_value->type = type;
 	r_value->next = NULL;
 	return (r_value);
 }
