@@ -25,6 +25,9 @@
 /* HEADER FILES */
 # include "../lib/libft.h"
 
+/* PROMPT */
+# define PROMPT "🛸~> "
+
 /* COLORS */
 # define KNORMAL "\x1B[0m"
 # define KRED "\x1B[31m"
@@ -65,9 +68,6 @@ typedef struct s_shell
 	char	**tab;
 	int		last_err_code;
 }	t_shell;
-
-/* PROMPT */
-# define PROMPT "🛸~> "
 
 void	prompt(t_shell *shell);
 

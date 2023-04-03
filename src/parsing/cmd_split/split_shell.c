@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../header.h"
+
 #define DOUBLE_QUOTE -15
 #define SINGLE_QUOTE -16
 
@@ -27,6 +28,19 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	return (NOT_INIT);
 }
 
+void	add_to_char(t_shell *shell, size_t *i, int state, char *current_str)
+{
+	if (state == NOT_INIT)
+	{
+		if (!ft_strchr(" \t><|", shell->input[*i]))
+			current_str = ft_strjoin_free_char(current_str, shell->input[*i], 1);
+		else
+		{
+			
+		}
+	}
+}
+
 void	split_shell(t_shell *shell)
 {
 	size_t	i;
@@ -35,13 +49,13 @@ void	split_shell(t_shell *shell)
 
 	state = NOT_INIT;
 	i = 0;
-	shell->tab = (char **) malloc (sizeof(char **));
-	if (!shell->tab)
+	current_str = (char *) malloc (sizeof(char *));
+	if (!current_str)
 		malloc_err_exit(shell);
 	while (shell->input[i])
 	{
 		state = quotes_state(shell, i, state);
-
+		add_to_char(shell, &i, state, current_str);
 		i++;
 	}
 }

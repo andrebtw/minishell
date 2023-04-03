@@ -18,7 +18,8 @@ void	loop(t_shell *shell)
 	while (1)
 	{
 		prompt(shell);
-		parsing(shell);
+		//parsing(shell);
+		test(shell);
 	}
 }
 
