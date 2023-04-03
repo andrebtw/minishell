@@ -56,5 +56,6 @@ void	prompt(t_shell *shell)
 	if (shell->input)
 		free(shell->input);
 	shell->input = readline(prompt);
+	add_history(shell->input);
 	free(prompt);
 }

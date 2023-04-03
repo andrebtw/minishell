@@ -19,7 +19,7 @@ void	loop(t_shell *shell)
 	{
 		prompt(shell);
 		//parsing(shell);
-		test(shell);
+		//test(shell);
 	}
 }
 

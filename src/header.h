@@ -65,7 +65,6 @@ typedef struct s_shell
 {
 	t_cmd	command;
 	char	*input;
-	char	**tab;
 	int		last_err_code;
 }	t_shell;
 
