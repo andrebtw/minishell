@@ -10,8 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef HEADER_H
-# define HEADER_H
+#ifndef MINISHELL_H
+# define MINISHELL_H
 
 /* SYSTEM LIBS */
 # include <stdarg.h>
@@ -23,7 +23,7 @@
 # include <readline/history.h>
 
 /* HEADER FILES */
-# include "../lib/libft.h"
+# include "libft.h"
 
 /* PROMPT */
 # define PROMPT "🛸~> "
@@ -50,9 +50,9 @@
 /* LINKED LISTS */
 typedef struct s_cmd
 {
-	int		type;
-	char	**content;
-	void	*next;
+	int				type;
+	char			**content;
+	struct s_cmd	*next;
 }	t_cmd;
 
 # define IS_BUILTIN 55
@@ -60,6 +60,7 @@ typedef struct s_cmd
 # define IS_PIPE 65
 # define IS_REDIRECT 70
 # define IS_HERE_DOC 75
+# define IS_FILE 80
 
 typedef struct s_shell
 {
@@ -85,5 +86,9 @@ void	malloc_err_exit(t_shell *shell);
 
 /* BUILTINS */
 void	bi_exit(t_shell *shell);
+int		echo(char **arg);
+
+/* UTILS */
+int	ft_strcmp(char *str1, char *str2);
 
 #endif

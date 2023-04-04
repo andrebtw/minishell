@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "../incl/minishell.h"
 #include "../lib/libft.h"
 
 void	loop(t_shell *shell)

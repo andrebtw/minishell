@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../../incl/minishell.h"
 
 void	bi_exit(t_shell *shell)
 {

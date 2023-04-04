@@ -1,4 +1,4 @@
-#include "../header.h"
+#include "../../incl/minishell.h"
 
 t_cmd   *lstcreate(int type, char **content)
 {

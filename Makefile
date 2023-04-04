@@ -10,53 +10,71 @@
 #                                                                              #
 # **************************************************************************** #
 
-#### SYSTEM ####
-CC = cc
-RM = rm -f
-CFLAGS = -Wall -Werror -Wextra 
-#### DIRECTORIES ####
-SRC_DIR = src
-
-#### SOURCE FILES ####
-SRCS =	$(SRC_DIR)/main.c \
-		$(SRC_DIR)/prompt/prompt.c \
-		$(SRC_DIR)/parsing/parsing.c \
-		$(SRC_DIR)/clean_exit/clean_exit.c \
-		$(SRC_DIR)/builtins/exit.c \
-		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
-		$(SRC_DIR)/linked_lists/lstcreate.c \
-		$(SRC_DIR)/test.c
-		
-
-OBJS = $(SRCS:.c=.o)
-HEADER = $(SRC_DIR)/header.h
-
 ### FINAL COMPILATION FILE ###
 NAME = minishell
 
-### LIBFT ###
-LIBFT = lib/libft.a
+#### DIRECTORIES ####
+SRC_DIR = src/
+
+OBJS_DIR = .objs/
+
+INC_DIR = incl/
+
+LIB_DIR = lib/
+
+#### SOURCE FILES ####
+LIBFT = $(LIB_DIR)libft.a
+
+SRCS =	main.c \
+		prompt/prompt.c \
+		parsing/parsing.c \
+		clean_exit/clean_exit.c \
+		builtins/exit.c \
+		parsing/cmd_split/split_shell.c \
+		linked_lists/lstcreate.c \
+		test.c
+		
+OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
+
+DEPS = $(OBJS:.o=.d)
+
+#### SYSTEM ####
+CC = cc
+
+RM = rm -rf
+
+CFLAGS = -Wall -Werror -Wextra
+
+DFLAGS = -MMD -MP
+
+LFLAGS = -L $(LIB_DIR) -lft -lreadline
+
+IFLAGS = -I $(INC_DIR) -I $(LIB_DIR)
 
 #### RULES ####
 all:		$(NAME)
 
-$(NAME):	libft_comp $(OBJS) $(HEADER)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -Llib -lft -lreadline
+-include	$(DEPS)
 
-%.o: %.c	$(HEADER) Makefile
-			$(CC) $(CFLAGS) -c $< -o $@
+$(NAME):	$(LIBFT) $(OBJS)
+			$(CC) $(OBJS) $(CFLAGS) $(LFLAGS) -o $@
+
+$(LIBFT):	FORCE
+			$(MAKE) all -j -C $(LIB_DIR)
+
+FORCE:
+
+$(OBJS_DIR)%.o:		$(SRC_DIR)%.c
+					mkdir -p $(shell dirname @)
+					$(CC) $(CFLAGS) $(DFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
-			@$(MAKE) clean -C lib
-			$(RM) $(OBJS)
+			$(MAKE) clean -C $(LIB_DIR)
+			$(RM) $(OBJS_DIR) $(DEPS)
 
-fclean:
-			@$(MAKE) fclean -C lib
-			$(RM) $(OBJS) $(NAME)
-
-libft_comp:
-			@$(MAKE) all -j -C lib
+fclean:		clean
+			$(RM) $(NAME)
 
 re:	fclean $(NAME)
 
-.PHONY: $(NAME) all clean fclean re
+.PHONY: $(NAME) all clean fclean re FORCE
