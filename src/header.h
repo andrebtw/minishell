@@ -82,6 +82,7 @@ void	split_shell(t_shell *shell);
 /* EXITS */
 void	clean_exit(t_shell *shell);
 void	malloc_err_exit(t_shell *shell);
+void	debug_print(t_shell *shell);
 
 /* BUILTINS */
 void	bi_exit(t_shell *shell);

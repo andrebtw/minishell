@@ -13,7 +13,7 @@
 #### SYSTEM ####
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra 
+CFLAGS = -Wall -Werror -Wextra -g3
 #### DIRECTORIES ####
 SRC_DIR = src
 
@@ -25,7 +25,8 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/builtins/exit.c \
 		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
 		$(SRC_DIR)/linked_lists/lstcreate.c \
-		$(SRC_DIR)/test.c
+		$(SRC_DIR)/test.c \
+		$(SRC_DIR)/debug_print.c
 		
 
 OBJS = $(SRCS:.c=.o)

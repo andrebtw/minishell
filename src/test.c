@@ -10,15 +10,15 @@ void  add_to_end(t_cmd **lst, int type, char **content)
 
 t_cmd *create_list(t_shell *shell)
 {
-    t_cmd *lst;
+    t_cmd	*lst;
 
     (void)shell;
-    char content1[20][20] = {"ls", "-a"};
-    char content2[20][20] = {"|"};
-    char content3[20][20] = {"cat", "-e"};
-    lst = lstcreate(IS_CMD, (char **)content1);
-    add_to_end(&lst, IS_PIPE, (char **)content2);
-    add_to_end(&lst, IS_CMD, (char **)content3);
+	char **content1 = ft_split("ls -a", ' ');
+	char **content2 = ft_split("|", ' ');
+	char **content3 = ft_split("cat -e", ' ');
+    lst = lstcreate(IS_CMD, content1);
+    add_to_end(&lst, IS_PIPE, content2);
+    add_to_end(&lst, IS_CMD, content3);
     return (lst);
 }
 
