@@ -61,11 +61,18 @@ typedef struct s_cmd
 # define IS_REDIRECT 70
 # define IS_HERE_DOC 75
 
+typedef struct s_parsing
+{
+	char	*current_str;
+	char	**current_tab;
+}	t_parsing;
+
 typedef struct s_shell
 {
-	t_cmd	*command;
-	char	*input;
-	int		last_err_code;
+	t_parsing	parsing;
+	t_cmd		*command;
+	char		*input;
+	int			last_err_code;
 }	t_shell;
 
 /* LINKED LISTS */

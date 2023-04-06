@@ -3,7 +3,7 @@
 CC = gcc
 AR = ar rc
 RM = rm -f
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -g
 
 #### DIRS ####
 LIBFT_DIR = libft

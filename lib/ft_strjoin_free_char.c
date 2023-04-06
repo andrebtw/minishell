@@ -23,7 +23,7 @@ static	int	ft_strlen_int(const char *s)
 	int	index;
 
 	index = 0;
-	while (s[index] != '\0')
+	while (s && s[index] != '\0')
 		index++;
 	return (index);
 }
@@ -39,7 +39,7 @@ char	*ft_strjoin_free_char(char const *s1, int const c, int free_s1)
 	r_string = (char *) malloc (ft_strlen_int(s1) + 2);
 	if (r_string == NULL)
 		return (free_strs(s1, free_s1), NULL);
-	while (s1[i] != '\0')
+	while (s1 && s1[i] != '\0')
 	{
 		r_string[j] = s1[i];
 		i++;

@@ -18,9 +18,9 @@ void	loop(t_shell *shell)
 	while (1)
 	{
 		prompt(shell);
-		//parsing(shell);
-		test(shell);
-		debug_print(shell);
+		parsing(shell);
+		// test(shell);
+		// debug_print(shell);
 	}
 }
 

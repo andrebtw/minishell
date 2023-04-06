@@ -14,9 +14,14 @@
 
 #define DOUBLE_QUOTE -15
 #define SINGLE_QUOTE -16
+#define SPACE -17
 
 int 	quotes_state(t_shell *shell, size_t i, int state)
 {
+	if (state == SPACE && ft_strchr(" \t", shell->input[i]))
+		return (SPACE);
+	if (state == NOT_INIT && ft_strchr(" \t", shell->input[i]))
+		return (SPACE);
 	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
 		return (NOT_INIT);
 	if (shell->input[i] == '\'' && state == NOT_INIT)
@@ -28,34 +33,27 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	return (NOT_INIT);
 }
 
-void	add_to_char(t_shell *shell, size_t *i, int state, char *current_str)
+void	add_to_char(t_shell *shell, size_t i, int state)
 {
-	if (state == NOT_INIT)
-	{
-		if (!ft_strchr(" \t><|", shell->input[*i]))
-			current_str = ft_strjoin_free_char(current_str, shell->input[*i], 1);
-		else
-		{
-			
-		}
-	}
+	if (state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[i]))
+		shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, shell->input[i], 1);
 }
 
 void	split_shell(t_shell *shell)
 {
 	size_t	i;
 	int 	state;
-	char 	*current_str;
 
 	state = NOT_INIT;
 	i = 0;
-	current_str = (char *) malloc (sizeof(char *));
-	if (!current_str)
+	shell->parsing.current_str = ft_strdup("");
+	if (!shell->parsing.current_str)
 		malloc_err_exit(shell);
 	while (shell->input[i])
 	{
 		state = quotes_state(shell, i, state);
-		add_to_char(shell, &i, state, current_str);
+		add_to_char(shell, i, state);
 		i++;
 	}
+	ft_printf("%s", shell->parsing.current_str);
 }
