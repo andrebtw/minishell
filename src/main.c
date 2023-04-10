@@ -20,7 +20,7 @@ void	loop(t_shell *shell)
 		prompt(shell);
 		parsing(shell);
 		// test(shell);
-		// debug_print(shell);
+		debug_print(shell);
 	}
 }
 

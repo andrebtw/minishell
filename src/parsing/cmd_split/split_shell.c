@@ -14,14 +14,20 @@
 
 #define DOUBLE_QUOTE -15
 #define SINGLE_QUOTE -16
-#define SPACE -17
+#define SPACE_SEP -17
 
 int 	quotes_state(t_shell *shell, size_t i, int state)
 {
-	if (state == SPACE && ft_strchr(" \t", shell->input[i]))
-		return (SPACE);
+	if (state == SPACE_SEP && ft_strchr(" \t", shell->input[i]))
+		return (SPACE_SEP);
 	if (state == NOT_INIT && ft_strchr(" \t", shell->input[i]))
-		return (SPACE);
+	{
+		shell->parsing.current_str = ft_strjoin_free_char(
+				shell->parsing.current_str, ' ', 1);
+		if (!shell->parsing.current_str)
+			malloc_err_exit(shell);
+		return (SPACE_SEP);
+	}
 	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
 		return (NOT_INIT);
 	if (shell->input[i] == '\'' && state == NOT_INIT)
@@ -33,10 +39,35 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	return (NOT_INIT);
 }
 
+t_cmd	*end_found(t_shell *shell, size_t i, int state)
+{
+	t_cmd	*lst;
+	char	**content;
+
+	(void)i;
+	(void)state;
+	content = ft_split(shell->parsing.current_str, ' ');
+	free(shell->parsing.current_str);
+	shell->parsing.current_str = NULL;
+	if (!content)
+		malloc_err_exit(shell);
+	lst = lstcreate(IS_CMD, content);
+	if (!lst)
+	{
+		free(content);
+		malloc_err_exit(shell);
+	}
+	return (lst);
+}
+
 void	add_to_char(t_shell *shell, size_t i, int state)
 {
 	if (state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[i]))
 		shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, shell->input[i], 1);
+	if (state == NOT_INIT && shell->input[i] == '|')
+	{
+		shell->command = end_found(shell, i, state);
+	}
 }
 
 void	split_shell(t_shell *shell)
@@ -55,5 +86,5 @@ void	split_shell(t_shell *shell)
 		add_to_char(shell, i, state);
 		i++;
 	}
-	ft_printf("%s", shell->parsing.current_str);
+	// ft_printf("%s", shell->parsing.current_str);
 }
