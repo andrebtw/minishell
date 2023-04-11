@@ -23,7 +23,7 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	if (state == NOT_INIT && ft_strchr(" \t", shell->input[i]))
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, ' ', 1);
+				shell->parsing.current_str, '\1', 1);
 		if (!shell->parsing.current_str)
 			malloc_err_exit(shell);
 		return (SPACE_SEP);
@@ -70,7 +70,7 @@ void	end_found(t_shell *shell, size_t i, int state, int type)
 
 	(void)i;
 	(void)state;
-	content = ft_split(shell->parsing.current_str, ' ');
+	content = ft_split(shell->parsing.current_str, '\1');
 	free(shell->parsing.current_str);
 	shell->parsing.current_str = NULL;
 	if (!content)
@@ -93,6 +93,12 @@ void	add_to_char(t_shell *shell, size_t i, int state)
 		shell->parsing.current_str = ft_strjoin_free_char(
 				shell->parsing.current_str, shell->input[i], 1);	
 		end_found(shell, i, state, IS_PIPE);
+	}
+	if (state == SINGLE_QUOTE)
+	{
+		shell->parsing.current_str = ft_strjoin_free_char(
+				shell->parsing.current_str, shell->input[i], 1);
+		return ;
 	}
 }
 
