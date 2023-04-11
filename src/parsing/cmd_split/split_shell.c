@@ -30,38 +30,41 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	}
 	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
 		return (NOT_INIT);
-	if (shell->input[i] == '\'' && state == NOT_INIT)
+	if ((shell->input[i] == '\'' && state == NOT_INIT) ||
+			(shell->input[i] == '\'' && state == SPACE_SEP))
 		return (SINGLE_QUOTE);
 	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
 		return (NOT_INIT);
-	if (shell->input[i] == '\"' && state == NOT_INIT)
+	if ((shell->input[i] == '\"' && state == NOT_INIT) || 
+			(shell->input[i] == '\"' && state == SPACE_SEP))
 		return (DOUBLE_QUOTE);
+	if (state == DOUBLE_QUOTE || state == SINGLE_QUOTE)
+		return (state);
 	return (NOT_INIT);
 }
 
-int	add_node(t_cmd **cmd, size_t i, int state, char **content)
+int	add_node(t_cmd **cmd, size_t i, int type, char **content)
 {
 	t_cmd	*tmp;
 	t_cmd	*new;
 
 	(void)i;
-	(void)state;
 	tmp = *cmd;
 	if (!tmp->content)
 	{
-		*cmd = lstcreate(IS_CMD, content);
+		*cmd = lstcreate(type, content);
 		if (!(*cmd))
 			return (free(content), ERR_MALLOC);
 		return (EXIT_SUCCESS);
 	}
-	new = lstcreate(IS_CMD, content);
+	new = lstcreate(type, content);
 	if (!new)
 		return (free(content), ERR_MALLOC);
 	lstadd_back(cmd, new);
 	return (EXIT_SUCCESS);
 }
 
-void	end_found(t_shell *shell, size_t i, int state)
+void	end_found(t_shell *shell, size_t i, int state, int type)
 {
 	char	**content;
 
@@ -72,17 +75,24 @@ void	end_found(t_shell *shell, size_t i, int state)
 	shell->parsing.current_str = NULL;
 	if (!content)
 		malloc_err_exit(shell);
-	if (add_node(&shell->command, i, state, content))
+	if (add_node(&shell->command, i, type, content))
 		malloc_err_exit(shell);
 }
 
 void	add_to_char(t_shell *shell, size_t i, int state)
 {
 	if (state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[i]))
-		shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, shell->input[i], 1);
+	{
+		shell->parsing.current_str = ft_strjoin_free_char(
+				shell->parsing.current_str, shell->input[i], 1);
+		return ;
+	}
 	if (state == NOT_INIT && shell->input[i] == '|')
 	{
-		end_found(shell, i, state);
+		end_found(shell, i, state, IS_CMD);
+		shell->parsing.current_str = ft_strjoin_free_char(
+				shell->parsing.current_str, shell->input[i], 1);	
+		end_found(shell, i, state, IS_PIPE);
 	}
 }
 
@@ -101,9 +111,11 @@ void	split_shell(t_shell *shell)
 		malloc_err_exit(shell);
 	while (shell->input[i])
 	{
+		ft_printf("STATE : %d\n", state);
 		state = quotes_state(shell, i, state);
 		add_to_char(shell, i, state);
 		i++;
 	}
+	end_found(shell, i, state, IS_CMD);
 	// ft_printf("%s", shell->parsing.current_str);
 }
