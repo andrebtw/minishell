@@ -21,6 +21,7 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <errno.h>
 
 /* HEADER FILES */
 # include "libft.h"
@@ -88,6 +89,9 @@ void	prompt(t_shell *shell);
 char	*find_name(char *envp);
 char	*find_value(char *envp);
 void	free_env(t_env *env);
+void	free_env_str(char **env);
+char	**env_to_str(t_env *env);
+t_env	**envp_to_list(char **envp);
 
 /* PARSING */
 void	parsing(t_shell *shell);
