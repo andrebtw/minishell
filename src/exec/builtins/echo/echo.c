@@ -9,36 +9,26 @@
 /*   Updated: 2023/04/04 13:56:00 by mthibaul         ###   ########lyon.fr   */
 /*                                                                            */
 /* ************************************************************************** */
-#include "../../../../incl/minishell.h"
+#include "minishell.h"
 
 int is_newline(char *arg);
+int print_args(char **arg);
 
 int	echo(char **arg)
 {
 	arg++;
-	if (is_newline(*arg))
+	if (*arg && is_newline(arg[1]))
 	{
 		arg++;
-		while (*arg)
-		{
-			printf("%s", *arg);
-			arg++;
-			if (*arg)
-				printf(" ");
-		}
-		return (printf("\n"), 0);
+		if (print_args(arg) != 0)
+			return (1);
+		if (printf("\n") < 0)
+			return (1);
 	}
+	else if (*arg)
+		return (print_args(arg));
 	else
-	{
-		while(*arg)
-		{
-			printf("%s", *arg);
-			arg++;
-			if (*arg)
-				printf(" ");
-		}
-		return (0);
-	}
+		return (1);
 }
 
 int is_newline(char *arg)
@@ -52,6 +42,19 @@ int is_newline(char *arg)
 			if (*arg == '\0')
 				return (1);
 		}
+	}
+	return (0);
+}
+
+int print_args(char **arg)
+{
+	while(*arg)
+	{
+		if (printf("%s", *arg) < 0)
+			return (1);
+		arg++;
+		if (*arg)
+			printf(" ");
 	}
 	return (0);
 }

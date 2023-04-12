@@ -47,6 +47,14 @@
 /* CODES */
 # define NOT_INIT -1
 
+/* ENVP */
+typedef struct s_env
+{
+	char			*name;
+	char			*value;
+	struct s_env	*next;
+}	t_env;
+
 /* LINKED LISTS */
 typedef struct s_cmd
 {
@@ -75,6 +83,11 @@ void		lstadd_back(t_cmd **lst, t_cmd *new);
 void 		test(t_shell *shell);
 
 void	prompt(t_shell *shell);
+
+/* ENVP */
+char	*find_name(char *envp);
+char	*find_value(char *envp);
+void	free_env(t_env *env);
 
 /* PARSING */
 void	parsing(t_shell *shell);

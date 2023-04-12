@@ -65,7 +65,7 @@ $(LIBFT):	FORCE
 FORCE:
 
 $(OBJS_DIR)%.o:		$(SRC_DIR)%.c
-					mkdir -p $(shell dirname @)
+					mkdir -p $(shell dirname $@)
 					$(CC) $(CFLAGS) $(DFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
@@ -77,4 +77,4 @@ fclean:		clean
 
 re:	fclean $(NAME)
 
-.PHONY: $(NAME) all clean fclean re FORCE
+.PHONY: all clean fclean re FORCE
