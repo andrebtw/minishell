@@ -12,8 +12,8 @@
 #include "minishell.h"
 
 int		env_size(t_env *env);
-int		add_env(t_env *env, char *env_str);
-void	free_env_str(char **env_str);
+char	*add_env(t_env *env);
+void	free_env_str(char **env);
 
 char **env_to_str(t_env *env)
 {
@@ -26,7 +26,8 @@ char **env_to_str(t_env *env)
 	i = 0;
 	while (env)
 	{
-		if (add_env(env,  env_str[i]) > 0)
+		env_str[i] = add_env(env);
+		if (!env_str[i])
 			return (free_env_str(env_str), NULL);
 		env++;
 		i++;
@@ -47,17 +48,15 @@ int	env_size(t_env *env)
 	return (i);
 }
 
-int	add_env(t_env *env, char *env_str)
+char	*add_env(t_env *env)
 {
-	int len;
+	char *env_str;
+	char *tmp;
 
-	len = (int) ft_strlen(env->name) + (int) ft_strlen(env->value) + 2;
-	env_str = malloc(sizeof(char) * len);
-	if (!env_str)
-		return (1);
-	ft_strcat(env_str, env->name);
-	ft_strcat(env_str, "=");
-	ft_strcat(env_str, env->value);
+	tmp = ft_strjoin(env->name, "=");
+	env_str = ft_strjoin(tmp, env->value);
+	free(tmp);
+	return (env_str);
 }
 
 void	free_env_str(char **env)

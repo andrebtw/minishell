@@ -44,7 +44,7 @@ char	*find_value(char *envp)
 char	*ft_strndup(char *s, int end)
 {
 	char			*return_string;
-	unsigned int	i;
+	int	i;
 
 	return_string = (char *) malloc((end + 1) * sizeof(char));
 	if (!return_string)

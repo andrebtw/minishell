@@ -12,16 +12,16 @@
 
 #include "../../incl/minishell.h"
 
-int check_builtins(t_cmd *cmd)
+int check_builtins(t_cmd *cmd, t_env *env)
 {
 	if (ft_strcmp(cmd->content[0], "echo") == 0)
 		return (echo(cmd->content));
 	else if (ft_strcmp(cmd->content[0], "cd") == 0)
-		return (cd(cmd->content));
+		return (cd(env, cmd->content));
 	else if (ft_strcmp(cmd->content[0], "pwd") == 0)
-		return (pwd(cmd->content));
+		return (pwd());
 	else if (ft_strcmp(cmd->content[0], "export") == 0)
-		return (export(cmd->content));
+		return (export(env, cmd->content));
 	else if (ft_strcmp(cmd->content[0], "unset") == 0)
 		return (unset(cmd->content));
 	else if (ft_strcmp(cmd->content[0], "env") == 0)

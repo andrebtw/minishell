@@ -12,23 +12,24 @@
 #include "minishell.h"
 
 static int	args_nb(char **args);
-static int	cd_no_arg(t_env *env);
+static int	cd_no_arg(t_env *env, char **args);
 static char	*replace_tilde(char **args, t_env *env);
 
-int cd(char **args, t_env *env)
+int cd(t_env *env, char **args)
 {
 	int len;
 
 	len = args_nb(args);
 	if (len == 1)
-		return (cd_no_arg(env));
+		return (cd_no_arg(env, args));
 	else if (len > 2)
-		return (ft_putstr_fd("\uD83D\uDEF8~> cd: too many arguments\n", STDERR_FILENO), 1);
+		return (ft_putstr_fd("🛸~> cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 		args[1] = replace_tilde(args, env);
 	if (!chdir(args[1]))
 	{
-		/* print_error */
+		print_builtin_error("cd", args[1]);
+		perror(NULL);
 		return (1);
 	}
 }
@@ -37,13 +38,20 @@ static char	*replace_tilde(char **args, t_env *env)
 {
 	char *path;
 
-	while (ft_strcmp(env->name, "HOME") != 0)
+	while (env)
+	{
+		if (ft_strcmp(env->name, "HOME") == 0)
+		{
+			path = ft_strjoin(env->value, args[1]);
+			return (path);
+		}
 		env = env->next;
-	path = ft_strjoin(env->value, args[1]);
-	return (path);
+	}
+	ft_putstr_fd("🛸~> cd: HOME not set\n", STDERR_FILENO);
+	return (NULL);
 }
 
-static int cd_no_arg(t_env *env)
+static int cd_no_arg(t_env *env, char **args)
 {
 	while (env)
 	{
@@ -51,8 +59,9 @@ static int cd_no_arg(t_env *env)
 		{
 			if (!chdir(env->value))
 			{
-				/* print_error */
-				return (1);	
+				print_builtin_error("cd", args[1]);
+				perror(NULL);
+				return (1);
 			}
 			return (0);
 		}

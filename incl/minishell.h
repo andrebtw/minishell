@@ -91,7 +91,10 @@ char	*find_value(char *envp);
 void	free_env(t_env *env);
 void	free_env_str(char **env);
 char	**env_to_str(t_env *env);
-t_env	**envp_to_list(char **envp);
+t_env	*envp_to_list(char **envp);
+int		envadd_elem(t_env **env, char *name, char *value);
+void 	envadd_back(t_env **env, t_env *new);
+t_env	*env_create(char *name, char *value);
 
 /* PARSING */
 void	parsing(t_shell *shell);
@@ -102,8 +105,11 @@ void	clean_exit(t_shell *shell);
 void	malloc_err_exit(t_shell *shell);
 
 /* BUILTINS */
-void	bi_exit(t_shell *shell);
+void	print_builtin_error(char *builtin, char *arg);
 int		echo(char **arg);
+int		cd(t_env *env, char **arg);
+int		pwd(void);
+int		export(t_env *env, char **args);
 
 /* UTILS */
 int	ft_strcmp(char *str1, char *str2);
