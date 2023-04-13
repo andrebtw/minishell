@@ -34,7 +34,10 @@ char	*find_value(char *envp)
 		if (*envp == '=')
 		{
 			envp++;
-			return (ft_strndup(envp, (int) ft_strlen(envp)));
+			if (*envp)
+				return (ft_strndup(envp, (int) ft_strlen(envp)));
+			else
+				return (NULL);
 		}
 		envp++;
 	}

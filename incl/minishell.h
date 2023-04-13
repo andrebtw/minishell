@@ -110,6 +110,8 @@ int		echo(char **arg);
 int		cd(t_env *env, char **arg);
 int		pwd(void);
 int		export(t_env *env, char **args);
+int		unset(char **args, t_env *env);
+int		env_builtin(char **args, t_env *env);
 
 /* UTILS */
 int	ft_strcmp(char *str1, char *str2);
