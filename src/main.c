@@ -13,23 +13,23 @@
 #include "../incl/minishell.h"
 #include "../lib/libft.h"
 
-void	loop(t_shell *shell)
+void	loop(t_shell *shell, char **env)
 {
 	while (1)
 	{
 		prompt(shell);
 		//parsing(shell);
-		test(shell);
+		test(shell, env);
 	}
 }
 
-void	init(void)
+void	init(char **env)
 {
 	t_shell	shell;
 
 	shell.last_err_code = NOT_INIT;
 	shell.input = NULL;
-	loop(&shell);
+	loop(&shell, env);
 }
 
 int	main(int argc, char **argv, char **env)
@@ -37,6 +37,6 @@ int	main(int argc, char **argv, char **env)
 	(void)argc;
 	(void)argv;
 	(void)env;
-	init();
+	init(env);
 	return (EXIT_SUCCESS);
 }

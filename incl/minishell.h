@@ -81,7 +81,7 @@ typedef struct s_shell
 /* LINKED LISTS */
 t_cmd		*lstcreate(int type, char **content);
 void		lstadd_back(t_cmd **lst, t_cmd *new);
-void 		test(t_shell *shell);
+void 		test(t_shell *shell, char **env);
 
 void	prompt(t_shell *shell);
 
@@ -112,6 +112,8 @@ int		pwd(void);
 int		export(t_env *env, char **args);
 int		unset(char **args, t_env *env);
 int		env_builtin(char **args, t_env *env);
+int		exit_builtin(char **args, t_env *env);
+int		check_builtins(t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int	ft_strcmp(char *str1, char *str2);

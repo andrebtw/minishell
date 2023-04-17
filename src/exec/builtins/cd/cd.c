@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:54:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/04 15:54:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 13:43:57 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 static int	args_nb(char **args);
@@ -32,6 +33,7 @@ int cd(t_env *env, char **args)
 		perror(NULL);
 		return (1);
 	}
+	return (0);
 }
 
 static char	*replace_tilde(char **args, t_env *env)

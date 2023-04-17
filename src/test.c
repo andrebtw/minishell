@@ -14,11 +14,12 @@ t_cmd *create_list(t_shell *shell)
 
     (void)shell;
     char **content1 = malloc(sizeof(char *) * 3);
-	content1[0] = "echo";
-	content1[1] = "bonjour";
-	content1[2] = "toi";
-	char **content2 = malloc(sizeof(char *));
-	content2[0] = "|";
+	content1[0] = "unset";
+    content1[1] = "HOME";
+    content1[2] = NULL;
+	char **content2 = malloc(sizeof(char *) * 2);
+	content2[0] = "cd";
+    content2[1] = NULL;
 	char **content3 = malloc(sizeof(char *) * 2);
 	content3[0] = "cat";
 	content3[1] = "-e";
@@ -28,8 +29,15 @@ t_cmd *create_list(t_shell *shell)
     return (lst);
 }
 
-void test(t_shell *shell)
+void test(t_shell *shell, char **envp)
 {
-    shell->command = create_list(shell);
+    t_env *env;
 
+    shell->command = create_list(shell);
+    env = envp_to_list(envp);
+    while (shell->command)
+    {
+        check_builtins(shell->command, env);
+        shell->command = shell->command->next;
+    }
 }

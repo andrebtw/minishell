@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   env_builtin.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/13 13:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/13 13:17:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 13:45:38 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int env_builtin(char **args, t_env *env)
@@ -26,4 +27,5 @@ int env_builtin(char **args, t_env *env)
 		ft_putstr_fd("\n", STDOUT_FILENO);
 		env_str++;
 	}
+	return (0);
 }

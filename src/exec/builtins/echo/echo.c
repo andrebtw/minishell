@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/04 13:56:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/04/17 14:15:38 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int is_newline(char *arg);
@@ -17,18 +18,22 @@ int print_args(char **arg);
 int	echo(char **arg)
 {
 	arg++;
-	if (*arg && is_newline(arg[1]))
+	if (*arg && is_newline(*arg))
 	{
 		arg++;
 		if (print_args(arg) != 0)
 			return (1);
-		if (printf("\n") < 0)
-			return (1);
+		return (0);
 	}
 	else if (*arg)
-		return (print_args(arg));
-	else
-		return (1);
+	{
+		if (print_args(arg) != 0)
+			return (1);
+		if (printf("\n") < 0)
+			return (1);
+		return (0);
+	}
+	return (1);
 }
 
 int is_newline(char *arg)

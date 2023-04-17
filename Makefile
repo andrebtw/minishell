@@ -39,13 +39,13 @@ SRCS =	main.c \
 		exec/exec.c \
 		exec/exec_utils.c \
 		exec/builtins/print_builtin_error.c \
-		exec/builtins/exit\exit.c \
 		exec/builtins/echo/echo.c \
 		exec/builtins/cd/cd.c \
 		exec/builtins/pwd/pwd.c \
 		exec/builtins/export/export.c \
 		exec/builtins/unset/unset.c \
 		exec/builtins/env/env_builtin.c \
+		exec/builtins/exit/exit.c \
 		
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
@@ -56,7 +56,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g3
 
 DFLAGS = -MMD -MP
 
