@@ -23,7 +23,7 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	if (state == NOT_INIT && ft_strchr(" \t", shell->input[i]))
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, '\1', 1);
+				shell->parsing.current_str, SEPARATOR, 1);
 		if (!shell->parsing.current_str)
 			malloc_err_exit(shell);
 		return (SPACE_SEP);
@@ -70,7 +70,7 @@ void	end_found(t_shell *shell, size_t i, int state, int type)
 
 	(void)i;
 	(void)state;
-	content = ft_split(shell->parsing.current_str, '\1');
+	content = ft_split(shell->parsing.current_str, SEPARATOR);
 	free(shell->parsing.current_str);
 	shell->parsing.current_str = NULL;
 	if (!content)
@@ -79,25 +79,20 @@ void	end_found(t_shell *shell, size_t i, int state, int type)
 		malloc_err_exit(shell);
 }
 
-void	add_to_char(t_shell *shell, size_t i, int state)
+void	add_to_char(t_shell *shell, size_t *i, int state)
 {
-	if (state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[i]))
+	if (state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[*i]))
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[i], 1);
+				shell->parsing.current_str, shell->input[*i], 1);
 		return ;
 	}
-	if (state == NOT_INIT && shell->input[i] == '|')
-	{
-		end_found(shell, i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[i], 1);	
-		end_found(shell, i, state, IS_PIPE);
-	}
+	separators_split(shell, i, state);
 	if (state == SINGLE_QUOTE)
 	{
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[i], 1);
+		if (shell->input[*i] != '\'')
+			shell->parsing.current_str = ft_strjoin_free_char(
+					shell->parsing.current_str, shell->input[*i], 1);
 		return ;
 	}
 }
@@ -117,9 +112,9 @@ void	split_shell(t_shell *shell)
 		malloc_err_exit(shell);
 	while (shell->input[i])
 	{
-		ft_printf("STATE : %d\n", state);
+		// ft_printf("STATE : %d\n", state);
 		state = quotes_state(shell, i, state);
-		add_to_char(shell, i, state);
+		add_to_char(shell, &i, state);
 		i++;
 	}
 	end_found(shell, i, state, IS_CMD);

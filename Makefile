@@ -13,7 +13,7 @@
 #### SYSTEM ####
 CC = cc
 RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 #### DIRECTORIES ####
 SRC_DIR = src
 
@@ -24,6 +24,7 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/clean_exit/clean_exit.c \
 		$(SRC_DIR)/builtins/exit.c \
 		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
+		$(SRC_DIR)/parsing/cmd_split/split_shell_utils1.c \
 		$(SRC_DIR)/linked_lists/lstcreate.c \
 		$(SRC_DIR)/test.c \
 		$(SRC_DIR)/debug_print.c

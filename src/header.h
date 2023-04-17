@@ -27,6 +27,7 @@
 
 /* PROMPT */
 # define PROMPT "🛸~> "
+# define SEPARATOR '\1'
 
 /* COLORS */
 # define KNORMAL "\x1B[0m"
@@ -86,6 +87,10 @@ void	prompt(t_shell *shell);
 /* PARSING */
 void	parsing(t_shell *shell);
 void	split_shell(t_shell *shell);
+
+/* CMD SPLITTING */
+void	separators_split(t_shell *shell, size_t *i, int state);
+void	end_found(t_shell *shell, size_t i, int state, int type);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/11 11:01:40 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/15 15:24:00 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,17 @@ void	print_list(t_cmd *lst)
 		ft_printf("------------\n");
 		ft_printf("| TYPE    : %d\n", lst->type);
 		ft_printf("| CONTENT : ");
-		while (lst->content[i])
+		if (!lst->content[i])
 		{
-			ft_printf("%s ", lst->content[i]);
-			i++;
+			ft_printf("EMPTY");
+		}
+		else
+		{
+			while (lst->content[i])
+			{
+				ft_printf("%s ", lst->content[i]);
+				i++;
+			}
 		}
 		lst = lst->next;
 		ft_printf("\n");
