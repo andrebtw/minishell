@@ -6,62 +6,95 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/17 10:32:24 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/20 12:07:54 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../header.h"
 
+#define DOUBLE_QUOTE -15
+#define SINGLE_QUOTE -16
+#define SPACE_SEP -17
+#define REDIRECT -18
+#define REDIRECT_SINGLE_QUOTE -19
+#define REDIRECT_DOUBLE_QUOTE -20
+#define REDIRECT_END -21
+
 /*
 << heredoc
->> redirect
-> redirect
-< redirect
+>> redirect out append
+> redirect out
+< redirect in
 */
 
-void	separators_split(t_shell *shell, size_t *i, int state)
+char	*malloc_int_code(t_shell *shell, char redirect)
 {
-	if (state == NOT_INIT && shell->input[*i] == '|')
+	char	*new_str;
+
+	if (!shell->parsing.current_in_out_code)
 	{
-		end_found(shell, *i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);	
-		end_found(shell, *i, state, IS_PIPE);
+		new_str = ft_strdup("");
+		if (!new_str)
+			malloc_err_exit(shell);
+		new_str = ft_strjoin_free_char(new_str, redirect, 1);
+		if (!new_str)
+			malloc_err_exit(shell);
+		return (new_str);
 	}
-	else if ((state == NOT_INIT && shell->input[*i] == '<') &&
-			(shell->input[*i + 1] == '<'))
+	new_str = ft_strjoin_free_char(shell->parsing.current_in_out_code, redirect, 1);
+	if (!new_str)
 	{
-		end_found(shell, *i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);
+		free(shell->parsing.current_in_out_code);
+		malloc_err_exit(shell);
+	}
+	return (new_str);
+}
+
+void	separators_split(t_shell *shell, size_t *i, int *state)
+{
+	if (*state == NOT_INIT && shell->input[*i] == '|')
+		end_found(shell, *i, *state, IS_CMD);
+	if ((*state == NOT_INIT && shell->input[*i] == '>') &&
+			shell->input[*i + 1] == '>')
+	{
+		shell->parsing.current_in_out_code = malloc_int_code(shell, IS_OUT_APPEND);
+		*state = REDIRECT;
+		*i = *i + 2;
+		while (ft_strchr(" \t", shell->input[*i]))
+			*i = *i + 1;
+		*i = *i - 1;
+	}
+	if ((*state == NOT_INIT && shell->input[*i] == '<') &&
+			shell->input[*i + 1] == '<')
+	{
+		shell->parsing.current_in_out_code = malloc_int_code(shell, IS_HEREDOC);
+		*state = REDIRECT;
+		*i = *i + 2;
+		while (ft_strchr(" \t", shell->input[*i]))
+			*i = *i + 1;
+		*i = *i - 1;
+	}
+	if (*state == NOT_INIT && shell->input[*i] == '>')
+	{
+		shell->parsing.current_in_out_code = malloc_int_code(shell, IS_OUT);
+		*state = REDIRECT;
 		*i = *i + 1;
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);	
-		end_found(shell, *i, state, IS_HERE_DOC);
+		while (ft_strchr(" \t", shell->input[*i]))
+			*i = *i + 1;
+		*i = *i - 1;
 	}
-	else if ((state == NOT_INIT && shell->input[*i] == '>') &&
-			(shell->input[*i + 1] == '>'))
+	if (*state == NOT_INIT && shell->input[*i] == '<')
 	{
-		end_found(shell, *i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);
+		shell->parsing.current_in_out_code = malloc_int_code(shell, IS_IN);
+		*state = REDIRECT;
 		*i = *i + 1;
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);	
-		end_found(shell, *i, state, IS_REDIRECT);
-	}
-	else if (state == NOT_INIT && shell->input[*i] == '>') 
-	{
-		end_found(shell, *i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);	
-		end_found(shell, *i, state, IS_REDIRECT);
-	}
-	else if (state == NOT_INIT && shell->input[*i] == '<') 
-	{
-		end_found(shell, *i, state, IS_CMD);
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);	
-		end_found(shell, *i, state, IS_REDIRECT);
+		while (ft_strchr(" \t", shell->input[*i]))
+			*i = *i + 1;
+		*i = *i - 1;
 	}
 }
+
+// void	redirect_detect(t_shell *shell, size_t *i, int state)
+// {
+// 	if (state == NOT_INIT && shell->input[*i] == '>')
+// }
