@@ -38,6 +38,8 @@ int 	quotes_state_redirect(t_shell *shell, size_t i, int state)
 		return (REDIRECT);
 	if (shell->input[i] == '\"' && state == REDIRECT_DOUBLE_QUOTE)
 		return (REDIRECT);
+	if (state == REDIRECT_DOUBLE_QUOTE || state == REDIRECT_SINGLE_QUOTE)
+		return (state);
 	return (REDIRECT);
 }
 
@@ -68,7 +70,7 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	return (NOT_INIT);
 }
 
-int	add_node(t_cmd **cmd, size_t i, int type, t_shell *shell)
+int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 {
 	t_cmd	*tmp;
 	t_cmd	*new;
@@ -77,19 +79,19 @@ int	add_node(t_cmd **cmd, size_t i, int type, t_shell *shell)
 	tmp = *cmd;
 	if (!tmp->content)
 	{
-		*cmd = lstcreate(type, shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
+		*cmd = lstcreate(shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
 		if (!(*cmd))
 			return (free(shell->parsing.current_tab), ERR_MALLOC);
 		return (EXIT_SUCCESS);
 	}
-	new = lstcreate(type, shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
+	new = lstcreate(shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
 	if (!new)
 		return (free(shell->parsing.current_tab), ERR_MALLOC);
 	lstadd_back(cmd, new);
 	return (EXIT_SUCCESS);
 }
 
-void	end_found(t_shell *shell, size_t i, int state, int type)
+void	end_found(t_shell *shell, size_t i, int state)
 {
 	char	**content;
 
@@ -104,7 +106,7 @@ void	end_found(t_shell *shell, size_t i, int state, int type)
 	shell->parsing.current_redirect_str = NULL;
 	if (!shell->parsing.current_tab)
 		malloc_err_exit(shell);
-	if (add_node(&shell->command, i, type, shell))
+	if (add_node(&shell->command, i, shell))
 		malloc_err_exit(shell);
 }
 
@@ -117,7 +119,6 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 		return ;
 	}
 	separators_split(shell, i, state);
-	// redirect_detect(shell, i, state);
 	if (*state == SINGLE_QUOTE)
 	{
 		if (shell->input[*i] != '\'')
@@ -136,7 +137,6 @@ void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 		return ;
 	}
 	separators_split(shell, i, state);
-	// redirect_detect(shell, i, state);
 	if (*state == REDIRECT_SINGLE_QUOTE)
 	{
 		if (shell->input[*i] != '\'')
@@ -168,7 +168,6 @@ void	split_shell(t_shell *shell)
 	}
 	while (shell->input[i])
 	{
-		// ft_printf("STATE : %d\n", state);
 		if (state > REDIRECT)
 		{
 			state = quotes_state(shell, i, state);
@@ -181,6 +180,5 @@ void	split_shell(t_shell *shell)
 		}
 		i++;
 	}
-	end_found(shell, i, state, IS_CMD);
-	// ft_printf("%s", shell->parsing.current_str);
+	end_found(shell, i, state);
 }

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/20 12:07:54 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/20 13:40:25 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,6 @@
 #define REDIRECT_SINGLE_QUOTE -19
 #define REDIRECT_DOUBLE_QUOTE -20
 #define REDIRECT_END -21
-
-/*
-<< heredoc
->> redirect out append
-> redirect out
-< redirect in
-*/
 
 char	*malloc_int_code(t_shell *shell, char redirect)
 {
@@ -53,7 +46,7 @@ char	*malloc_int_code(t_shell *shell, char redirect)
 void	separators_split(t_shell *shell, size_t *i, int *state)
 {
 	if (*state == NOT_INIT && shell->input[*i] == '|')
-		end_found(shell, *i, *state, IS_CMD);
+		end_found(shell, *i, *state);
 	if ((*state == NOT_INIT && shell->input[*i] == '>') &&
 			shell->input[*i + 1] == '>')
 	{
@@ -93,8 +86,3 @@ void	separators_split(t_shell *shell, size_t *i, int *state)
 		*i = *i - 1;
 	}
 }
-
-// void	redirect_detect(t_shell *shell, size_t *i, int state)
-// {
-// 	if (state == NOT_INIT && shell->input[*i] == '>')
-// }

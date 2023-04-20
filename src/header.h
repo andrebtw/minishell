@@ -48,12 +48,6 @@
 /* CODES */
 # define NOT_INIT -1
 
-# define IS_BUILTIN 55
-# define IS_CMD 60
-# define IS_PIPE 65
-# define IS_REDIRECT 70
-# define IS_HERE_DOC 75
-
 /* REDIRECT CODES */
 # define IS_IN -95
 # define IS_OUT -96
@@ -63,7 +57,6 @@
 /* LINKED LISTS */
 typedef struct s_cmd
 {
-	int		type;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
@@ -88,7 +81,7 @@ typedef struct s_shell
 }	t_shell;
 
 /* LINKED LISTS */
-t_cmd		*lstcreate(int type, char **content, char **in_out, char *in_out_code);
+t_cmd		*lstcreate(char **content, char **in_out, char *in_out_code);
 void		lstadd_back(t_cmd **lst, t_cmd *new);
 void 		test(t_shell *shell);
 t_cmd		*lstinit(void);
@@ -101,7 +94,7 @@ void	split_shell(t_shell *shell);
 
 /* CMD SPLITTING */
 void	separators_split(t_shell *shell, size_t *i, int *state);
-void	end_found(t_shell *shell, size_t i, int state, int type);
+void	end_found(t_shell *shell, size_t i, int state);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);
