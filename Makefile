@@ -9,24 +9,24 @@
 #    Updated: 2023/03/15 00:38:24 by anrodri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+### FINAL COMPILATION FILE ###
+NAME = minishell
+
 #### DIRECTORIES ####
-SRC_DIR = src
+SRC_DIR = src/
 
-OBJS = $(SRCS:.c=.o)
-HEADER = $(SRC_DIR)/header.h
+OBJS_DIR = .objs/
 
+INC_DIR = incl/
+
+LIB_DIR = lib/
 
 #### SOURCE FILES ####
-SRCS =	$(SRC_DIR)/main.c \
-		$(SRC_DIR)/prompt/prompt.c \
-		$(SRC_DIR)/parsing/parsing.c \
-		$(SRC_DIR)/clean_exit/clean_exit.c \
-		$(SRC_DIR)/builtins/exit.c \
-		$(SRC_DIR)/parsing/cmd_split/split_shell.c \
-		$(SRC_DIR)/parsing/cmd_split/split_shell_utils1.c \
-		$(SRC_DIR)/linked_lists/lstcreate.c \
-		$(SRC_DIR)/test.c \
-		$(SRC_DIR)/debug_print.c
+LIBFT = $(LIB_DIR)libft.a
+
+SRCS =	main.c \
+		prompt/prompt.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
