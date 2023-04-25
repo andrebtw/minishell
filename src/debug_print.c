@@ -6,11 +6,11 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/21 12:39:59 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:06:13 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "header.h"
+#include "minishell.h"
 
 void	print_list(t_cmd *lst)
 {

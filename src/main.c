@@ -14,13 +14,15 @@
 #include "../lib/libft.h"
 
 int	state;
+
 void	loop(t_shell *shell, char **env)
 {
+	(void)env;
 	while (1)
 	{
 		prompt(shell);
-		debug_print(shell);
 		parsing(shell);
+		debug_print(shell);
 	}
 }
 

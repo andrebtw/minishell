@@ -6,11 +6,11 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/21 12:58:22 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/25 15:05:53 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../../../incl/minishell.h"
 
 #define DOUBLE_QUOTE -15
 #define SINGLE_QUOTE -16

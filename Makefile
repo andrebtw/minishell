@@ -37,6 +37,7 @@ SRCS =	main.c \
 		envp/envp_to_list/free_env.c \
 		envp/env_to_str/env_to_str.c \
 		exec/exec.c \
+		exec/builtins/exit/exit.c \
 		exec/exec_utils.c \
 		exec/builtins/print_builtin_error.c \
 		exec/builtins/echo/echo.c \

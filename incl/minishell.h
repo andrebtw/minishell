@@ -96,6 +96,7 @@ typedef struct s_shell
 t_cmd		*lstcreate(char **content, char **in_out, char *in_out_code);
 void		lstadd_back(t_cmd **lst, t_cmd *new);
 void 		test(t_shell *shell, char **env);
+t_cmd		*lstinit(void);
 
 void	prompt(t_shell *shell);
 
