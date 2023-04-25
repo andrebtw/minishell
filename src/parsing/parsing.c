@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "../../incl/minishell.h"
 
 void	parsing(t_shell *shell)
 {

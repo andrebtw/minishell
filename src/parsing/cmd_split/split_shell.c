@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../header.h"
+#include "../../../incl/minishell.h"
 
 #define DOUBLE_QUOTE -15
 #define SINGLE_QUOTE -16

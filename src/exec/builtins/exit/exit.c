@@ -10,9 +10,11 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../header.h"
+#include "minishell.h"
 
-void	bi_exit(t_shell *shell)
+int	exit_builtin(char **args, t_env *env)
 {
-	(void)shell;
+	(void)args;
+	(void)env;
+	return (0);
 }

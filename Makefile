@@ -9,13 +9,12 @@
 #    Updated: 2023/03/15 00:38:24 by anrodri2         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
-
-#### SYSTEM ####
-CC = cc
-RM = rm -f
-CFLAGS = -Wall -Werror -Wextra -g3 #-fsanitize=address
 #### DIRECTORIES ####
 SRC_DIR = src
+
+OBJS = $(SRCS:.c=.o)
+HEADER = $(SRC_DIR)/header.h
+
 
 #### SOURCE FILES ####
 SRCS =	$(SRC_DIR)/main.c \
@@ -28,37 +27,67 @@ SRCS =	$(SRC_DIR)/main.c \
 		$(SRC_DIR)/linked_lists/lstcreate.c \
 		$(SRC_DIR)/test.c \
 		$(SRC_DIR)/debug_print.c
+		parsing/parsing.c \
+		clean_exit/clean_exit.c \
+		parsing/cmd_split/split_shell.c \
+		linked_lists/lstcreate.c \
+		test.c \
+		envp/envp_to_list/envp_to_list.c \
+		envp/envp_to_list/find_list_content.c \
+		envp/envp_to_list/free_env.c \
+		envp/env_to_str/env_to_str.c \
+		exec/exec.c \
+		exec/exec_utils.c \
+		exec/builtins/print_builtin_error.c \
+		exec/builtins/echo/echo.c \
+		exec/builtins/cd/cd.c \
+		exec/builtins/pwd/pwd.c \
+		exec/builtins/export/export.c \
+		exec/builtins/unset/unset.c \
+		exec/builtins/env/env_builtin.c \
+		exec/builtins/exit/exit.c \
 		
+OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
-OBJS = $(SRCS:.c=.o)
-HEADER = $(SRC_DIR)/header.h
+DEPS = $(OBJS:.o=.d)
 
-### FINAL COMPILATION FILE ###
-NAME = minishell
+#### SYSTEM ####
+CC = cc
 
-### LIBFT ###
-LIBFT = lib/libft.a
+RM = rm -rf
+
+CFLAGS = -Wall -Werror -Wextra -g3
+
+DFLAGS = -MMD -MP
+
+LFLAGS = -L $(LIB_DIR) -lft -lreadline
+
+IFLAGS = -I $(INC_DIR) -I $(LIB_DIR)
 
 #### RULES ####
 all:		$(NAME)
 
-$(NAME):	libft_comp $(OBJS) $(HEADER)
-			$(CC) $(CFLAGS) $(OBJS) -o $(NAME) -Llib -lft -lreadline
+-include	$(DEPS)
 
-%.o: %.c	$(HEADER) Makefile
-			$(CC) $(CFLAGS) -c $< -o $@
+$(NAME):	$(LIBFT) $(OBJS)
+			$(CC) $(OBJS) $(CFLAGS) $(LFLAGS) -o $@
+
+$(LIBFT):	FORCE
+			$(MAKE) all -j -C $(LIB_DIR)
+
+FORCE:
+
+$(OBJS_DIR)%.o:		$(SRC_DIR)%.c
+					mkdir -p $(shell dirname $@)
+					$(CC) $(CFLAGS) $(DFLAGS) $(IFLAGS) -c $< -o $@
 
 clean:
-			@$(MAKE) clean -C lib
-			$(RM) $(OBJS)
+			$(MAKE) clean -C $(LIB_DIR)
+			$(RM) $(OBJS_DIR) $(DEPS)
 
-fclean:
-			@$(MAKE) fclean -C lib
-			$(RM) $(OBJS) $(NAME)
-
-libft_comp:
-			@$(MAKE) all -j -C lib
+fclean:		clean
+			$(RM) $(NAME)
 
 re:	fclean $(NAME)
 
-.PHONY: $(NAME) all clean fclean re
+.PHONY: all clean fclean re FORCE
