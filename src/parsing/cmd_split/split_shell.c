@@ -116,6 +116,13 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
 				shell->parsing.current_str, shell->input[*i], 1);
+		if (ft_strchr("><", shell->input[*i + 1]))
+		{
+			shell->parsing.current_str = ft_strjoin_free_char(
+					shell->parsing.current_str, SEPARATOR, 1);
+			if (!shell->parsing.current_str)
+				malloc_err_exit(shell);
+		}
 		return ;
 	}
 	separators_split(shell, i, state);
@@ -124,6 +131,8 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 		if (shell->input[*i] != '\'')
 			shell->parsing.current_str = ft_strjoin_free_char(
 					shell->parsing.current_str, shell->input[*i], 1);
+		if (!shell->parsing.current_str)
+			malloc_err_exit(shell);
 		return ;
 	}
 	if (*state == DOUBLE_QUOTE)
@@ -131,6 +140,8 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 		if (shell->input[*i] != '\"')
 			shell->parsing.current_str = ft_strjoin_free_char(
 					shell->parsing.current_str, shell->input[*i], 1);
+		if (!shell->parsing.current_str)
+			malloc_err_exit(shell);
 		return ;
 	}
 }
