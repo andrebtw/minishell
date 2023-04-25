@@ -126,9 +126,14 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 					shell->parsing.current_str, shell->input[*i], 1);
 		return ;
 	}
+	if (*state == DOUBLE_QUOTE)
+	{
+		if (shell->input[*i] != '\"')
+			shell->parsing.current_str = ft_strjoin_free_char(
+					shell->parsing.current_str, shell->input[*i], 1);
+		return ;
+	}
 }
-
-// TODO : Redirect separates without spaces 
 
 void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 {

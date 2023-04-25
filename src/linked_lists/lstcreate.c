@@ -10,6 +10,7 @@ t_cmd   *lstcreate(char **content, char **in_out, char *in_out_code)
 	r_value->content = content;
 	r_value->in_out = in_out;
 	r_value->in_out_code = in_out_code;
+	r_value->type = IS_CMD;
 	r_value->next = NULL;
 	return (r_value);
 }
@@ -21,6 +22,7 @@ t_cmd   *lstinit(void)
 	r_value = malloc (sizeof(t_cmd));
 	if (!r_value)
 		return (NULL);
+	r_value->type = IS_CMD;
 	r_value->content = NULL;
 	r_value->next = NULL;
 	return (r_value);

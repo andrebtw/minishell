@@ -13,6 +13,8 @@
 #include "header.h"
 #include "../lib/libft.h"
 
+int	state;
+
 void	loop(t_shell *shell)
 {
 	while (1)

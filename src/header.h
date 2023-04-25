@@ -37,8 +37,6 @@
 # define KBLUE "\x1B[34m"
 # define KWHITE "\x1B[37m"
 
-/* ERROR MESSAGES */
-
 /* ERROR CODES */
 # define ERR_MALLOC -2
 
@@ -47,6 +45,11 @@
 
 /* CODES */
 # define NOT_INIT -1
+
+/* */
+# define IS_BUILTIN 55
+# define IS_CMD 60
+
 
 /* REDIRECT CODES */
 # define IS_IN -95
@@ -57,6 +60,7 @@
 /* LINKED LISTS */
 typedef struct s_cmd
 {
+	int		type;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
