@@ -14,7 +14,7 @@
 
 static int	args_nb(char **args);
 static int	cd_no_arg(t_env *env);
-static char	*replace_tilde(char **args, t_env *env);
+static char	*replace_tilde(t_env *env);
 
 int cd(t_env *env, char **args)
 {
@@ -26,8 +26,8 @@ int cd(t_env *env, char **args)
 	else if (len > 2)
 		return (ft_putstr_fd("🛸~> cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
-		args[1] = replace_tilde(args, env);
-	if (!chdir(args[1]))
+		args[1] = replace_tilde(env);
+	if (chdir(args[1]) != 0)
 	{
 		print_builtin_error("cd", args[1]);
 		perror(NULL);
@@ -36,7 +36,7 @@ int cd(t_env *env, char **args)
 	return (0);
 }
 
-static char	*replace_tilde(char **args, t_env *env)
+static char	*replace_tilde(t_env *env)
 {
 	char *path;
 
@@ -44,7 +44,7 @@ static char	*replace_tilde(char **args, t_env *env)
 	{
 		if (ft_strcmp(env->name, "HOME") == 0)
 		{
-			path = ft_strjoin(env->value, args[1]);
+			path = env->value;
 			return (path);
 		}
 		env = env->next;

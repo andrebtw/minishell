@@ -14,18 +14,19 @@ t_cmd *create_list(t_shell *shell)
 
     (void)shell;
     char **content1 = malloc(sizeof(char *) * 3);
-	content1[0] = "unset";
-	content1[1] = "HOME";
+	content1[0] = "echo";
+	content1[1] = "--qw-qwd-qw-qw-";
     content1[2] = NULL;
 	char **content2 = malloc(sizeof(char *) * 2);
 	content2[0] = "cd";
-    content2[1] = NULL;
+	content2[1] = "..";
+    content2[2] = NULL;
 	char **content3 = malloc(sizeof(char *) * 2);
-	content3[0] = "cat";
+	content3[0] = "pwd";
 	content3[1] = "-e";
     lst = lstcreate(IS_BUILTIN, content1);
-    add_to_end(&lst, IS_PIPE, content2);
-    add_to_end(&lst, IS_CMD, content3);
+    add_to_end(&lst, IS_BUILTIN, content2);
+    add_to_end(&lst, IS_BUILTIN, content3);
     return (lst);
 }
 
