@@ -15,7 +15,7 @@ t_cmd *create_list(t_shell *shell)
     (void)shell;
     char **content1 = malloc(sizeof(char *) * 3);
 	content1[0] = "unset";
-    content1[1] = "HOME";
+	content1[1] = "HOME";
     content1[2] = NULL;
 	char **content2 = malloc(sizeof(char *) * 2);
 	content2[0] = "cd";
@@ -37,7 +37,7 @@ void test(t_shell *shell, char **envp)
     env = envp_to_list(envp);
     while (shell->command)
     {
-        check_builtins(shell->command, env);
+		check_builtins(shell->command, env);
         shell->command = shell->command->next;
     }
 }

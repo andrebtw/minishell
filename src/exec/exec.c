@@ -23,7 +23,7 @@ int check_builtins(t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->content[0], "export") == 0)
 		return (export(env, cmd->content));
 	else if (ft_strcmp(cmd->content[0], "unset") == 0)
-		return (unset(cmd->content, env));
+		return (unset(cmd->content, &env));
 	else if (ft_strcmp(cmd->content[0], "env") == 0)
 		return (env_builtin(cmd->content, env));
 	else if (ft_strcmp(cmd->content[0], "exit") == 0)

@@ -38,7 +38,7 @@ static int check_arg(char *arg, t_env *env)
 	while(arg[i])
 	{
 		if (arg[i] == '=')
-			return (envadd_elem(&env, find_name(arg), find_value(arg)));
+			return (envadd_elem(env, find_name(arg), find_value(arg)));
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 		{
 			print_builtin_error("export", arg);

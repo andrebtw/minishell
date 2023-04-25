@@ -20,7 +20,7 @@ char **env_to_str(t_env *env)
 	char	**env_str;
 	int		i;
 
-	env_str = malloc(sizeof(char *) * env_size(env));
+	env_str = malloc(sizeof(char *) * (env_size(env) + 1));
 	if (!env_str)
 		return (NULL);
 	i = 0;
@@ -29,9 +29,10 @@ char **env_to_str(t_env *env)
 		env_str[i] = add_env(env);
 		if (!env_str[i])
 			return (free_env_str(env_str), NULL);
-		env++;
+		env = env->next;
 		i++;
 	}
+	env_str[i++] = NULL;
 	return (env_str);
 }
 

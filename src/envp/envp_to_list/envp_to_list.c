@@ -19,9 +19,9 @@ t_env	*envp_to_list(char **envp)
 	if (!env)
 		return (NULL);
 	envp++;
-	while (envp)
+	while (*envp)
 	{
-		if (envadd_elem(&env, find_name(*envp), find_value(*envp)) > 0)
+		if (envadd_elem(env, find_name(*envp), find_value(*envp)) > 0)
 			return (free_env(env), NULL);
 		envp++;
 	}
@@ -41,7 +41,7 @@ t_env	*env_create(char *name, char *value)
 	return (elem);
 }
 
-int envadd_elem(t_env **env, char *name, char *value)
+int envadd_elem(t_env *env, char *name, char *value)
 {
 	t_env *new;
 
@@ -52,14 +52,14 @@ int envadd_elem(t_env **env, char *name, char *value)
 	return (0);
 }
 
-void envadd_back(t_env **env, t_env *new)
+void envadd_back(t_env *env, t_env *new)
 {
-	if (!(*env))
+	if (!env)
 	{
-		*env = new;
+		env = new;
 		return ;
 	}
-	while ((*env)->next)
-		*env = (*env)->next;
-	(*env)->next = new;
+	while (env->next)
+		env = env->next;
+	env->next = new;
 }

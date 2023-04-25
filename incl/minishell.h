@@ -92,8 +92,8 @@ void	free_env(t_env *env);
 void	free_env_str(char **env);
 char	**env_to_str(t_env *env);
 t_env	*envp_to_list(char **envp);
-int		envadd_elem(t_env **env, char *name, char *value);
-void 	envadd_back(t_env **env, t_env *new);
+int		envadd_elem(t_env *env, char *name, char *value);
+void 	envadd_back(t_env *env, t_env *new);
 t_env	*env_create(char *name, char *value);
 
 /* PARSING */
@@ -110,7 +110,7 @@ int		echo(char **arg);
 int		cd(t_env *env, char **arg);
 int		pwd(void);
 int		export(t_env *env, char **args);
-int		unset(char **args, t_env *env);
+int		unset(char **args, t_env **env);
 int		env_builtin(char **args, t_env *env);
 int		exit_builtin(char **args, t_env *env);
 int		check_builtins(t_cmd *cmd, t_env *env);

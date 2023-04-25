@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "minishell.h"
 
 char	*join_code(t_shell *shell, char *r_prompt, char *err_code)
 {

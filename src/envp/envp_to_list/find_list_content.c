@@ -21,7 +21,7 @@ char	*find_name(char *envp)
 	while (envp[i])
 	{
 		if (envp[i] == '=')
-			return (ft_strndup(envp, i - 1));
+			return (ft_strndup(envp, i));
 		i++;
 	}
 	return (NULL);
