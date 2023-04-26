@@ -15,31 +15,33 @@
 
 int	state;
 
-void	loop(t_shell *shell, char **env)
+void	loop(t_shell *shell, t_env *env)
 {
-	(void)env;
 	while (1)
 	{
 		prompt(shell);
 		parsing(shell);
-		debug_print(shell);
+		if (shell->command->content[0])
+			check_builtins(shell->command, env);
+		//debug_print(shell);
 	}
 }
 
-void	init(char **env)
+void	init(char **envp)
 {
 	t_shell	shell;
+	t_env *env;
 
 	shell.last_err_code = NOT_INIT;
 	shell.input = NULL;
+	env = envp_to_list(envp);
 	loop(&shell, env);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)env;
-	init(env);
+	init(envp);
 	return (EXIT_SUCCESS);
 }

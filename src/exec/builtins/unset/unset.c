@@ -12,9 +12,9 @@
 #include "minishell.h"
 
 static int	check_arg(char *arg);
-static void	envdel_elem(char *arg, t_env **env);
+static void	envdel_elem(char *arg, t_env *env);
 
-int	unset(char **args, t_env **env)
+int	unset(char **args, t_env *env)
 {
 	while (*args)
 	{
@@ -49,20 +49,21 @@ static int	check_arg(char *arg)
 	return (0);
 }
 
-static void	envdel_elem(char *arg, t_env **env)
+static void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
 
-	while ((*env) && ft_strcmp(arg, (*env)->name) != 0)
+	while (env && ft_strcmp(arg, env->name) != 0)
 	{
-		tmp = *env;
-		*env = (*env)->next;
+		printf("ok\n");
+		tmp = env;
+		env = env->next;
 	}
-	if (*env)
+	if (env)
 	{
-		tmp->next = (*env)->next;
-		free((*env)->name);
-		free((*env)->value);
-		free(*env);
+		tmp->next = env->next;
+		free(env->name);
+		free(env->value);
+		free(env);
 	}
 }
