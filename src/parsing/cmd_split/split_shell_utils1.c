@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/25 15:05:53 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/27 15:49:49 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 #define REDIRECT_DOUBLE_QUOTE -20
 #define REDIRECT_END -21
 
-char	*malloc_int_code(t_shell *shell, char redirect)
+char	*
+malloc_int_code(t_shell *shell, char redirect)
 {
 	char	*new_str;
 

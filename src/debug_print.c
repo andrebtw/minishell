@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/25 15:06:13 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/04/27 17:07:29 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,15 @@ void	print_list(t_cmd *lst)
 		{
 			while (lst->in_out[i])
 			{
-				ft_printf("%s,", lst->in_out[i]);
+				ft_printf("%s:", lst->in_out[i]);
+				if (lst->in_out_code[i] == IS_IN)
+					ft_printf("IN,");
+				if (lst->in_out_code[i] == IS_OUT)
+					ft_printf("OUT,");
+				if (lst->in_out_code[i] == IS_OUT_APPEND)
+					ft_printf("OUT APPEND,");
+				if (lst->in_out_code[i] == IS_HEREDOC)
+					ft_printf("HEREDOC,");
 				i++;
 			}
 		}
