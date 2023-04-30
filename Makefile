@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
+		parsing/errors/errors.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \

@@ -30,6 +30,10 @@
 # define PROMPT "🛸~> "
 # define SEPARATOR '\1'
 
+/* BOOLEAN */
+# define TRUE 1
+# define FALSE 0
+
 /* COLORS */
 # define KNORMAL "\x1B[0m"
 # define KRED "\x1B[31m"
@@ -47,16 +51,16 @@
 /* CODES */
 # define NOT_INIT -1
 
-/* */
+/* COMMAND TYPES */
 # define IS_BUILTIN 55
 # define IS_CMD 60
-
 
 /* REDIRECT CODES */
 # define IS_IN -95
 # define IS_OUT -96
 # define IS_OUT_APPEND -97
 # define IS_HEREDOC -98
+
 /* ENVP */
 typedef struct s_env
 {
@@ -118,6 +122,9 @@ void	split_shell(t_shell *shell);
 /* CMD SPLITTING */
 void	separators_split(t_shell *shell, size_t *i, int *state);
 void	end_found(t_shell *shell, size_t i, int state);
+
+/* ERROR CHECKING */
+void	errors(t_shell *shell);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);
