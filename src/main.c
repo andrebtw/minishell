@@ -21,8 +21,12 @@ void	loop(t_shell *shell, char **env)
 	while (1)
 	{
 		prompt(shell);
-		parsing(shell);
-		debug_print(shell);
+		if (!errors(shell))
+		{
+			parsing(shell);
+			debug_print(shell);
+		}
+		malloc_err_exit(shell);
 	}
 }
 

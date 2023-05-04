@@ -71,7 +71,6 @@ void	parsing(t_shell *shell)
 	char	**tab;
 
 	(void)tab;
-	errors(shell);
 	split_shell(shell);
 	detect_builtin(shell);
 }

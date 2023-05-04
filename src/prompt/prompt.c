@@ -31,7 +31,6 @@ char	*create_prompt(t_shell *shell)
 	char	*r_prompt;
 	char	*err_code;
 
-	err_code = ft_itoa(shell->last_err_code);
 	if (shell->last_err_code == NOT_INIT)
 	{
 		r_prompt = ft_strdup(PROMPT);
@@ -39,6 +38,7 @@ char	*create_prompt(t_shell *shell)
 			return (malloc_err_exit(shell), NULL);
 		return (r_prompt);
 	}
+	err_code = ft_itoa(shell->last_err_code);
 	if (!err_code)
 		return (malloc_err_exit(shell), NULL);
 	r_prompt = ft_strdup(PROMPT);

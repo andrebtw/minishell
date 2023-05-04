@@ -27,7 +27,7 @@
 # include "libft.h"
 
 /* PROMPT */
-# define PROMPT "🛸~> "
+# define PROMPT "🗿~> "
 # define SEPARATOR '\1'
 
 /* BOOLEAN */
@@ -46,7 +46,7 @@
 # define ERR_MALLOC -2
 
 /* ERROR MSG */
-# define MSG_ERR_MALLOC "Allocation has failed.\n Please make sure enough memory is dedicated to the process.\n"
+# define MSG_ERR_MALLOC "Memory allocation has failed: \x1B[0m\n\x1B[33mPlease make sure enough memory is dedicated to the process.\n"
 
 /* CODES */
 # define NOT_INIT -1
@@ -124,7 +124,7 @@ void	separators_split(t_shell *shell, size_t *i, int *state);
 void	end_found(t_shell *shell, size_t i, int state);
 
 /* ERROR CHECKING */
-void	errors(t_shell *shell);
+int		errors(t_shell *shell);
 
 /* EXITS */
 void	clean_exit(t_shell *shell);
