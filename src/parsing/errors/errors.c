@@ -6,18 +6,36 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:55:09 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/04 11:46:03 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/04 13:10:38 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
-#define PIPE_ERR_MSG "🗿: syntax error near unexpected token `|'\n"
 
-int	pipe_check(t_shell *shell, size_t i)
+int	empty_check(t_shell *shell, size_t i)
 {
-	(void)shell;
-	(void)i;
+	while (shell->input[i])
+	{
+		if (shell->input[i] != ' ' && shell->input[i] != '\t')
+			return (FALSE);
+		i++;
+	}
 	return (TRUE);
+}
+
+int	quotes_state_error(t_shell *shell, size_t i, int state)
+{
+	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
+		return (NOT_INIT);
+	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
+		return (NOT_INIT);
+	if (shell->input[i] == '\"' && state == NOT_INIT)
+		return (DOUBLE_QUOTE);
+	if (shell->input[i] == '\'' && state == NOT_INIT)
+		return (SINGLE_QUOTE);
+	if (state == DOUBLE_QUOTE || state == SINGLE_QUOTE)
+		return (state);
+	return (NOT_INIT);
 }
 
 int	errors(t_shell *shell)
@@ -25,7 +43,9 @@ int	errors(t_shell *shell)
 	size_t	i;
 
 	i = 0;
+	if (empty_check(shell, i))
+		return (TRUE);
 	if (pipe_check(shell, i))
-		return (ft_putstr_fd(PIPE_ERR_MSG, 2), TRUE);
+		return (TRUE);
 	return (FALSE);
 }

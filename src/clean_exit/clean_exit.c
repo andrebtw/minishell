@@ -30,6 +30,6 @@ void	malloc_err_exit(t_shell *shell)
 {
 	if (shell->input)
 		free(shell->input);
-	print_error(MSG_ERR_MALLOC);
+	print_error(ERR_MALLOC_MSG);
 	exit(ERR_MALLOC);
 }

@@ -26,7 +26,7 @@ void	loop(t_shell *shell, char **env)
 			parsing(shell);
 			debug_print(shell);
 		}
-		malloc_err_exit(shell);
+		// malloc_err_exit(shell);
 	}
 }
 
