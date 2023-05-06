@@ -3,16 +3,27 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/17 13:40:01 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/05/06 18:55:19 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "minishell.h"
+#include "../../incl/minishell.h"
 
-int check_builtins(t_cmd *cmd, t_env *env)
+int find_builtin(t_cmd *cmd, t_env *env);
+
+int	check_cmd(t_env *env, t_cmd *cmd)
+{
+	if (find_builtin(cmd, env) != -1)
+		return (0);
+	else if (find_cmd(cmd, env) != -1)
+		return (0);
+	return (-1);
+}
+
+int find_builtin(t_cmd *cmd, t_env *env)
 {
 	if (ft_strcmp(cmd->content[0], "echo") == 0)
 		return (echo(cmd->content));

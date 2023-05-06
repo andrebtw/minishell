@@ -3,17 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   envp_to_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/06 11:56:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/05/06 17:47:38 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
+#include "../../../incl/minishell.h"
 
 t_env	*envp_to_list(char **envp)
 {
 	t_env	*env;
+	int i;
 
 	env = env_create(find_name(*envp), find_value(*envp));
 	if (!env)
@@ -21,8 +23,9 @@ t_env	*envp_to_list(char **envp)
 	envp++;
 	while (*envp)
 	{
-		if (envadd_elem(env, find_name(*envp), find_value(*envp)) > 0)
-			return (free_env(env), NULL);
+		if ((i = envadd_elem(env, find_name(*envp), find_value(*envp))) > 0)
+			return (free_env(env), printf("%d\n", i), NULL);
+		printf("%d\n", i);
 		envp++;
 	}
 	return (env);
@@ -33,7 +36,7 @@ t_env	*env_create(char *name, char *value)
 	t_env	*elem;
 
 	elem = (t_env *) malloc(sizeof(t_env));
-	if (!elem || !name || !value)
+	if (!elem || !name)
 		return (free(name), free(value), NULL);
 	elem->name = name;
 	elem->value = value;

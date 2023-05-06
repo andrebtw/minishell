@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:15:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/04 14:15:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/05/06 17:22:35 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
 int ft_strcmp(char *str1, char *str2)

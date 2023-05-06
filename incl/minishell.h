@@ -47,7 +47,7 @@
 /* CODES */
 # define NOT_INIT -1
 
-/* */
+/* TYPES */
 # define IS_BUILTIN 55
 # define IS_CMD 60
 
@@ -124,6 +124,10 @@ void	clean_exit(t_shell *shell);
 void	malloc_err_exit(t_shell *shell);
 void	debug_print(t_shell *shell);
 
+/* EXECVE */
+int	check_cmd(t_env *env, t_cmd *cmd);
+int	find_cmd(t_cmd *cmd, t_env *env);
+
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
 int		echo(char **arg);
@@ -133,7 +137,6 @@ int		export(t_env *env, char **args);
 int		unset(char **args, t_env *env);
 int		env_builtin(char **args, t_env *env);
 int		exit_builtin(char **args, t_env *env);
-int		check_builtins(t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int	ft_strcmp(char *str1, char *str2);

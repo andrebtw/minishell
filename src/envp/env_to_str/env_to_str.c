@@ -3,13 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:13:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/12 12:13:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/05/06 17:52:59 by marvin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include "minishell.h"
+
+#include "../../../incl/minishell.h"
 
 int		env_size(t_env *env);
 char	*add_env(t_env *env);
@@ -52,11 +53,10 @@ int	env_size(t_env *env)
 char	*add_env(t_env *env)
 {
 	char *env_str;
-	char *tmp;
 
-	tmp = ft_strjoin(env->name, "=");
-	env_str = ft_strjoin(tmp, env->value);
-	free(tmp);
+	env_str = ft_strjoin(env->name, "=");
+	if (env->value)
+		env_str = ft_strjoin(env_str, env->value);
 	return (env_str);
 }
 
