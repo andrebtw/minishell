@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:55:09 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/04 13:10:38 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/05 17:20:14 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,13 @@ int	quotes_state_error(t_shell *shell, size_t i, int state)
 int	errors(t_shell *shell)
 {
 	size_t	i;
+	int		state;
 
 	i = 0;
+	state = NOT_INIT;
 	if (empty_check(shell, i))
 		return (TRUE);
-	if (pipe_check(shell, i))
+	if (pipe_check(shell, i, state))
 		return (TRUE);
 	return (FALSE);
 }

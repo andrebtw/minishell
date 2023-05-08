@@ -130,7 +130,7 @@ void	end_found(t_shell *shell, size_t i, int state);
 # define SINGLE_QUOTE -16
 
 int		errors(t_shell *shell);
-int		pipe_check(t_shell *shell, size_t i);
+int		pipe_check(t_shell *shell, size_t i, int state);
 int		quotes_state_error(t_shell *shell, size_t i, int state);
 
 /* EXITS */
