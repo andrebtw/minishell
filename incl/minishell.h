@@ -51,6 +51,9 @@
 # define PIPE_ERR_MSG2 "⛔️: syntax error near unexpected token `||'\n"
 # define SINGLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\''\n"
 # define DOUBLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\"'\n"
+# define REDIRECT_NOEND_ERR_MSG "⛔️: syntax error near unexpected token `newline'\n"
+# define REDIRECT_INPUT_ERR_MSG "⛔️: syntax error near unexpected token `<'\n"
+# define REDIRECT_OUTPUT_ERR_MSG "⛔️: syntax error near unexpected token `>'\n"
 
 /* CODES */
 # define NOT_INIT -1
