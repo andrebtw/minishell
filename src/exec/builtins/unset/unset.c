@@ -55,7 +55,6 @@ static void	envdel_elem(char *arg, t_env *env)
 
 	while (env && ft_strcmp(arg, env->name) != 0)
 	{
-		printf("ok\n");
 		tmp = env;
 		env = env->next;
 	}

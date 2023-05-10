@@ -25,7 +25,6 @@ t_env	*envp_to_list(char **envp)
 	{
 		if ((i = envadd_elem(env, find_name(*envp), find_value(*envp))) > 0)
 			return (free_env(env), printf("%d\n", i), NULL);
-		printf("%d\n", i);
 		envp++;
 	}
 	return (env);

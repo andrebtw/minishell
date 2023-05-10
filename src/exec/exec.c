@@ -18,7 +18,7 @@ int	check_cmd(t_env *env, t_cmd *cmd)
 {
 	if (find_builtin(cmd, env) != -1)
 		return (0);
-	else if (find_cmd(cmd, env) != -1)
+	else if (exec_cmd(cmd, env) != -1)
 		return (0);
 	return (-1);
 }

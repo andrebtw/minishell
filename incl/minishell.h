@@ -19,6 +19,8 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
@@ -125,8 +127,8 @@ void	malloc_err_exit(t_shell *shell);
 void	debug_print(t_shell *shell);
 
 /* EXECVE */
-int	check_cmd(t_env *env, t_cmd *cmd);
-int	find_cmd(t_cmd *cmd, t_env *env);
+int		check_cmd(t_env *env, t_cmd *cmd);
+int		exec_cmd(t_cmd *cmd, t_env *env);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);

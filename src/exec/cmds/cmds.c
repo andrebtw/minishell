@@ -13,11 +13,32 @@
 #include "../../../incl/minishell.h"
 
 char	**find_path(t_env *env);
+char	*find_cmd(t_cmd *cmd, t_env *env);
 
-int	find_cmd(t_cmd *cmd, t_env *env)
+int	exec_cmd(t_cmd *cmd, t_env *env)
+{
+	char	*cmd_path;
+	char	**env_str;
+	pid_t	pid;
+
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	else if (pid == 0)
+	{
+		cmd_path = find_cmd(cmd, env);
+		if (!cmd_path)
+			return (-1);
+		env_str = env_to_str(env);
+		execve(cmd_path, cmd->content, env_str);
+	}
+	waitpid(pid, NULL, 0);
+	return 0;
+}
+
+char	*find_cmd(t_cmd *cmd, t_env *env)
 {
 	char	**path;
-	char	**env_str;
 	char	*cmd_path;
 
 	path = find_path(env);
@@ -25,18 +46,14 @@ int	find_cmd(t_cmd *cmd, t_env *env)
 	{
 		cmd_path = ft_strjoin(*path, cmd->content[0]);
 		if (!cmd_path)
-			return (-1);
+			return (NULL);
 		if (access(cmd_path, F_OK | R_OK | X_OK) == 0)
-		{
-			env_str = env_to_str(env);
-			execve(*path, cmd->content, env_str);
-			return (-1);
-		}
+			return (cmd_path);
 		path++;
 	}
-	ft_putstr_fd("🛸~> command not found: ", STDERR_FILENO);
+	ft_putstr_fd("🛸~> ", STDERR_FILENO);
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
-	ft_putstr_fd("\n", STDERR_FILENO);
+	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (0);
 }
 
