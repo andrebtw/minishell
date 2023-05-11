@@ -1,0 +1,10 @@
+Makefile
+README.md
+cat
+d
+incl
+lib
+minishell
+out
+src
+valgrind_ignore_leaks.txt

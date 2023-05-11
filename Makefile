@@ -34,6 +34,7 @@ SRCS =	main.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \
 		parsing/errors/redirections.c \
+		parsing/errors/redirections2.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \
