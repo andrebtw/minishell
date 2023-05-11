@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/09 20:56:15 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/11 00:00:08 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/11 00:20:23 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,19 @@
 int	check_next_redirect(t_shell *shell, size_t i)
 {
 	if (shell->input[i] == '<')
+	{
+		i++;
+		if (shell->input[i] == '<')
+			return (ft_putstr_fd(REDIRECT_INPUT_ERR_MSG2, 2), TRUE);
 		return (ft_putstr_fd(REDIRECT_INPUT_ERR_MSG, 2), TRUE);
+	}
 	if (shell->input[i] == '>')
+	{
+		i++;
+		if (shell->input[i] == '>')
+			return (ft_putstr_fd(REDIRECT_OUTPUT_ERR_MSG2, 2), TRUE);
 		return (ft_putstr_fd(REDIRECT_OUTPUT_ERR_MSG, 2), TRUE);
+	}
 	return (FALSE);
 }
 
@@ -71,6 +81,8 @@ int	redirections_check(t_shell *shell, size_t i, int state)
 		state = quotes_state_error(shell, i, state);
 		if (state == NOT_INIT)
 		{
+			if (shell->input[i] == '<' && shell->input[i + 1] == '>')
+				return (ft_putstr_fd(REDIRECT_NOEND_ERR_MSG, 2), TRUE);
 			if (shell->input[i] == '>')
 			{
 				if (output_check(shell, i))
