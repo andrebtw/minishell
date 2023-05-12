@@ -17,6 +17,8 @@ int	same_word(char *cmd, char *string)
 	int	i;
 
 	i = 0;
+	if (!cmd[i])
+		return (FALSE);
 	while (cmd[i])
 	{
 		if (cmd[i] != string[i])

@@ -91,14 +91,12 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 	return (EXIT_SUCCESS);
 }
 
-void	end_found(t_shell *shell, size_t i, int state)
+void	end_found(t_shell *shell, size_t i)
 {
-	char	**content;
-
-	(void)i;
-	(void)state;
-	(void)content;
-	add_separator(shell);
+	if ((!shell->parsing.current_str[0]) ||
+			(shell->parsing.current_str[0] == '\1' &&
+			!shell->parsing.current_str[1]))
+		add_separator(shell);
 	shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
 	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
 	replace_empty_spaces(shell);
@@ -211,5 +209,5 @@ void	split_shell(t_shell *shell)
 		if (shell->input[i])
 			i++;
 	}
-	end_found(shell, i, state);
+	end_found(shell, i);
 }

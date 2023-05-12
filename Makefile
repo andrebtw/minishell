@@ -56,7 +56,7 @@ SRCS =	main.c \
 		exec/builtins/env/env_builtin.c \
 		debug_print.c \
 
-		
+
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
 DEPS = $(OBJS:.o=.d)
