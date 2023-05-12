@@ -30,6 +30,9 @@ SRCS =	main.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
+		parsing/cmd_split/split_shell_utils1.c \
+		parsing/cmd_split/split_shell_utils2.c \
+		parsing/cmd_split/empty_args.c \
 		parsing/errors/errors.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \
@@ -51,7 +54,6 @@ SRCS =	main.c \
 		exec/builtins/export/export.c \
 		exec/builtins/unset/unset.c \
 		exec/builtins/env/env_builtin.c \
-		parsing/cmd_split/split_shell_utils1.c \
 		debug_print.c \
 
 		
@@ -64,7 +66,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 DFLAGS = -MMD -MP
 

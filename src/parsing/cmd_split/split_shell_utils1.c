@@ -20,8 +20,7 @@
 #define REDIRECT_DOUBLE_QUOTE -20
 #define REDIRECT_END -21
 
-char	*
-malloc_int_code(t_shell *shell, char redirect)
+char	*malloc_int_code(t_shell *shell, char redirect)
 {
 	char	*new_str;
 

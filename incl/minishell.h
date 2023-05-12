@@ -29,6 +29,7 @@
 /* PROMPT */
 # define PROMPT "🛸~> "
 # define SEPARATOR '\1'
+# define EMPTY_SPACE '\2'
 
 /* BOOLEAN */
 # define TRUE 1
@@ -95,6 +96,7 @@ typedef struct s_parsing
 	char	**current_redirect_tab;
 	char	*current_redirect_str;
 	char	*current_in_out_code;
+	int		quote_end;
 }	t_parsing;
 
 typedef struct s_shell
@@ -131,6 +133,8 @@ void	split_shell(t_shell *shell);
 /* CMD SPLITTING */
 void	separators_split(t_shell *shell, size_t *i, int *state);
 void	end_found(t_shell *shell, size_t i, int state);
+void	empty_args(t_shell *shell, size_t *i, int state);
+void	replace_empty_spaces(t_shell *shell);
 
 /* ERROR CHECKING */
 # define DOUBLE_QUOTE -15

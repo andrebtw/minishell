@@ -35,9 +35,9 @@ int 	quotes_state_redirect(t_shell *shell, size_t i, int state)
 	if (shell->input[i] == '\"' && state == REDIRECT)
 		return (REDIRECT_DOUBLE_QUOTE);
 	if (shell->input[i] == '\'' && state == REDIRECT_SINGLE_QUOTE)
-		return (REDIRECT);
+		return (shell->parsing.quote_end = TRUE, REDIRECT);
 	if (shell->input[i] == '\"' && state == REDIRECT_DOUBLE_QUOTE)
-		return (REDIRECT);
+		return (shell->parsing.quote_end = TRUE, REDIRECT);
 	if (state == REDIRECT_DOUBLE_QUOTE || state == REDIRECT_SINGLE_QUOTE)
 		return (state);
 	return (REDIRECT);
@@ -56,12 +56,12 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 		return (SPACE_SEP);
 	}
 	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
-		return (NOT_INIT);
+		return (shell->parsing.quote_end = TRUE, NOT_INIT);
 	if ((shell->input[i] == '\'' && state == NOT_INIT) ||
 			(shell->input[i] == '\'' && state == SPACE_SEP))
 		return (SINGLE_QUOTE);
 	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
-		return (NOT_INIT);
+		return (shell->parsing.quote_end = TRUE, NOT_INIT);
 	if ((shell->input[i] == '\"' && state == NOT_INIT) || 
 			(shell->input[i] == '\"' && state == SPACE_SEP))
 		return (DOUBLE_QUOTE);
@@ -100,6 +100,7 @@ void	end_found(t_shell *shell, size_t i, int state)
 	(void)content;
 	shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
 	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
+	replace_empty_spaces(shell);
 	free(shell->parsing.current_str);
 	free(shell->parsing.current_redirect_str);
 	shell->parsing.current_str = NULL;
@@ -162,6 +163,13 @@ void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 					shell->parsing.current_redirect_str, shell->input[*i], 1);
 		return ;
 	}
+	if (*state == REDIRECT_DOUBLE_QUOTE)
+	{
+		if (shell->input[*i] != '\"')
+			shell->parsing.current_redirect_str = ft_strjoin_free_char(
+					shell->parsing.current_redirect_str, shell->input[*i], 1);
+		return ;
+	}
 }
 
 void	split_shell(t_shell *shell)
@@ -171,6 +179,7 @@ void	split_shell(t_shell *shell)
 
 	shell->parsing.current_in_out_code = NULL;
 	state = NOT_INIT;
+	shell->parsing.quote_end = FALSE;
 	i = 0;
 	shell->command = lstinit();
 	if (!shell->command)
@@ -186,6 +195,8 @@ void	split_shell(t_shell *shell)
 	}
 	while (shell->input[i])
 	{
+		empty_args(shell, &i, state);
+		shell->parsing.quote_end = FALSE;
 		if (state > REDIRECT)
 		{
 			state = quotes_state(shell, i, state);
@@ -196,7 +207,8 @@ void	split_shell(t_shell *shell)
 			state = quotes_state_redirect(shell, i, state);
 			add_to_char_redirect(shell, &i, &state);
 		}
-		i++;
+		if (shell->input[i])
+			i++;
 	}
 	end_found(shell, i, state);
 }
