@@ -98,6 +98,7 @@ void	end_found(t_shell *shell, size_t i, int state)
 	(void)i;
 	(void)state;
 	(void)content;
+	add_separator(shell);
 	shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
 	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
 	replace_empty_spaces(shell);
