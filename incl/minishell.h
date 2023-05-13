@@ -126,8 +126,8 @@ void	clean_exit(t_shell *shell);
 void	malloc_err_exit(t_shell *shell);
 void	debug_print(t_shell *shell);
 
-/* EXECVE */
-int		check_cmd(t_env *env, t_cmd *cmd);
+/* COMMANDS */
+int		cmd_nb(t_env *env, t_cmd *cmd);
 int		exec_cmd(t_cmd *cmd, t_env *env);
 
 /* BUILTINS */

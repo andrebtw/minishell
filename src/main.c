@@ -22,7 +22,7 @@ void	loop(t_shell *shell, t_env *env)
 		prompt(shell);
 		parsing(shell);
 		if (shell->command->content[0])
-			check_cmd(env, shell->command);
+			cmd_nb(env, shell->command);
 		//debug_print(shell);
 	}
 }

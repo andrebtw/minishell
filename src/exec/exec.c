@@ -6,20 +6,43 @@
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/06 18:55:19 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/05/14 01:03:11 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "minishell.h"
 
+int	check_cmd(t_env *env, t_cmd *cmd);
 int find_builtin(t_cmd *cmd, t_env *env);
+
+int	cmd_nb(t_env *env, t_cmd *cmd)
+{
+	int		count;
+	t_cmd	*tmp;
+
+	count = 0;
+	tmp = cmd;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	if (count > 1)
+	{
+		pipes(env, cmd, count);
+		waitpid(-1, NULL, 0);
+		return (0);
+	}
+	else
+		return (check_cmd(env, cmd));
+}
 
 int	check_cmd(t_env *env, t_cmd *cmd)
 {
 	if (find_builtin(cmd, env) != -1)
 		return (0);
 	else if (exec_cmd(cmd, env) != -1)
-		return (0);
+		return (waitpid(-1, NULL, 0), 0);
 	return (-1);
 }
 

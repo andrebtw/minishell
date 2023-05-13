@@ -10,12 +10,12 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incl/minishell.h"
+#include "minishell.h"
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);
 
-int	exec_cmd(t_cmd *cmd, t_env *env)
+int	exec_cmd(t_cmd *cmd, t_env *env, int index, int	*pipes_tab)
 {
 	char	*cmd_path;
 	char	**env_str;
@@ -24,16 +24,16 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
 	pid = fork();
 	if (pid < 0)
 		return (-1);
-	else if (pid == 0)
+	else if (!pid)
 	{
+		if (index >= 0)
+			pipes_dup();
 		cmd_path = find_cmd(cmd, env);
 		if (!cmd_path)
 			return (-1);
 		env_str = env_to_str(env);
 		execve(cmd_path, cmd->content, env_str);
 	}
-	waitpid(pid, NULL, 0);
-	return 0;
 }
 
 char	*find_cmd(t_cmd *cmd, t_env *env)
