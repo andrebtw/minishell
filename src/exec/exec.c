@@ -6,7 +6,7 @@
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/14 01:03:11 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:09:11 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ int	check_cmd(t_env *env, t_cmd *cmd)
 {
 	if (find_builtin(cmd, env) != -1)
 		return (0);
-	else if (exec_cmd(cmd, env) != -1)
+	else if (exec_cmd(cmd, env, NULL) != -1)
 		return (waitpid(-1, NULL, 0), 0);
 	return (-1);
 }

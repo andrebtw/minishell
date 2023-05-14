@@ -1,31 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child_bonus.c                                      :+:      :+:    :+:   */
+/*   pipes_dup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 18:08:48 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/14 01:23:21 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:29:17 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex_bonus.h"
-#include "libft.h"
+#include "minishell.h"
 
-static void	do_dup(int in, int out)
+static int	do_dup(int in, int out)
 {
 	if (dup2(in, 0) < 0 || dup2(out, 1) < 0)
-		error("Dup2");
+		return (-1);
+	return (0);
 }
 
-void	child(int index, int *pipes_tab)
+int	pipes_dup(t_pipe *pipe)
 {
-		if (index == 0)
-			do_dup(p.infile, p.pipe[1]);
-		else if (p.index == p.cmd_nb - 1)
-			do_dup(p.pipe[2 * p.index - 2], p.outfile);
+		if (pipe->index == 0)
+			dup2(pipe->pipes_tab[1], 1);
+		else if (pipe->index == pipe->cmd_nb - 1)
+			dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
 		else
-			do_dup(p.pipe[2 * p.index - 2], p.pipe[2 * p.index + 1]);
-		close_pipes(&p);
+			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
+		close_pipes(pipe);
+		return (0);
 }

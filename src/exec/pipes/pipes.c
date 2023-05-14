@@ -6,56 +6,54 @@
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/14 01:21:38 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:25:37 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 
-void	close_pipes(int *pipes_tab, int pipe_nb)
+void	close_pipes(t_pipe *pipe)
 {
 	int	i;
 
 	i = 0;
-	while (i < pipe_nb)
+	while (i < pipe->pipe_nb)
 	{
-		close(pipes_tab[i]);
+		close(pipe->pipes_tab[i]);
 		i++;
 	}
 }
 
-int	do_pipes(int *pipes_tab, int cmd_nb)
+int	do_pipes(t_pipe *p)
 {
 	int	i;
 
 	i = 0;
-	while (i < cmd_nb)
+	while (i < p->cmd_nb)
 	{
-		if (pipe(pipes_tab + 2 * i) < 0)
+		if (pipe(p->pipes_tab + 2 * i) < 0)
 			return (-1);
 		i++;
 	}
+	return (0);
 }
 
 int	pipes(t_env *env, t_cmd *cmd, int cmd_nb)
 {
-	int	*pipes_tab;
-	int	index;
+	t_pipe	pipe;
 
-	get_infile(av, &pipex);
-	get_outfile(av[ac - 1], &pipex);
-	pipes_tab = malloc(sizeof(int) * cmd_nb * 2);
-	if (!pipes_tab)
+	pipe.cmd_nb = cmd_nb;
+	pipe.pipe_nb = cmd_nb * 2;
+	pipe.pipes_tab = malloc(sizeof(int) * pipe.pipe_nb);
+	if (!pipe.pipes_tab)
 		return (-1);
-	if (do_pipes(pipes_tab, cmd_nb) < 0)
+	if (do_pipes(&pipe) < 0)
 		return (-1);
-	index = -1;
-	while (++index < cmd_nb)
-		child(env, cmd);
-	close_pipes(pipes_tab, cmd_nb * 2);
-	free(pipex.pipe);
-	ft_freesplit(pipex.cmd_path);
-	unlink(".here_doc"); 
+	pipe.index = -1;
+	while (++(pipe.index) < cmd_nb)
+		exec_cmd(cmd, env, &pipe);
+	close_pipes(&pipe);
+	free(pipe.pipes_tab);
 	return (0);
 }

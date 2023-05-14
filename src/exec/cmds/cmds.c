@@ -15,7 +15,7 @@
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);
 
-int	exec_cmd(t_cmd *cmd, t_env *env, int index, int	*pipes_tab)
+int	exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe)
 {
 	char	*cmd_path;
 	char	**env_str;
@@ -26,14 +26,15 @@ int	exec_cmd(t_cmd *cmd, t_env *env, int index, int	*pipes_tab)
 		return (-1);
 	else if (!pid)
 	{
-		if (index >= 0)
-			pipes_dup();
+		if (pipe)
+			pipes_dup(pipe);
 		cmd_path = find_cmd(cmd, env);
 		if (!cmd_path)
 			return (-1);
 		env_str = env_to_str(env);
 		execve(cmd_path, cmd->content, env_str);
 	}
+	return (0);
 }
 
 char	*find_cmd(t_cmd *cmd, t_env *env)

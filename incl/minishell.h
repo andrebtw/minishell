@@ -59,6 +59,16 @@
 # define IS_OUT -96
 # define IS_OUT_APPEND -97
 # define IS_HEREDOC -98
+
+/* PIPES */
+typedef struct s_pipe
+{
+	int	cmd_nb;
+	int	pipe_nb;
+	int	index;
+	int	*pipes_tab;
+}	t_pipe;
+
 /* ENVP */
 typedef struct s_env
 {
@@ -128,7 +138,13 @@ void	debug_print(t_shell *shell);
 
 /* COMMANDS */
 int		cmd_nb(t_env *env, t_cmd *cmd);
-int		exec_cmd(t_cmd *cmd, t_env *env);
+int		exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe);
+
+/* PIPES */
+int		pipes(t_env *env, t_cmd *cmd, int cmd_nb);
+int		pipes_dup(t_pipe *pipe);
+void	close_pipes(t_pipe *pipe);
+
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
