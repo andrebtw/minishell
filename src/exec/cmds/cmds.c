@@ -24,7 +24,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe)
 	pid = fork();
 	if (pid < 0)
 		return (-1);
-	else if (!pid)
+	else if (pid == 0)
 	{
 		if (pipe)
 			pipes_dup(pipe);
