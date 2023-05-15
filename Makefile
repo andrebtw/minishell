@@ -52,7 +52,7 @@ SRCS =	main.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		debug_print.c \
 
-		
+
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 
 DEPS = $(OBJS:.o=.d)

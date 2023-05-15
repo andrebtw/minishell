@@ -30,7 +30,6 @@ int	cmd_nb(t_env *env, t_cmd *cmd)
 	if (count > 1)
 	{
 		pipes(env, cmd, count);
-		waitpid(-1, NULL, 0);
 		return (0);
 	}
 	else
@@ -42,7 +41,7 @@ int	check_cmd(t_env *env, t_cmd *cmd)
 	if (find_builtin(cmd, env) != -1)
 		return (0);
 	else if (exec_cmd(cmd, env, NULL) != -1)
-		return (waitpid(-1, NULL, 0), 0);
+		return (0);
 	return (-1);
 }
 

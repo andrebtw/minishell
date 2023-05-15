@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-void	get_infile(char **av, t_pipex *pipex)
+/*void	get_infile(char **av, t_pipex *pipex)
 {
 	if (!pipex->here_doc)
 	{
@@ -32,4 +32,4 @@ void	get_outfile(char *file, t_pipex *pipex)
 		pipex->outfile = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (pipex->outfile < 0)
 		error(file);
-}
+}*/
