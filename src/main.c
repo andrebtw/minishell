@@ -22,7 +22,7 @@ void	loop(t_shell *shell, t_env *env)
 		parsing(shell);
 		if (shell->command->content[0])
 			cmd_nb(env, shell->command);
-		waitpid(1, NULL, 0);
+		waitpid(-1, NULL, 0);
 		//debug_print(shell);
 	}
 }

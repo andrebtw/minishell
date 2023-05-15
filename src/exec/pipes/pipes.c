@@ -51,9 +51,13 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb)
 	if (do_pipes(&pipe) < 0)
 		return (-1);
 	pipe.index = -1;
-	while (++(pipe.index) < cmd_nb)
+	while (++(pipe.index) < cmd_nb && cmd)
+	{
 		exec_cmd(cmd, env, &pipe);
+		cmd = cmd->next;
+	}
 	close_pipes(&pipe);
 	free(pipe.pipes_tab);
+	waitpid(-1, NULL, 0);
 	return (0);
 }

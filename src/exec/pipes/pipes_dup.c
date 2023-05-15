@@ -22,9 +22,9 @@ static int	do_dup(int in, int out)
 int	pipes_dup(t_pipe *pipe)
 {
 		if (pipe->index == 0)
-			do_dup(0, pipe->pipes_tab[1]);
+			dup2(pipe->pipes_tab[1], 1);
 		else if (pipe->index == pipe->cmd_nb - 1)
-			do_dup(pipe->pipes_tab[2 * pipe->index - 2], 1);
+			dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
 		else
 			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
 		close_pipes(pipe);
