@@ -27,7 +27,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe)
 	else if (pid == 0)
 	{
 		if (pipe)
-			pipes_dup(pipe);
+			pipes_dup(pipe, cmd);
 		cmd_path = find_cmd(cmd, env);
 		if (!cmd_path)
 			return (-1);
@@ -52,7 +52,6 @@ char	*find_cmd(t_cmd *cmd, t_env *env)
 			return (cmd_path);
 		path++;
 	}
-	ft_putstr_fd("🛸~> ", STDERR_FILENO);
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	return (0);

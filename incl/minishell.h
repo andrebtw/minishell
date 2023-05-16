@@ -24,6 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+#include <fcntl.h>
 
 /* HEADER FILES */
 # include "libft.h"
@@ -102,12 +103,12 @@ typedef struct s_shell
 	t_cmd		*command;
 	char		*input;
 	int			last_err_code;
+	t_env		*env;
 }	t_shell;
 
 /* LINKED LISTS */
 t_cmd		*lstcreate(char **content, char **in_out, char *in_out_code);
 void		lstadd_back(t_cmd **lst, t_cmd *new);
-void 		test(t_shell *shell, char **env);
 t_cmd		*lstinit(void);
 
 void	prompt(t_shell *shell);
@@ -137,14 +138,18 @@ void	malloc_err_exit(t_shell *shell);
 void	debug_print(t_shell *shell);
 
 /* COMMANDS */
-int		cmd_nb(t_env *env, t_cmd *cmd);
+int		cmd_nb(t_shell *shell);
 int		exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe);
 
 /* PIPES */
 int		pipes(t_env *env, t_cmd *cmd, int cmd_nb);
-int		pipes_dup(t_pipe *pipe);
+int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
 void	close_pipes(t_pipe *pipe);
 
+/* REDIRECTIONS */
+int	do_dup(int in, int out);
+int	get_infile(t_cmd *cmd);
+int	get_outfile(t_cmd *cmd);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);

@@ -12,21 +12,27 @@
 
 #include "minishell.h"
 
-static int	do_dup(int in, int out)
+int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 {
-	if (dup2(in, 0) < 0 || dup2(out, 1) < 0)
-		return (-1);
-	return (0);
-}
+	int fd;
 
-int	pipes_dup(t_pipe *pipe)
-{
-		if (pipe->index == 0)
-			dup2(pipe->pipes_tab[1], 1);
-		else if (pipe->index == pipe->cmd_nb - 1)
-			dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
-		else
-			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
-		close_pipes(pipe);
-		return (0);
+	if (pipe->index == 0)
+	{
+		fd = get_infile(cmd);
+		printf("pipe in = %d\n", fd);
+		if (fd < 0)
+			return (-1);
+		do_dup(fd, pipe->pipes_tab[1]);
+	}
+	else if (pipe->index == pipe->cmd_nb - 1)
+	{
+		fd = get_outfile(cmd);
+		if (fd < 0)
+			return (-1);
+		do_dup(pipe->pipes_tab[2 * pipe->index - 2], fd);
+	}
+	else
+		do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
+	close_pipes(pipe);
+	return (0);
 }

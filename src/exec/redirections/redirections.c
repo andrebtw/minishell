@@ -12,24 +12,71 @@
 
 #include "minishell.h"
 
-/*void	get_infile(char **av, t_pipex *pipex)
+int	get_infile(t_cmd *cmd)
 {
-	if (!pipex->here_doc)
+	int infile;
+	int fd_in;
+	int i;
+
+	infile = -1;
+	i = -1;
+	fd_in = STDIN_FILENO;
+	if (!cmd->in_out_code)
+		return (fd_in);
+	while (cmd->in_out_code[++i])
 	{
-		pipex->infile = open(av[1], O_RDONLY);
-		if (pipex->infile < 0)
-			error(av[1]);
+		if (cmd->in_out_code[i] == IS_IN)
+			infile = i;
 	}
-	else
-		here_doc(av[2], pipex);
+	if (infile >= 0)
+		fd_in = open(cmd->in_out[infile], O_RDONLY);
+	printf("in = %d\n", fd_in);
+	return (fd_in);
 }
 
-void	get_outfile(char *file, t_pipex *pipex)
+int	get_outfile(t_cmd *cmd)
 {
-	if (!pipex->here_doc)
-		pipex->outfile = open(file, O_CREAT | O_RDWR | O_TRUNC, 0644);
-	else
-		pipex->outfile = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (pipex->outfile < 0)
-		error(file);
-}*/
+	int outfile;
+	int	fd_out;
+	int tmp;
+	int append;
+	int i;
+
+	outfile = -1;
+	i = -1;
+	fd_out = STDOUT_FILENO;
+	if (!cmd->in_out_code)
+		return (fd_out);
+	while (cmd->in_out_code[++i])
+	{
+		if (cmd->in_out_code[i] == IS_OUT)
+		{
+			outfile = i;
+			append = 0;
+			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC, 0644);
+			close(tmp);
+		}
+		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
+		{
+			outfile = i;
+			append = 1;
+			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
+			close(tmp);
+		}
+	}
+	if (outfile > 0)
+	{
+		if (append)
+			fd_out = open(cmd->in_out[i], O_WRONLY | O_APPEND, 0644);
+		else
+			fd_out = open(cmd->in_out[i], O_WRONLY, 0644);
+	}
+	return(fd_out);
+}
+
+int	do_dup(int in, int out)
+{
+	if (dup2(in, 0) < 0 || dup2(out, 1) < 0)
+		return (-1);
+	return (0);
+}

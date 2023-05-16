@@ -15,13 +15,13 @@
 int	check_cmd(t_env *env, t_cmd *cmd);
 int find_builtin(t_cmd *cmd, t_env *env);
 
-int	cmd_nb(t_env *env, t_cmd *cmd)
+int	cmd_nb(t_shell *shell)
 {
 	int		count;
 	t_cmd	*tmp;
 
 	count = 0;
-	tmp = cmd;
+	tmp = shell->command;
 	while (tmp)
 	{
 		tmp = tmp->next;
@@ -29,11 +29,11 @@ int	cmd_nb(t_env *env, t_cmd *cmd)
 	}
 	if (count > 1)
 	{
-		pipes(env, cmd, count);
+		pipes(shell->env, shell->command, count);
 		return (0);
 	}
 	else
-		return (check_cmd(env, cmd));
+		return (check_cmd(shell->env, shell->command));
 }
 
 int	check_cmd(t_env *env, t_cmd *cmd)

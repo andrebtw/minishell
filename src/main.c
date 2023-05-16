@@ -14,15 +14,17 @@
 
 int	state;
 
-void	loop(t_shell *shell, t_env *env)
+void	loop(t_shell *shell)
 {
 	while (1)
 	{
 		prompt(shell);
 		parsing(shell);
 		if (shell->command->content[0])
-			cmd_nb(env, shell->command);
-		waitpid(-1, NULL, 0);
+		{
+			cmd_nb(shell);
+			waitpid(-1, NULL, 0);
+		}
 		//debug_print(shell);
 	}
 }
@@ -30,12 +32,11 @@ void	loop(t_shell *shell, t_env *env)
 void	init(char **envp)
 {
 	t_shell	shell;
-	t_env *env;
 
 	shell.last_err_code = NOT_INIT;
 	shell.input = NULL;
-	env = envp_to_list(envp);
-	loop(&shell, env);
+	shell.env = envp_to_list(envp);
+	loop(&shell);
 }
 
 int	main(int argc, char **argv, char **envp)
