@@ -53,6 +53,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb)
 	pipe.index = -1;
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
+		//find_builtin(cmd, env);
 		exec_cmd(cmd, env, &pipe);
 		cmd = cmd->next;
 	}

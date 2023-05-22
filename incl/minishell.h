@@ -82,6 +82,8 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int		type;
+	int 	fd_in;
+	int 	fd_out;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
@@ -150,6 +152,7 @@ void	close_pipes(t_pipe *pipe);
 int	do_dup(int in, int out);
 int	get_infile(t_cmd *cmd);
 int	get_outfile(t_cmd *cmd);
+int	check_redirections(t_cmd *cmd);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
@@ -160,6 +163,7 @@ int		export(t_env *env, char **args);
 int		unset(char **args, t_env *env);
 int		env_builtin(char **args, t_env *env);
 int		exit_builtin(char **args, t_env *env);
+int		find_builtin(t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int	ft_strcmp(char *str1, char *str2);
