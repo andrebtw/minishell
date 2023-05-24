@@ -16,7 +16,6 @@ int	check_redirections(t_cmd *cmd)
 {
 	cmd->fd_in = get_infile(cmd);
 	cmd->fd_out = get_outfile(cmd);
-	printf("OUT REDIR : %d\n", cmd->fd_out);
 	if (cmd->fd_in != STDIN_FILENO && cmd->fd_out != STDOUT_FILENO)
 		return (do_dup(cmd->fd_in, cmd->fd_out));
 	else if (cmd->fd_in != STDIN_FILENO)
@@ -42,11 +41,8 @@ int	get_infile(t_cmd *cmd)
 		if (cmd->in_out_code[i] == IS_IN)
 			infile = i;
 	}
-	if (infile >= 0) {
-		printf("INFILE : %s\n", cmd->in_out[infile]);
+	if (infile >= 0)
 		fd_in = open(cmd->in_out[infile], O_RDONLY);
-	}
-	printf("in = %d\n", fd_in);
 	return (fd_in);
 }
 
@@ -80,7 +76,6 @@ int	get_outfile(t_cmd *cmd)
 			close(tmp);
 		}
 	}
-	printf("OUTFILE : %d\n", outfile);
 	if (outfile >= 0)
 	{
 		if (append == 1)
@@ -88,7 +83,6 @@ int	get_outfile(t_cmd *cmd)
 		else
 			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
 	}
-	printf("out = %d\n", fd_out);
 	return(fd_out);
 }
 

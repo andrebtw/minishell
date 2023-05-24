@@ -19,7 +19,6 @@ int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 	if (pipe->index == 0)
 	{
 		fd = get_infile(cmd);
-		printf("pipe in = %d\n", fd);
 		if (fd < 0)
 			return (-1);
 		if (fd != STDIN_FILENO)

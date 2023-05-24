@@ -20,7 +20,7 @@ void	loop(t_shell *shell)
 	{
 		prompt(shell);
 		parsing(shell);
-		if (shell->command->content[0])
+		if (shell->command->content[0] || shell->command->in_out)
 		{
 			cmd_nb(shell);
 			waitpid(-1, NULL, 0);

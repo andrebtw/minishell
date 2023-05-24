@@ -50,6 +50,8 @@ int	cmd_nb(t_shell *shell)
 int	check_cmd(t_env *env, t_cmd *cmd)
 {
 	check_redirections(cmd);
+	if (!cmd->content[0])
+		return (0);
 	if (find_builtin(cmd, env) != -1)
 		return (0);
 	else if (exec_cmd(cmd, env, NULL) != -1)
