@@ -112,7 +112,10 @@ void	end_found(t_shell *shell, size_t i)
 
 void	add_to_char(t_shell *shell, size_t *i, int *state)
 {
-	if (*state == NOT_INIT && !ft_strchr(" \t<>|$\'\"", shell->input[*i]))
+	env_gestion(shell, i, state);
+	if (!shell->input[*i])
+		return ;
+	if (*state == NOT_INIT && !ft_strchr(" \t<>|\'\"", shell->input[*i]))
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
 				shell->parsing.current_str, shell->input[*i], 1);
@@ -148,7 +151,7 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 
 void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 {
-	if (*state == REDIRECT && !ft_strchr("<>|$\'\"", shell->input[*i]))
+	if (*state == REDIRECT && !ft_strchr("<>|\'\"", shell->input[*i]))
 	{
 		shell->parsing.current_redirect_str = ft_strjoin_free_char(
 				shell->parsing.current_redirect_str, shell->input[*i], 1);

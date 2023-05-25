@@ -33,11 +33,14 @@ SRCS =	main.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
 		parsing/cmd_split/empty_args.c \
+		parsing/cmd_split/env_gestion.c \
+		parsing/cmd_split/env_gestion2.c \
 		parsing/errors/errors.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \
 		parsing/errors/redirections.c \
 		parsing/errors/redirections2.c \
+		parsing/cmd_free/cmd_free.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \

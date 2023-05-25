@@ -15,9 +15,8 @@
 
 int	state;
 
-void	loop(t_shell *shell, char **env)
+void	loop(t_shell *shell)
 {
-	(void)env;
 	while (1)
 	{
 		prompt(shell);
@@ -25,25 +24,27 @@ void	loop(t_shell *shell, char **env)
 		{
 			parsing(shell);
 			debug_print(shell);
+			/* EXEC FUNCTION HERE */
+			cmd_free(shell);
 		}
 		// malloc_err_exit(shell);
 	}
 }
 
-void	init(char **env)
+void	init(char **envp)
 {
 	t_shell	shell;
 
 	shell.last_err_code = NOT_INIT;
 	shell.input = NULL;
-	loop(&shell, env);
+	shell.env = envp_to_list(envp);
+	loop(&shell);
 }
 
-int	main(int argc, char **argv, char **env)
+int	main(int argc, char **argv, char **envp)
 {
 	(void)argc;
 	(void)argv;
-	(void)env;
-	init(env);
+	init(envp);
 	return (EXIT_SUCCESS);
 }

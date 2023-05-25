@@ -1,27 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   free_env.c                                         :+:      :+:    :+:   */
+/*   cmd_free.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/12 12:25:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/25 11:37:10 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/05/12 16:49:29 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/05/12 17:09:47 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
 
-void free_env(t_env *env)
+void	free_cmd(t_cmd **cmd)
 {
-        t_env   *tmp;
+	t_cmd	*tmp;
 
-        while (env)
-        {
-            tmp = env->next;
-            free(env->name);
-            free(env->value);
-            free(env);
-            env = tmp;
-        }
+	tmp = *cmd;
+	free(*cmd);
+	while (tmp->next)
+	{
+		// free(tmp->in_out_code);
+		// ft_free_tab(tmp->content);
+		// ft_free_tab(tmp->in_out);
+		// free(tmp);
+		tmp = tmp->next;
+	}
+}
+
+void	cmd_free(t_shell *shell)
+{
+	(void)shell;
 }

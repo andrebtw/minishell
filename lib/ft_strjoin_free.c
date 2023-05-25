@@ -15,9 +15,15 @@
 static void	free_strs(char const *s1, char const *s2, int free_s1, int free_s2)
 {
 	if (free_s1 == 1)
+	{
 		free((char *)s1);
+		s1 = NULL;
+	}
 	if (free_s2 == 1)
+	{
 		free((char *)s2);
+		s2 = NULL;
+	}
 }
 
 static	int	ft_strlen_int(const char *s)
@@ -41,7 +47,7 @@ char	*ft_strjoin_free(char const *s1, char const *s2,
 	j = 0;
 	r_string = (char *) malloc (ft_strlen_int(s1) + ft_strlen_int(s2) + 1);
 	if (r_string == NULL)
-		return (NULL);
+		return (free_strs(s1, s2, free_s1, free_s2), NULL);
 	while (s1[i] != '\0')
 	{
 		r_string[j] = s1[i];
