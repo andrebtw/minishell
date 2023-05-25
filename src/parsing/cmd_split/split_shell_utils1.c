@@ -6,19 +6,11 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/12 16:14:58 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:45:26 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
-
-#define DOUBLE_QUOTE -15
-#define SINGLE_QUOTE -16
-#define SPACE_SEP -17
-#define REDIRECT -18
-#define REDIRECT_SINGLE_QUOTE -19
-#define REDIRECT_DOUBLE_QUOTE -20
-#define REDIRECT_END -21
 
 char	*malloc_int_code(t_shell *shell, char redirect)
 {

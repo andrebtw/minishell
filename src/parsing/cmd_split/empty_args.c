@@ -6,19 +6,11 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:27:37 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/11 19:27:37 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:45:45 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
-
-#define DOUBLE_QUOTE -15
-#define SINGLE_QUOTE -16
-#define SPACE_SEP -17
-#define REDIRECT -18
-#define REDIRECT_SINGLE_QUOTE -19
-#define REDIRECT_DOUBLE_QUOTE -20
-#define REDIRECT_END -21
 
 void	add_separator(t_shell *shell)
 {

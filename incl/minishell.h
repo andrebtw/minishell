@@ -141,10 +141,14 @@ void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
 void		find_env(t_shell *shell, size_t *i, int *state, char *env_name);
 
-
-/* ERROR CHECKING */
+/* QUOTE STATE */
 # define DOUBLE_QUOTE -15
 # define SINGLE_QUOTE -16
+# define SPACE_SEP -17
+# define REDIRECT -18
+# define REDIRECT_SINGLE_QUOTE -19
+# define REDIRECT_DOUBLE_QUOTE -20
+# define REDIRECT_END -21
 
 int			errors(t_shell *shell);
 int			pipe_check(t_shell *shell, size_t i, int state);

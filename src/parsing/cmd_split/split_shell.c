@@ -12,63 +12,8 @@
 
 #include "../../../incl/minishell.h"
 
-#define DOUBLE_QUOTE -15
-#define SINGLE_QUOTE -16
-#define SPACE_SEP -17
-#define REDIRECT -18
-#define REDIRECT_SINGLE_QUOTE -19
-#define REDIRECT_DOUBLE_QUOTE -20
-#define REDIRECT_END -21
-
-int 	quotes_state_redirect(t_shell *shell, size_t i, int state)
-{
-	if (state == REDIRECT && ft_strchr(" \t<>|", shell->input[i]))
-	{
-		shell->parsing.current_redirect_str = ft_strjoin_free_char(
-				shell->parsing.current_redirect_str, SEPARATOR, 1);
-		if (!shell->parsing.current_redirect_str)
-			malloc_err_exit(shell);
-		return (NOT_INIT);
-	}
-	if (shell->input[i] == '\'' && state == REDIRECT)
-		return (REDIRECT_SINGLE_QUOTE);
-	if (shell->input[i] == '\"' && state == REDIRECT)
-		return (REDIRECT_DOUBLE_QUOTE);
-	if (shell->input[i] == '\'' && state == REDIRECT_SINGLE_QUOTE)
-		return (shell->parsing.quote_end = TRUE, REDIRECT);
-	if (shell->input[i] == '\"' && state == REDIRECT_DOUBLE_QUOTE)
-		return (shell->parsing.quote_end = TRUE, REDIRECT);
-	if (state == REDIRECT_DOUBLE_QUOTE || state == REDIRECT_SINGLE_QUOTE)
-		return (state);
-	return (REDIRECT);
-}
-
-int 	quotes_state(t_shell *shell, size_t i, int state)
-{
-	if (state == SPACE_SEP && ft_strchr(" \t", shell->input[i]))
-		return (SPACE_SEP);
-	if (state == NOT_INIT && ft_strchr(" \t", shell->input[i]))
-	{
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, SEPARATOR, 1);
-		if (!shell->parsing.current_str)
-			malloc_err_exit(shell);
-		return (SPACE_SEP);
-	}
-	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
-		return (shell->parsing.quote_end = TRUE, NOT_INIT);
-	if ((shell->input[i] == '\'' && state == NOT_INIT) ||
-			(shell->input[i] == '\'' && state == SPACE_SEP))
-		return (SINGLE_QUOTE);
-	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
-		return (shell->parsing.quote_end = TRUE, NOT_INIT);
-	if ((shell->input[i] == '\"' && state == NOT_INIT) || 
-			(shell->input[i] == '\"' && state == SPACE_SEP))
-		return (DOUBLE_QUOTE);
-	if (state == DOUBLE_QUOTE || state == SINGLE_QUOTE)
-		return (state);
-	return (NOT_INIT);
-}
+int	quotes_state_redirect(t_shell *shell, size_t i, int state);
+int	quotes_state(t_shell *shell, size_t i, int state);
 
 int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 {

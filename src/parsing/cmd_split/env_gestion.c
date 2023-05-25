@@ -6,19 +6,11 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/18 16:33:32 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:45:41 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
-
-#define DOUBLE_QUOTE -15
-#define SINGLE_QUOTE -16
-#define SPACE_SEP -17
-#define REDIRECT -18
-#define REDIRECT_SINGLE_QUOTE -19
-#define REDIRECT_DOUBLE_QUOTE -20
-#define REDIRECT_END -21
 
 int	write_dollar(t_shell *shell, size_t *i, int *state)
 {

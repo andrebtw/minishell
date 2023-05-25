@@ -6,24 +6,16 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/18 17:29:30 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/25 11:52:38 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
 
-#define DOUBLE_QUOTE -15
-#define SINGLE_QUOTE -16
-#define SPACE_SEP -17
-#define REDIRECT -18
-#define REDIRECT_SINGLE_QUOTE -19
-#define REDIRECT_DOUBLE_QUOTE -20
-#define REDIRECT_END -21
-
 void	split_space_env(t_shell *shell, size_t *i, int *state)
 {
 	(void)state;
-	if (shell->input[*i] || ft_strchr(" \t", shell->input[*i + 1]))
+	if (shell->input[*i] && ft_strchr(" \t", shell->input[*i + 1]))
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, SEPARATOR, 1);
 		if (!shell->parsing.current_str)

@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
+		parsing/cmd_split/split_shell_state.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
 		parsing/cmd_split/empty_args.c \
