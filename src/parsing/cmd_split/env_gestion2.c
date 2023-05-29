@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/25 11:52:38 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/29 15:06:22 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,20 @@
 
 void	split_space_env(t_shell *shell, size_t *i, int *state)
 {
-	(void)state;
 	if (shell->input[*i] && ft_strchr(" \t", shell->input[*i + 1]))
 	{
-		shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, SEPARATOR, 1);
-		if (!shell->parsing.current_str)
-			malloc_err_exit(shell);
+		if (*state >= SPACE_SEP)
+		{
+			shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, SEPARATOR, 1);
+			if (!shell->parsing.current_str)
+				malloc_err_exit(shell);
+		}
+		else
+		{
+			shell->parsing.current_redirect_str = ft_strjoin_free_char(shell->parsing.current_redirect_str, SEPARATOR, 1);
+			if (!shell->parsing.current_redirect_str)
+				malloc_err_exit(shell);
+		}
 	}
 }
 
@@ -67,6 +75,9 @@ void	find_env(t_shell *shell, size_t *i, int *state, char *env_name)
 	if (!env_value)
 		return ;
 	free(env_name);
+	env_value = env_spaces(env_value);
+	if (!env_value)
+		malloc_err_exit(shell);
 	shell->parsing.current_str = ft_strjoin_free(shell->parsing.current_str, env_value, 1, 1);
 	if (!shell->parsing.current_str)
 		malloc_err_exit(shell);

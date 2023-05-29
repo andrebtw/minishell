@@ -150,6 +150,10 @@ void		find_env(t_shell *shell, size_t *i, int *state, char *env_name);
 # define REDIRECT_DOUBLE_QUOTE -20
 # define REDIRECT_END -21
 
+/* ENV DETECTION */
+char	*env_spaces(char *env);
+
+/* ERROR CHECK */
 int			errors(t_shell *shell);
 int			pipe_check(t_shell *shell, size_t i, int state);
 int			quotes_state_error(t_shell *shell, size_t i, int state);
