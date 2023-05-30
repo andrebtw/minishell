@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/29 15:14:25 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:50:41 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 void	split_space_env(t_shell *shell, size_t *i, int *state)
 {
-	if (shell->input[*i] && ft_strchr(" \t", shell->input[*i + 1]))
+	if (shell->input[*i] && ft_strchr(" \t", shell->input[*i]))
 	{
-		if (*state >= SPACE_SEP)
+		if (*state == NOT_INIT)
 		{
 			shell->parsing.current_str = ft_strjoin_free_char(shell->parsing.current_str, SEPARATOR, 1);
 			if (!shell->parsing.current_str)
 				malloc_err_exit(shell);
 		}
-		else
+		else if (*state == REDIRECT)
 		{
 			shell->parsing.current_redirect_str = ft_strjoin_free_char(shell->parsing.current_redirect_str, SEPARATOR, 1);
 			if (!shell->parsing.current_redirect_str)

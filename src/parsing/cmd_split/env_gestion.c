@@ -6,11 +6,14 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/29 14:25:04 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/30 17:48:59 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
+
+int	quotes_state_redirect(t_shell *shell, size_t i, int state);
+int	quotes_state(t_shell *shell, size_t i, int state);
 
 int	write_dollar(t_shell *shell, size_t *i, int *state)
 {
@@ -52,6 +55,14 @@ int	check_bad_char(t_shell *shell, size_t *i, int *state)
 	return (FALSE);
 }
 
+void	put_state(t_shell *shell, size_t *i, int *state)
+{
+	if (*state >= SPACE_SEP)
+		*state = quotes_state(shell, *i, *state);
+	else
+		*state = quotes_state_redirect(shell, *i, *state);
+}
+
 int	skip_special(t_shell *shell, size_t *i, int *state)
 {
 	if (!(shell->input[*i] == '$'))
@@ -70,7 +81,9 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	char	*env_name;
 
 	if (skip_special(shell, i, state))
+	{
 		return ;
+	}
 	*i = *i + 1;
 	env_name = ft_strdup("");
 	if (!env_name)
@@ -85,4 +98,7 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	}
 	find_env(shell, i, state, env_name);
 	split_space_env(shell, i, state);
+	if (shell->input[*i] == '$')
+		env_gestion(shell, i, state);
+	put_state(shell, i, state);
 }
