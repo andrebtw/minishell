@@ -143,7 +143,7 @@ void	split_shell(t_shell *shell)
 	}
 	while (shell->input[i])
 	{
-		// empty_args(shell, &i, state);
+		empty_args(shell, &i, state);
 		shell->parsing.quote_end = FALSE;
 		if (state > REDIRECT)
 		{

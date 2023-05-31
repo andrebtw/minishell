@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug_print.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: codespace <codespace@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/04/30 20:25:11 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/31 06:19:35 by codespace        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	print_list(t_cmd *lst)
 		i = 0;
 		ft_printf("\n------------\n");
 		ft_printf("| CONTENT : ");
-		if (!lst->content[i])
+		if (!lst->content)
 		{
 			ft_printf("EMPTY");
 		}
