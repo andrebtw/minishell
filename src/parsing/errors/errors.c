@@ -53,6 +53,5 @@ int	errors(t_shell *shell)
 		return (TRUE);
 	if (redirections_check(shell, i, state))
 		return (TRUE);
-	// TODO: redirection errors
 	return (FALSE);
 }

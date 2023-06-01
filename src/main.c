@@ -13,7 +13,7 @@
 #include "../incl/minishell.h"
 #include "../lib/libft.h"
 
-int	state;
+int	g_state;
 
 void	loop(t_shell *shell)
 {
@@ -35,9 +35,11 @@ void	init(char **envp)
 {
 	t_shell	shell;
 
+	g_state = BEFORE_PROMPT;
 	shell.last_err_code = NOT_INIT;
 	shell.input = NULL;
 	shell.env = envp_to_list(envp);
+	signal_init(&shell);
 	loop(&shell);
 }
 

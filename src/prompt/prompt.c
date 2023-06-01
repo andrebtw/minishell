@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	g_state;
 
 char	*join_code(t_shell *shell, char *r_prompt, char *err_code)
 {
@@ -48,14 +49,32 @@ char	*create_prompt(t_shell *shell)
 	return (r_prompt);
 }
 
+void	empty_prompt(t_shell *shell)
+{
+	if (g_state != CTRL_C)
+	{
+		ft_putstr_fd("exit\n", 1);
+		clean_exit(shell);
+	}
+	else
+	{
+		ft_putchar_fd('\n', 1);
+		prompt(shell);
+	}
+}
+
 void	prompt(t_shell *shell)
 {
 	char	*prompt;
 
 	prompt = create_prompt(shell);
+	rl_getc_function = getc;
 	if (shell->input)
 		free(shell->input);
+	g_state = IN_PROMPT;
 	shell->input = readline(prompt);
+	if (!shell->input)
+		empty_prompt(shell);
 	add_history(shell->input);
 	free(prompt);
 }

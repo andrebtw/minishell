@@ -43,6 +43,8 @@ SRCS =	main.c \
 		parsing/errors/redirections.c \
 		parsing/errors/redirections2.c \
 		parsing/cmd_free/cmd_free.c \
+		signals/signals.c \
+		signals/signal_handler.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \

@@ -114,7 +114,17 @@ void		lstadd_back(t_cmd **lst, t_cmd *new);
 void 		test(t_shell *shell, char **env);
 t_cmd		*lstinit(void);
 
+/* PROMPT */
 void		prompt(t_shell *shell);
+
+/* SIGNALS */
+# define BEFORE_PROMPT 6555
+# define IN_PARSING 6556
+# define IN_PROMPT 6559
+# define EXECUTION 6557
+# define CTRL_C 6558
+
+int		signal_init(t_shell *shell);
 
 /* ENVP */
 char		*find_name(char *envp);
