@@ -54,27 +54,27 @@ int	check_cmd(t_env *env, t_cmd *cmd)
 		return (0);
 	if (find_builtin(cmd, env) != -1)
 		return (0);
-	else if (exec_cmd(cmd, env, NULL) != -1)
+	else if (exec_cmd(cmd, env) != -1)
 		return (0);
 	return (-1);
 }
 
 int find_builtin(t_cmd *cmd, t_env *env)
 {
-	if (ft_strcmp(cmd->content[0], "echo") == 0)
-		return (echo(cmd->content));
-	else if (ft_strcmp(cmd->content[0], "cd") == 0)
-		return (cd(env, cmd->content));
-	else if (ft_strcmp(cmd->content[0], "pwd") == 0)
-		return (pwd());
-	else if (ft_strcmp(cmd->content[0], "export") == 0)
-		return (export(env, cmd->content));
-	else if (ft_strcmp(cmd->content[0], "unset") == 0)
-		return (unset(cmd->content, env));
-	else if (ft_strcmp(cmd->content[0], "env") == 0)
-		return (env_builtin(cmd->content, env));
-	else if (ft_strcmp(cmd->content[0], "exit") == 0)
-		return (exit_builtin(cmd->content, env));
-	else
-		return (-1);
+        if (ft_strcmp(cmd->content[0], "echo") == 0)
+            return (echo(cmd->content));
+        else if (ft_strcmp(cmd->content[0], "cd") == 0)
+            return (cd(env, cmd->content));
+        else if (ft_strcmp(cmd->content[0], "pwd") == 0)
+            return (pwd());
+        else if (ft_strcmp(cmd->content[0], "export") == 0)
+            return (export(env, cmd->content));
+        else if (ft_strcmp(cmd->content[0], "unset") == 0)
+            return (unset(cmd->content, env));
+        else if (ft_strcmp(cmd->content[0], "env") == 0)
+            return (env_builtin(cmd->content, env));
+        else if (ft_strcmp(cmd->content[0], "exit") == 0)
+            return (exit_builtin(cmd->content, env));
+        else
+            return (-1);
 }

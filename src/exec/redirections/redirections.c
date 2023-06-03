@@ -14,14 +14,16 @@
 
 int	check_redirections(t_cmd *cmd)
 {
+    cmd->fd_stdin = STDIN_FILENO;
+    cmd->fd_stdout = STDOUT_FILENO;
 	cmd->fd_in = get_infile(cmd);
 	cmd->fd_out = get_outfile(cmd);
-	if (cmd->fd_in != STDIN_FILENO && cmd->fd_out != STDOUT_FILENO)
+	if (cmd->fd_in != cmd->fd_stdin && cmd->fd_out != cmd->fd_stdout)
 		return (do_dup(cmd->fd_in, cmd->fd_out));
-	else if (cmd->fd_in != STDIN_FILENO)
-		return (dup2(cmd->fd_in, STDIN_FILENO));
-	else if (cmd->fd_out != STDOUT_FILENO)
-		return (dup2(cmd->fd_out, STDOUT_FILENO));
+	else if (cmd->fd_in != cmd->fd_stdin)
+		return (dup2(cmd->fd_in, STDIN_FILENO), close(cmd->fd_in));
+	else if (cmd->fd_out != cmd->fd_stdout)
+		return (dup2(cmd->fd_out, STDOUT_FILENO), close(cmd->fd_out));
 	return (0);
 }
 
@@ -90,5 +92,22 @@ int	do_dup(int in, int out)
 {
 	if (dup2(in, STDIN_FILENO) < 0 || dup2(out, STDOUT_FILENO) < 0)
 		return (-1);
+    close(in);
+    close(out);
 	return (0);
+}
+
+int reset_fd(t_cmd *cmd)
+{
+    if (STDIN_FILENO != cmd->fd_stdin)
+    {
+        dup2(cmd->fd_stdin, STDIN_FILENO);
+        close(cmd->fd_stdin);
+    }
+    if (STDOUT_FILENO != cmd->fd_stdout)
+    {
+        dup2(cmd->fd_stdout, STDOUT_FILENO);
+        close(cmd->fd_stdout);
+    }
+    return (0);
 }

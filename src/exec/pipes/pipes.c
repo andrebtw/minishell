@@ -42,8 +42,9 @@ int	do_pipes(t_pipe *p)
 int	pipes(t_env *env, t_cmd *cmd, int cmd_nb)
 {
 	t_pipe	pipe;
+    pid_t   pid;
 
-	pipe.cmd_nb = cmd_nb;
+    pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
 	pipe.pipes_tab = malloc(sizeof(int) * pipe.pipe_nb);
 	if (!pipe.pipes_tab)
@@ -53,13 +54,22 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb)
 	pipe.index = -1;
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
-		if (find_builtin(cmd, env) < 0)
-			exec_cmd(cmd, env, &pipe);
+        pid = fork();
+        if (pid == -1)
+            return (-1);
+        else if (pid == 0)
+        {
+            pipes_dup(&pipe, cmd);
+            ft_putstr_fd_p("HERE\n", cmd->fd_stdout);
+            if (find_builtin(cmd, env) < 0)
+                exec_cmd(cmd, env);
+            exit(0);
+        }
+        waitpid(pid, NULL, 0);
 		cmd = cmd->next;
 	}
 	close_pipes(&pipe);
+    reset_fd(cmd);
 	free(pipe.pipes_tab);
-	while (--cmd_nb >= 0)
-		waitpid(-1, NULL, 0);
 	return (0);
 }

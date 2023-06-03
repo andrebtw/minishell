@@ -24,7 +24,10 @@ int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 		if (fd != STDIN_FILENO)
 			do_dup(fd, pipe->pipes_tab[1]);
 		else
-			dup2(pipe->pipes_tab[1], 1);
+        {
+            dup2(pipe->pipes_tab[1], 1);
+            close(pipe->pipes_tab[1]);
+        }
 	}
 	else if (pipe->index == pipe->cmd_nb - 1)
 	{
@@ -34,10 +37,12 @@ int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 		if (fd != STDOUT_FILENO)
 			do_dup(pipe->pipes_tab[2 * pipe->index - 2], fd);
 		else
-			dup2(pipe->pipes_tab[2 * pipe->index -2], 0);
+        {
+            dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
+            close(pipe->pipes_tab[2 * pipe->index - 2]);
+        }
 	}
 	else
 		do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
-	close_pipes(pipe);
 	return (0);
 }

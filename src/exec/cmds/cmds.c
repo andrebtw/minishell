@@ -15,25 +15,22 @@
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);
 
-int	exec_cmd(t_cmd *cmd, t_env *env, t_pipe *pipe)
+int	exec_cmd(t_cmd *cmd, t_env *env)
 {
 	char	*cmd_path;
 	char	**env_str;
-	pid_t	pid;
+    pid_t   pid;
 
-	pid = fork();
-	if (pid < 0)
-		return (-1);
-	else if (pid == 0)
-	{
-		if (pipe)
-			pipes_dup(pipe, cmd);
-		cmd_path = find_cmd(cmd, env);
-		if (!cmd_path)
-			return (-1);
-		env_str = env_to_str(env);
-		execve(cmd_path, cmd->content, env_str);
-	}
+    cmd_path = find_cmd(cmd, env);
+    if (!cmd_path)
+        return (-1);
+    env_str = env_to_str(env);
+    pid = fork();
+    if (pid < 0)
+        return (-1);
+    else if (pid == 0)
+        execve(cmd_path, cmd->content, env_str);
+    waitpid(pid, NULL, 0);
 	return (0);
 }
 
