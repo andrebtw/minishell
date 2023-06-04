@@ -51,6 +51,8 @@ char	*create_prompt(t_shell *shell)
 
 void	empty_prompt(t_shell *shell)
 {
+	if (g_state == CTRL_SLASH)
+		return ;
 	if (g_state != CTRL_C)
 	{
 		ft_putstr_fd("exit\n", 1);
@@ -72,6 +74,7 @@ void	prompt(t_shell *shell)
 	if (shell->input)
 		free(shell->input);
 	g_state = IN_PROMPT;
+	signal(SIGQUIT, SIG_IGN);
 	shell->input = readline(prompt);
 	if (!shell->input)
 		empty_prompt(shell);

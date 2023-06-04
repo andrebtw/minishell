@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 20:05:01 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/15 06:52:57 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/04 16:43:10 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 void	replace_current_tab(t_shell *shell, size_t j, size_t i)
 {
+	if (!shell->parsing.current_tab)
+		return ;
 	while (shell->parsing.current_tab[i])
 	{
 		j = 0;
@@ -29,6 +31,8 @@ void	replace_current_tab(t_shell *shell, size_t j, size_t i)
 
 void	replace_current_redirect_tab(t_shell *shell, size_t j, size_t i)
 {
+	if (!shell->parsing.current_redirect_tab)
+		return ;
 	while (shell->parsing.current_redirect_tab[i])
 	{
 		j = 0;

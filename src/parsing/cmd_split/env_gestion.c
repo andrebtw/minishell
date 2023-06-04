@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/30 17:48:59 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/04 16:31:18 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,15 +21,15 @@ int	write_dollar(t_shell *shell, size_t *i, int *state)
 	{
 		if (*state >= SPACE_SEP)
 		{
-			shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, SEPARATOR, 1);
+			shell->parsing.current_str = ft_strjoin_free_char(\
+			shell->parsing.current_str, SEPARATOR, 1);
 			if (!shell->parsing.current_str)
 				malloc_err_exit(shell);
 		}
 		if (*state <= REDIRECT)
 		{
-			shell->parsing.current_redirect_str = ft_strjoin_free_char(
-					shell->parsing.current_redirect_str, SEPARATOR, 1);
+			shell->parsing.current_redirect_str = ft_strjoin_free_char(\
+			shell->parsing.current_redirect_str, SEPARATOR, 1);
 			if (!shell->parsing.current_redirect_str)
 				malloc_err_exit(shell);
 		}
@@ -39,9 +39,8 @@ int	write_dollar(t_shell *shell, size_t *i, int *state)
 	return (FALSE);
 }
 
-int	check_bad_char(t_shell *shell, size_t *i, int *state)
+int	check_bad_char(t_shell *shell, size_t *i)
 {
-	(void)state;
 	if (ft_isdigit(shell->input[*i + 1]) || !(shell->input[*i + 1] == '_'))
 	{
 		if (!ft_isalpha(shell->input[*i + 1]) || !(shell->input[*i + 1] == '_'))
@@ -71,7 +70,7 @@ int	skip_special(t_shell *shell, size_t *i, int *state)
 		return (TRUE);
 	if (write_dollar(shell, i, state))
 		return (TRUE);
-	if (check_bad_char(shell, i, state))
+	if (check_bad_char(shell, i))
 		return (TRUE);
 	return (FALSE);
 }
@@ -80,10 +79,9 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 {
 	char	*env_name;
 
+	shell->parsing.is_empty_env = FALSE;
 	if (skip_special(shell, i, state))
-	{
 		return ;
-	}
 	*i = *i + 1;
 	env_name = ft_strdup("");
 	if (!env_name)
@@ -96,7 +94,9 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 			malloc_err_exit(shell);
 		*i = *i + 1;
 	}
-	find_env(shell, i, state, env_name);
+	if (!(find_env(shell, state, env_name)))
+		if (empty_env_errors(shell, i, state))
+			return ;
 	split_space_env(shell, i, state);
 	if (shell->input[*i] == '$')
 		env_gestion(shell, i, state);

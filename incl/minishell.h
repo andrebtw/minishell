@@ -47,7 +47,7 @@
 # define ERR_MALLOC -2
 
 /* ERROR MSG */
-# define ERR_MALLOC_MSG "Memory allocation has failed: \x1B[0m\n\x1B[33mPlease make sure enough memory is dedicated to the process.\n"
+# define ERR_MALLOC_MSG "Memory allocation has failed. \x1B[0m\n\x1B[33mPlease make sure enough memory is dedicated to the process.\n"
 # define PIPE_ERR_MSG "⛔️: syntax error near unexpected token `|'\n"
 # define PIPE_ERR_MSG2 "⛔️: syntax error near unexpected token `||'\n"
 # define SINGLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\''\n"
@@ -91,6 +91,7 @@ typedef struct s_cmd
 
 typedef struct s_parsing
 {
+	int		is_empty_env;
 	char	*current_str;
 	char	**current_tab;
 	char	**current_redirect_tab;
@@ -123,6 +124,7 @@ void		prompt(t_shell *shell);
 # define IN_PROMPT 6559
 # define EXECUTION 6557
 # define CTRL_C 6558
+# define CTRL_SLASH 6560
 
 int		signal_init(t_shell *shell);
 
@@ -149,7 +151,8 @@ void		replace_empty_spaces(t_shell *shell);
 void		add_separator(t_shell *shell);
 void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
-void		find_env(t_shell *shell, size_t *i, int *state, char *env_name);
+int			find_env(t_shell *shell, int *state, char *env_name);
+int			empty_env_errors(t_shell *shell, size_t *i, int *state);
 
 /* QUOTE STATE */
 # define DOUBLE_QUOTE -15

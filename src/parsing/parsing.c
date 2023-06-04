@@ -17,6 +17,8 @@ int	same_word(char *cmd, char *string)
 	int	i;
 
 	i = 0;
+	if (!cmd)
+		return (FALSE);
 	if (!cmd[i])
 		return (FALSE);
 	while (cmd[i])
@@ -52,6 +54,8 @@ void	check_cmds(t_cmd **cmd)
 	t_cmd	*tmp;
 
 	tmp = *cmd;
+	if (!tmp->content)
+		return ;
 	while (tmp->next)
 	{
 		if (is_builtin_check(tmp->content[0]))
@@ -67,12 +71,8 @@ void	detect_builtin(t_shell *shell)
 	check_cmds(&shell->command);
 }
 
-
 void	parsing(t_shell *shell)
 {
-	char	**tab;
-
-	(void)tab;
 	split_shell(shell);
 	detect_builtin(shell);
 }
