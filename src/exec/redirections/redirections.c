@@ -99,15 +99,10 @@ int	do_dup(int in, int out)
 
 int reset_fd(t_shell *shell)
 {
-    if (STDIN_FILENO != shell->fd_stdin)
-    {
-        dup2(shell->fd_stdin, STDIN_FILENO);
-		close(shell->fd_stdin);
-    }
-    if (STDOUT_FILENO != shell->fd_stdout)
-    {
-        dup2(shell->fd_stdout, STDOUT_FILENO);
-		close(shell->fd_stdout);
-    }
-    return (0);
+    dup2(shell->fd_stdin, STDIN_FILENO);
+	close(shell->fd_stdin);
+	close(4);
+    dup2(shell->fd_stdout, STDOUT_FILENO);
+	close(shell->fd_stdout);
+	return (0);
 }

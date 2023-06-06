@@ -22,6 +22,7 @@ void	loop(t_shell *shell)
 		parsing(shell);
 		if (shell->command->content[0] || shell->command->in_out)
 			cmd_nb(shell);
+		wait(NULL);
 		//debug_print(shell);
 	}
 }

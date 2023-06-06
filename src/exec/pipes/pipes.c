@@ -44,7 +44,6 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 	t_pipe	pipe;
     pid_t   pid;
 
-	(void)shell;
     pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
 	pipe.pipes_tab = malloc(sizeof(int) * pipe.pipe_nb);
@@ -60,6 +59,8 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
             return (-1);
         else if (pid == 0)
         {
+			close(shell->fd_stdout);
+			close(shell->fd_stdin);
             pipes_dup(&pipe, cmd);
             if (find_builtin(cmd, env) < 0)
                 exec_cmd(cmd, env);
@@ -67,7 +68,9 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
         }
 		cmd = cmd->next;
 	}
-	waitpid(-1, NULL, 0);
+	int i = 0;
+	while (++i < cmd_nb)
+		waitpid(-1, NULL, 0);
 	close_pipes(&pipe);
 	free(pipe.pipes_tab);
 	return (0);

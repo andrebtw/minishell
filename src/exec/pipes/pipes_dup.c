@@ -44,5 +44,6 @@ int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 	}
 	else
 		do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
+	close_pipes(pipe);
 	return (0);
 }

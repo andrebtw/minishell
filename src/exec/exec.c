@@ -30,6 +30,7 @@ int	cmd_nb(t_shell *shell)
 	if (count > 1)
 	{
 		pipes(shell->env, shell->command, count, shell);
+		reset_fd(shell);
 		return (0);
 	}
 	else
