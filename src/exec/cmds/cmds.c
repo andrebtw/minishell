@@ -29,8 +29,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
     if (pid < 0)
         return (-1);
     else if (pid == 0)
-        execve(cmd_path, cmd->content, env_str);
-    waitpid(pid, NULL, 0);
+		execve(cmd_path, cmd->content, env_str);
+	waitpid(pid, NULL, 0);
 	return (0);
 }
 

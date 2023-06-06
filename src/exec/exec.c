@@ -18,11 +18,7 @@ int	cmd_nb(t_shell *shell)
 {
 	int		count;
 	t_cmd	*tmp;
-	int		fd_in;
-	int		fd_out;
 
-	fd_in = dup(STDIN_FILENO);
-	fd_out = dup(STDOUT_FILENO);
 	count = 0;
 	tmp = shell->command;
 	while (tmp)
@@ -30,26 +26,22 @@ int	cmd_nb(t_shell *shell)
 		tmp = tmp->next;
 		count++;
 	}
+	check_redirections(shell);
 	if (count > 1)
 	{
-		pipes(shell->env, shell->command, count);
+		pipes(shell->env, shell->command, count, shell);
 		return (0);
 	}
 	else
 	{
 		if (check_cmd(shell->env, shell->command) < 0)
 			return (-1);
-		close(shell->command->fd_in);
-		close(shell->command->fd_out);
-		dup2(fd_in, STDIN_FILENO);
-		dup2(fd_out, STDOUT_FILENO);
-		return (0);
+		return (reset_fd(shell), 0);
 	}
 }
 
 int	check_cmd(t_env *env, t_cmd *cmd)
 {
-	check_redirections(cmd);
 	if (!cmd->content[0])
 		return (0);
 	if (find_builtin(cmd, env) != -1)

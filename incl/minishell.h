@@ -107,6 +107,8 @@ typedef struct s_shell
 	t_cmd		*command;
 	char		*input;
 	int			last_err_code;
+	int 		fd_stdin;
+	int 		fd_stdout;
 	t_env		*env;
 }	t_shell;
 
@@ -146,7 +148,7 @@ int		cmd_nb(t_shell *shell);
 int		exec_cmd(t_cmd *cmd, t_env *env);
 
 /* PIPES */
-int		pipes(t_env *env, t_cmd *cmd, int cmd_nb);
+int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
 int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
 void	close_pipes(t_pipe *pipe);
 
@@ -154,8 +156,8 @@ void	close_pipes(t_pipe *pipe);
 int	do_dup(int in, int out);
 int	get_infile(t_cmd *cmd);
 int	get_outfile(t_cmd *cmd);
-int	check_redirections(t_cmd *cmd);
-int reset_fd(t_cmd *cmd);
+int	check_redirections(t_shell *shell);
+int reset_fd(t_shell *shell);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);

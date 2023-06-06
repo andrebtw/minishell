@@ -12,18 +12,18 @@
 
 #include "minishell.h"
 
-int	check_redirections(t_cmd *cmd)
+int	check_redirections(t_shell *shell)
 {
-    cmd->fd_stdin = STDIN_FILENO;
-    cmd->fd_stdout = STDOUT_FILENO;
-	cmd->fd_in = get_infile(cmd);
-	cmd->fd_out = get_outfile(cmd);
-	if (cmd->fd_in != cmd->fd_stdin && cmd->fd_out != cmd->fd_stdout)
-		return (do_dup(cmd->fd_in, cmd->fd_out));
-	else if (cmd->fd_in != cmd->fd_stdin)
-		return (dup2(cmd->fd_in, STDIN_FILENO), close(cmd->fd_in));
-	else if (cmd->fd_out != cmd->fd_stdout)
-		return (dup2(cmd->fd_out, STDOUT_FILENO), close(cmd->fd_out));
+    shell->fd_stdin = dup(STDIN_FILENO);
+    shell->fd_stdout = dup(STDOUT_FILENO);
+	shell->command->fd_in = get_infile(shell->command);
+	shell->command->fd_out = get_outfile(shell->command);
+	if (shell->command->fd_in != STDIN_FILENO && shell->command->fd_out != STDOUT_FILENO)
+		return (do_dup(shell->command->fd_in, shell->command->fd_out));
+	else if (shell->command->fd_in != STDIN_FILENO)
+		return (dup2(shell->command->fd_in, STDIN_FILENO), close(shell->command->fd_in));
+	else if (shell->command->fd_out != STDOUT_FILENO)
+		return (dup2(shell->command->fd_out, STDOUT_FILENO), close(shell->command->fd_out));
 	return (0);
 }
 
@@ -97,17 +97,17 @@ int	do_dup(int in, int out)
 	return (0);
 }
 
-int reset_fd(t_cmd *cmd)
+int reset_fd(t_shell *shell)
 {
-    if (STDIN_FILENO != cmd->fd_stdin)
+    if (STDIN_FILENO != shell->fd_stdin)
     {
-        dup2(cmd->fd_stdin, STDIN_FILENO);
-        close(cmd->fd_stdin);
+        dup2(shell->fd_stdin, STDIN_FILENO);
+		close(shell->fd_stdin);
     }
-    if (STDOUT_FILENO != cmd->fd_stdout)
+    if (STDOUT_FILENO != shell->fd_stdout)
     {
-        dup2(cmd->fd_stdout, STDOUT_FILENO);
-        close(cmd->fd_stdout);
+        dup2(shell->fd_stdout, STDOUT_FILENO);
+		close(shell->fd_stdout);
     }
     return (0);
 }
