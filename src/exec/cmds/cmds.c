@@ -15,6 +15,7 @@ extern int	g_state;
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);
+int		find_slash(char *cmd);
 
 int	exec_cmd(t_cmd *cmd, t_env *env)
 {
@@ -30,9 +31,28 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
     if (pid < 0)
         return (-1);
     else if (pid == 0)
-		execve(cmd_path, cmd->content, env_str);
+	{
+		if (find_slash(cmd->content[0]) == 1)
+			execve(cmd_path, cmd->content, env_str);
+		else
+			execve(cmd->content[0], cmd->content, env_str);
+	}
 	waitpid(pid, NULL, 0);
 	return (0);
+}
+
+int	find_slash(char *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd[i])
+	{
+		if (cmd[i] == '/')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 char	*find_cmd(t_cmd *cmd, t_env *env)
