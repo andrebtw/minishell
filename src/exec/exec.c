@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/14 15:09:11 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/06/07 11:12:54 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	g_state;
 
 int	check_cmd(t_env *env, t_cmd *cmd);
 
@@ -19,6 +20,7 @@ int	cmd_nb(t_shell *shell)
 	int		count;
 	t_cmd	*tmp;
 
+	g_state = EXECUTION;
 	count = 0;
 	tmp = shell->command;
 	while (tmp)

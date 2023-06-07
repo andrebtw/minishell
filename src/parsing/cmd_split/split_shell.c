@@ -42,7 +42,6 @@ void	end_found(t_shell *shell, size_t i)
 			(shell->parsing.current_str[0] == '\1' &&
 			!shell->parsing.current_str[1]))
 		add_separator(shell);
-	ft_printf("CHAR: '%c'\nCODE: %d\n", shell->input[i], shell->parsing.error_code_parsing);
 	if (shell->parsing.error_code_parsing)
 	{
 		shell->parsing.current_tab = NULL;
@@ -52,7 +51,6 @@ void	end_found(t_shell *shell, size_t i)
 	}
 	else
 	{
-		ft_printf("NOT DETECTED!\n");
 		shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
 		if (!shell->parsing.current_tab)
 			malloc_err_exit(shell);
@@ -142,6 +140,8 @@ void	split_shell(t_shell *shell)
 	int 	state;
 
 	shell->parsing.current_in_out_code = NULL;
+	shell->parsing.error_code_parsing = FALSE;
+	shell->parsing.error_code_parsing_saved = FALSE;
 	state = NOT_INIT;
 	shell->parsing.quote_end = FALSE;
 	i = 0;

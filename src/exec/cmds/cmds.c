@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	g_state;
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);

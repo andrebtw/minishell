@@ -73,6 +73,7 @@ void	detect_builtin(t_shell *shell)
 
 void	parsing(t_shell *shell)
 {
+	shell->parsing.error_code_parsing_saved = FALSE;
 	split_shell(shell);
 	if (shell->parsing.error_code_parsing_saved == ERR_ENV_EMPTY_LINE)
 	{
