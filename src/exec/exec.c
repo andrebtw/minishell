@@ -3,31 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   exec.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/09 20:54:10 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/05/14 15:09:11 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_builtins(t_cmd *cmd, t_env *env)
+int	check_cmd(t_env *env, t_cmd *cmd);
+
+int	cmd_nb(t_shell *shell)
 {
-	if (ft_strcmp(cmd->content[0], "echo") == 0)
-		return (echo(cmd->content));
-	else if (ft_strcmp(cmd->content[0], "cd") == 0)
-		return (cd(env, cmd->content));
-	else if (ft_strcmp(cmd->content[0], "pwd") == 0)
-		return (pwd());
-	else if (ft_strcmp(cmd->content[0], "export") == 0)
-		return (export(env, cmd->content));
-	else if (ft_strcmp(cmd->content[0], "unset") == 0)
-		return (unset(cmd->content, &env));
-	else if (ft_strcmp(cmd->content[0], "env") == 0)
-		return (env_builtin(cmd->content, env));
-	else if (ft_strcmp(cmd->content[0], "exit") == 0)
-		return (exit_builtin(cmd->content, env));
+	int		count;
+	t_cmd	*tmp;
+
+	count = 0;
+	tmp = shell->command;
+	while (tmp)
+	{
+		tmp = tmp->next;
+		count++;
+	}
+	check_redirections(shell);
+	if (count > 1)
+	{
+		pipes(shell->env, shell->command, count, shell);
+		reset_fd(shell);
+		return (0);
+	}
 	else
-		return (-1);
+	{
+		if (check_cmd(shell->env, shell->command) < 0)
+			return (-1);
+		return (reset_fd(shell), 0);
+	}
+}
+
+int	check_cmd(t_env *env, t_cmd *cmd)
+{
+	if (!cmd->content[0])
+		return (0);
+	if (find_builtin(cmd, env) != -1)
+		return (0);
+	else if (exec_cmd(cmd, env) != -1)
+		return (0);
+	return (-1);
+}
+
+int find_builtin(t_cmd *cmd, t_env *env)
+{
+        if (ft_strcmp(cmd->content[0], "echo") == 0)
+            return (echo(cmd->content));
+        else if (ft_strcmp(cmd->content[0], "cd") == 0)
+            return (cd(env, cmd->content));
+        else if (ft_strcmp(cmd->content[0], "pwd") == 0)
+            return (pwd());
+        else if (ft_strcmp(cmd->content[0], "export") == 0)
+            return (export(env, cmd->content));
+        else if (ft_strcmp(cmd->content[0], "unset") == 0)
+            return (unset(cmd->content, env));
+        else if (ft_strcmp(cmd->content[0], "env") == 0)
+            return (env_builtin(cmd->content, env));
+        else if (ft_strcmp(cmd->content[0], "exit") == 0)
+            return (exit_builtin(cmd->content, env));
+        else
+            return (-1);
 }

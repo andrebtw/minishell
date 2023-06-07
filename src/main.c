@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-#include "../lib/libft.h"
+#include "minishell.h"
 
 int	g_state;
 
@@ -25,13 +24,11 @@ void	loop(t_shell *shell)
 			parsing(shell);
 			if (!(shell->parsing.error_code_parsing_saved <= ERR_ENV_EMPTY_REDIRECT))
 			{
-				ft_printf("CODE: %d", shell->parsing.error_code_parsing_saved);
 				debug_print(shell);
-			// /* EXEC FUNCTION HERE */
-			// cmd_free(shell);
+				cmd_nb(shell);
+				wait(NULL);
 			}
 		}
-		// malloc_err_exit(shell);m
 	}
 }
 
