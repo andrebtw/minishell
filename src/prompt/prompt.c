@@ -71,8 +71,6 @@ void	prompt(t_shell *shell)
 
 	prompt = create_prompt(shell);
 	rl_getc_function = getc;
-	if (shell->input)
-		free(shell->input);
 	g_state = IN_PROMPT;
 	signal(SIGQUIT, SIG_IGN);
 	shell->input = readline(prompt);

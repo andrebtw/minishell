@@ -89,9 +89,15 @@ typedef struct s_cmd
 	void	*next;
 }	t_cmd;
 
+/* ERROR CODES PARSING */
+# define ERR_ENV_EMPTY_LINE -10000
+# define ERR_ENV_EMPTY_REDIRECT -10001
+# define ERR_ENV_EMPTY_FULL -10002
+
 typedef struct s_parsing
 {
-	int		is_empty_env;
+	int		error_code_parsing;
+	int		error_code_parsing_saved;
 	char	*current_str;
 	char	**current_tab;
 	char	**current_redirect_tab;
@@ -152,7 +158,7 @@ void		add_separator(t_shell *shell);
 void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
 int			find_env(t_shell *shell, int *state, char *env_name);
-int			empty_env_errors(t_shell *shell, size_t *i, int *state);
+int			empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name);
 
 /* QUOTE STATE */
 # define DOUBLE_QUOTE -15

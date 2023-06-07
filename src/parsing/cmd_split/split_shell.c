@@ -42,27 +42,31 @@ void	end_found(t_shell *shell, size_t i)
 			(shell->parsing.current_str[0] == '\1' &&
 			!shell->parsing.current_str[1]))
 		add_separator(shell);
-	if (shell->parsing.is_empty_env)
+	ft_printf("CHAR: '%c'\nCODE: %d\n", shell->input[i], shell->parsing.error_code_parsing);
+	if (shell->parsing.error_code_parsing)
 	{
 		shell->parsing.current_tab = NULL;
-		shell->parsing.is_empty_env = FALSE;
+		shell->parsing.error_code_parsing_saved = shell->parsing.error_code_parsing;
+		if (shell->input[i])
+			shell->parsing.error_code_parsing = FALSE;
 	}
 	else
 	{
+		ft_printf("NOT DETECTED!\n");
 		shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
 		if (!shell->parsing.current_tab)
 			malloc_err_exit(shell);
+		shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
+		if (!shell->parsing.current_redirect_tab)
+			malloc_err_exit(shell);
+		replace_empty_spaces(shell);
+		if (add_node(&shell->command, i, shell))
+			malloc_err_exit(shell);
 	}
-	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
-	if (!shell->parsing.current_redirect_tab)
-		malloc_err_exit(shell);
-	replace_empty_spaces(shell);
 	free(shell->parsing.current_str);
 	free(shell->parsing.current_redirect_str);
 	shell->parsing.current_str = NULL;
 	shell->parsing.current_redirect_str = NULL;
-	if (add_node(&shell->command, i, shell))
-		malloc_err_exit(shell);
 }
 
 void	add_to_char(t_shell *shell, size_t *i, int *state)
@@ -107,6 +111,8 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 {
 	env_gestion(shell, i, state);
+	if (!shell->input[*i])
+		return ;
 	if (*state == REDIRECT && !ft_strchr("<>|\'\"", shell->input[*i]))
 	{
 		shell->parsing.current_redirect_str = ft_strjoin_free_char(
@@ -153,7 +159,6 @@ void	split_shell(t_shell *shell)
 	}
 	while (shell->input[i])
 	{
-		shell->parsing.is_empty_env = FALSE;
 		empty_args(shell, &i, state);
 		shell->parsing.quote_end = FALSE;
 		if (state > REDIRECT)
@@ -168,6 +173,9 @@ void	split_shell(t_shell *shell)
 		}
 		if (shell->input[i])
 			i++;
+		if (shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT)
+			break ;
 	}
 	end_found(shell, i);
+	free(shell->input);
 }

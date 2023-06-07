@@ -23,11 +23,15 @@ void	loop(t_shell *shell)
 		if (!errors(shell))
 		{
 			parsing(shell);
-			debug_print(shell);
-			/* EXEC FUNCTION HERE */
-			cmd_free(shell);
+			if (!(shell->parsing.error_code_parsing_saved <= ERR_ENV_EMPTY_REDIRECT))
+			{
+				ft_printf("CODE: %d", shell->parsing.error_code_parsing_saved);
+				debug_print(shell);
+			// /* EXEC FUNCTION HERE */
+			// cmd_free(shell);
+			}
 		}
-		// malloc_err_exit(shell);
+		// malloc_err_exit(shell);m
 	}
 }
 
