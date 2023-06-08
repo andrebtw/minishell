@@ -106,9 +106,7 @@ typedef struct s_cmd
 }	t_cmd;
 
 /* ERROR CODES PARSING */
-# define ERR_ENV_EMPTY_LINE -10000
 # define ERR_ENV_EMPTY_REDIRECT -10001
-# define ERR_ENV_EMPTY_FULL -10002
 
 typedef struct s_parsing
 {

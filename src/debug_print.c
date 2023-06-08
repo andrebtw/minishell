@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/04 16:03:19 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/08 09:26:49 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,11 @@ void	print_list(t_cmd *lst)
 		}
 		i = 0;
 		ft_printf("\n| REDIRECTIONS : ");
-		if (!lst->in_out[i])
+		if (!lst->in_out)
+		{
+			ft_printf("EMPTY\n");
+		}
+		else if (!lst->in_out[i])
 		{
 			ft_printf("EMPTY\n");
 		}

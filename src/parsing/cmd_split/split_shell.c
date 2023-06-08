@@ -38,29 +38,19 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 
 void	end_found(t_shell *shell, size_t i)
 {
-	if ((!shell->parsing.current_str[0]) ||
-			(shell->parsing.current_str[0] == '\1' &&
-			!shell->parsing.current_str[1]))
-		add_separator(shell);
-	if (shell->parsing.error_code_parsing)
-	{
-		shell->parsing.current_tab = NULL;
-		shell->parsing.error_code_parsing_saved = shell->parsing.error_code_parsing;
-		if (shell->input[i])
-			shell->parsing.error_code_parsing = FALSE;
-	}
-	else
-	{
-		shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
-		if (!shell->parsing.current_tab)
-			malloc_err_exit(shell);
-		shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
-		if (!shell->parsing.current_redirect_tab)
-			malloc_err_exit(shell);
-		replace_empty_spaces(shell);
-		if (add_node(&shell->command, i, shell))
-			malloc_err_exit(shell);
-	}
+	// if ((!shell->parsing.current_str[0]) ||
+	// 		(shell->parsing.current_str[0] == '\1' &&
+	// 		!shell->parsing.current_str[1]))
+	// 	add_separator(shell);
+	shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
+	if (!shell->parsing.current_tab)
+		malloc_err_exit(shell);
+	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
+	if (!shell->parsing.current_redirect_tab)
+		malloc_err_exit(shell);
+	replace_empty_spaces(shell);
+	if (add_node(&shell->command, i, shell))
+		malloc_err_exit(shell);
 	free(shell->parsing.current_str);
 	free(shell->parsing.current_redirect_str);
 	shell->parsing.current_str = NULL;
