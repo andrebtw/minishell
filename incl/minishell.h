@@ -111,7 +111,6 @@ typedef struct s_cmd
 typedef struct s_parsing
 {
 	int		error_code_parsing;
-	int		error_code_parsing_saved;
 	char	*current_str;
 	char	**current_tab;
 	char	**current_redirect_tab;

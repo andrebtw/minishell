@@ -131,7 +131,6 @@ void	split_shell(t_shell *shell)
 
 	shell->parsing.current_in_out_code = NULL;
 	shell->parsing.error_code_parsing = FALSE;
-	shell->parsing.error_code_parsing_saved = FALSE;
 	state = NOT_INIT;
 	shell->parsing.quote_end = FALSE;
 	i = 0;
