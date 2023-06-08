@@ -173,6 +173,7 @@ void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
 int			find_env(t_shell *shell, int *state, char *env_name);
 int			empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name);
+int			error_code_dollar(t_shell *shell, size_t *i, int *state);
 
 /* QUOTE STATE */
 # define DOUBLE_QUOTE -15

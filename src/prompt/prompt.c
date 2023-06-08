@@ -32,7 +32,7 @@ char	*create_prompt(t_shell *shell)
 	char	*r_prompt;
 	char	*err_code;
 
-	if (shell->last_err_code == NOT_INIT)
+	if (shell->last_err_code == 0)
 	{
 		r_prompt = ft_strdup(PROMPT);
 		if (!r_prompt)
