@@ -18,12 +18,22 @@ int	check_redirections(t_shell *shell)
     shell->fd_stdout = dup(STDOUT_FILENO);
 	shell->command->fd_in = get_infile(shell->command);
 	shell->command->fd_out = get_outfile(shell->command);
+	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
+		return (-1);
 	if (shell->command->fd_in != STDIN_FILENO && shell->command->fd_out != STDOUT_FILENO)
 		return (do_dup(shell->command->fd_in, shell->command->fd_out));
 	else if (shell->command->fd_in != STDIN_FILENO)
-		return (dup2(shell->command->fd_in, STDIN_FILENO), close(shell->command->fd_in));
+	{
+		if (dup2(shell->command->fd_in, STDIN_FILENO) < 0)
+			return (-1);
+		return (close(shell->command->fd_in), 0);
+	}
 	else if (shell->command->fd_out != STDOUT_FILENO)
-		return (dup2(shell->command->fd_out, STDOUT_FILENO), close(shell->command->fd_out));
+	{
+		if (dup2(shell->command->fd_out, STDOUT_FILENO) < 0)
+			return (-1);
+		return (close(shell->command->fd_out), 0);
+	}
 	return (0);
 }
 
@@ -45,6 +55,8 @@ int	get_infile(t_cmd *cmd)
 	}
 	if (infile >= 0)
 		fd_in = open(cmd->in_out[infile], O_RDONLY);
+	if (fd_in < 0)
+		error_cmd(cmd->content[0], cmd->in_out[infile]);
 	return (fd_in);
 }
 
@@ -85,6 +97,8 @@ int	get_outfile(t_cmd *cmd)
 		else
 			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
 	}
+	if (fd_out < 0)
+		error_cmd(cmd->content[0], cmd->in_out[outfile]);
 	return(fd_out);
 }
 
