@@ -62,7 +62,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			close(shell->fd_stdout);
 			close(shell->fd_stdin);
             pipes_dup(&pipe, cmd);
-            if (find_builtin(cmd, env) < 0)
+            if (find_builtin(shell, cmd, env) < 0)
                 exec_cmd(cmd, env);
             exit(0);
         }

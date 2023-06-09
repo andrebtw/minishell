@@ -194,6 +194,7 @@ int			pipe_check(t_shell *shell, size_t i, int state);
 int			quotes_state_error(t_shell *shell, size_t i, int state);
 int			quotes_check(t_shell *shell, size_t i, int state);
 int			redirections_check(t_shell *shell, size_t i, int state);
+int			error_cmd(char *cmd, char *file);
 
 /* EXITS */
 void		clean_exit(t_shell *shell);
@@ -227,8 +228,8 @@ int		pwd(void);
 int		export(t_env *env, char **args);
 int		unset(char **args, t_env *env);
 int		env_builtin(char **args, t_env *env);
-int		exit_builtin(char **args, t_env *env);
-int		find_builtin(t_cmd *cmd, t_env *env);
+int		exit_builtin(t_shell *shell, char **args, t_env *env);
+int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int		ft_strcmp(char *str1, char *str2);

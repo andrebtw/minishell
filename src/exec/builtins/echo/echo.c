@@ -41,7 +41,7 @@ int is_newline(char *arg)
 	if (*arg == '-')
 	{
 		arg++;
-		if (*arg == 'n')
+		while (*arg == 'n')
 		{
 			arg++;
 			if (*arg == '\0')
