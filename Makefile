@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
+		parsing/cmd_split/split_shell2.c \
 		parsing/cmd_split/split_shell_state.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
@@ -42,7 +43,6 @@ SRCS =	main.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \
 		parsing/errors/redirections.c \
-		parsing/errors/redirections2.c \
 		parsing/cmd_free/cmd_free.c \
 		signals/signals.c \
 		signals/signal_handler.c \

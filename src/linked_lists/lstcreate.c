@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   lstcreate.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/06/09 08:10:55 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/06/09 08:11:27 by anrodri2         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../incl/minishell.h"
 
-t_cmd   *lstcreate(char **content, char **in_out, char *in_out_code)
+t_cmd	*lstcreate(char **content, char **in_out, char *in_out_code)
 {
-	t_cmd   *r_value;
+	t_cmd	*r_value;
 
 	r_value = malloc (sizeof(t_cmd));
 	if (!r_value)
@@ -15,9 +27,9 @@ t_cmd   *lstcreate(char **content, char **in_out, char *in_out_code)
 	return (r_value);
 }
 
-t_cmd   *lstinit(void)
+t_cmd	*lstinit(void)
 {
-	t_cmd   *r_value;
+	t_cmd	*r_value;
 
 	r_value = malloc (sizeof(t_cmd));
 	if (!r_value)

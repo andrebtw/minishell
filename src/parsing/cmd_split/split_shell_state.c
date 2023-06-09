@@ -6,13 +6,13 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 11:44:17 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/25 11:44:45 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/09 08:13:25 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
 
-int 	quotes_state_redirect(t_shell *shell, size_t i, int state)
+int	quotes_state_redirect(t_shell *shell, size_t i, int state)
 {
 	if (state == REDIRECT && ft_strchr(" \t<>|", shell->input[i]))
 	{
@@ -35,7 +35,7 @@ int 	quotes_state_redirect(t_shell *shell, size_t i, int state)
 	return (REDIRECT);
 }
 
-int 	quotes_state(t_shell *shell, size_t i, int state)
+int	quotes_state(t_shell *shell, size_t i, int state)
 {
 	if (state == SPACE_SEP && ft_strchr(" \t", shell->input[i]))
 		return (SPACE_SEP);
@@ -49,13 +49,13 @@ int 	quotes_state(t_shell *shell, size_t i, int state)
 	}
 	if (shell->input[i] == '\'' && state == SINGLE_QUOTE)
 		return (shell->parsing.quote_end = TRUE, NOT_INIT);
-	if ((shell->input[i] == '\'' && state == NOT_INIT) ||
-			(shell->input[i] == '\'' && state == SPACE_SEP))
+	if ((shell->input[i] == '\'' && state == NOT_INIT)
+		|| (shell->input[i] == '\'' && state == SPACE_SEP))
 		return (SINGLE_QUOTE);
 	if (shell->input[i] == '\"' && state == DOUBLE_QUOTE)
 		return (shell->parsing.quote_end = TRUE, NOT_INIT);
-	if ((shell->input[i] == '\"' && state == NOT_INIT) || 
-			(shell->input[i] == '\"' && state == SPACE_SEP))
+	if ((shell->input[i] == '\"' && state == NOT_INIT)
+		|| (shell->input[i] == '\"' && state == SPACE_SEP))
 		return (DOUBLE_QUOTE);
 	if (state == DOUBLE_QUOTE || state == SINGLE_QUOTE)
 		return (state);

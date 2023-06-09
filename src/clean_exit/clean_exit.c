@@ -21,6 +21,7 @@ void	print_error(char *string)
 
 void	clean_exit(t_shell *shell)
 {
+	rl_clear_history();
 	if (shell->input)
 		free(shell->input);
 	exit(EXIT_SUCCESS);

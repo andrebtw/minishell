@@ -164,6 +164,7 @@ void		parsing(t_shell *shell);
 void		split_shell(t_shell *shell);
 
 /* CMD SPLITTING */
+void		split_shell_loop(t_shell *shell, size_t i, int state);
 void		separators_split(t_shell *shell, size_t *i, int *state);
 void		end_found(t_shell *shell, size_t i);
 void		empty_args(t_shell *shell, size_t *i, int state);

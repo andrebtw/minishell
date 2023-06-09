@@ -12,8 +12,8 @@
 
 #include "../../../incl/minishell.h"
 
-int	quotes_state_redirect(t_shell *shell, size_t i, int state);
-int	quotes_state(t_shell *shell, size_t i, int state);
+int		quotes_state_redirect(t_shell *shell, size_t i, int state);
+int		quotes_state(t_shell *shell, size_t i, int state);
 
 int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 {
@@ -25,12 +25,15 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 	if (!tmp->content)
 	{
 		free(*cmd);
-		*cmd = lstcreate(shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
+		*cmd = lstcreate(shell->parsing.current_tab, \
+		shell->parsing.current_redirect_tab, \
+		shell->parsing.current_in_out_code);
 		if (!(*cmd))
 			return (free(shell->parsing.current_tab), ERR_MALLOC);
 		return (EXIT_SUCCESS);
 	}
-	new = lstcreate(shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
+	new = lstcreate(shell->parsing.current_tab, \
+	shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
 	if (!new)
 		return (free(shell->parsing.current_tab), ERR_MALLOC);
 	lstadd_back(cmd, new);
@@ -39,14 +42,12 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 
 void	end_found(t_shell *shell, size_t i)
 {
-	// if ((!shell->parsing.current_str[0]) ||
-	// 		(shell->parsing.current_str[0] == '\1' &&
-	// 		!shell->parsing.current_str[1]))
-	// 	add_separator(shell);
-	shell->parsing.current_tab = ft_split(shell->parsing.current_str, SEPARATOR);
+	shell->parsing.current_tab = ft_split(\
+	shell->parsing.current_str, SEPARATOR);
 	if (!shell->parsing.current_tab)
 		malloc_err_exit(shell);
-	shell->parsing.current_redirect_tab = ft_split(shell->parsing.current_redirect_str, SEPARATOR);
+	shell->parsing.current_redirect_tab = ft_split(\
+	shell->parsing.current_redirect_str, SEPARATOR);
 	if (!shell->parsing.current_redirect_tab)
 		malloc_err_exit(shell);
 	replace_empty_spaces(shell);
@@ -128,7 +129,7 @@ void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
 void	split_shell(t_shell *shell)
 {
 	size_t	i;
-	int 	state;
+	int		state;
 
 	shell->parsing.current_in_out_code = NULL;
 	shell->parsing.error_code_parsing = FALSE;
@@ -147,24 +148,6 @@ void	split_shell(t_shell *shell)
 		free(shell->parsing.current_str);
 		malloc_err_exit(shell);
 	}
-	while (shell->input[i])
-	{
-		empty_args(shell, &i, state);
-		shell->parsing.quote_end = FALSE;
-		if (state > REDIRECT)
-		{
-			state = quotes_state(shell, i, state);
-			add_to_char(shell, &i, &state);
-		}
-		else
-		{
-			state = quotes_state_redirect(shell, i, state);
-			add_to_char_redirect(shell, &i, &state);
-		}
-		if (shell->input[i])
-			i++;
-		if (shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT)
-			break ;
-	}
+	split_shell_loop(shell, i, state);
 	end_found(shell, i);
 }

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:49:29 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/09 07:55:17 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:50:03 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,7 @@ void	free_cmd(t_cmd **cmd)
 
 void	cmd_free(t_shell *shell)
 {
-	(void)shell;
-	if (shell->input)
-		free(shell->input);
+	// if (shell->input)
+	// 	free(shell->input);
 	free_cmd(&shell->command);
-	// free(shell->command);
 }
