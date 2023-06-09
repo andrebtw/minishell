@@ -46,9 +46,9 @@ int	cmd_nb(t_shell *shell)
 
 int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 {
-	//if (!cmd->content[0])
-		//return (0);
-	if (cmd->content[0][0] == '\0' && !cmd->in_out_code)
+	if (!cmd->content[0])
+		return (0);
+	if (cmd->content[0][0] == '\0')
 		return (ft_putstr_fd("'': command not found\n", STDERR_FILENO), 0);
 	if (find_builtin(shell, cmd, env) != -1)
 		return (0);
