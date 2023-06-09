@@ -232,6 +232,7 @@ int		exit_builtin(t_shell *shell, char **args, t_env *env);
 int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
-int		ft_strcmp(char *str1, char *str2);
+int				ft_strcmp(char *str1, char *str2);
+long long int	atoll(const char *nptr);
 
 #endif
