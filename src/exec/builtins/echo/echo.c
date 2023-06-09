@@ -21,6 +21,8 @@ int	echo(char **arg)
 	if (*arg && is_newline(*arg))
 	{
 		arg++;
+		while (is_newline(*arg))
+			arg++;
 		if (print_args(arg) != 0)
 			return (1);
 		return (0);
@@ -38,14 +40,17 @@ int	echo(char **arg)
 
 int is_newline(char *arg)
 {
+
 	if (*arg == '-')
 	{
 		arg++;
-		if (*arg == 'n')
+		while (*arg == 'n' || ft_isspace(*arg) == 1)
 		{
 			arg++;
 			if (*arg == '\0')
 				return (1);
+			if (*arg == '-' && *arg + 1 == 'n')
+				arg++;
 		}
 	}
 	return (0);

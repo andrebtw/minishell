@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/12 16:49:29 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/05/12 17:09:47 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/09 10:50:03 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,20 +15,23 @@
 void	free_cmd(t_cmd **cmd)
 {
 	t_cmd	*tmp;
+	t_cmd	*tmp2;
 
 	tmp = *cmd;
-	free(*cmd);
-	while (tmp->next)
+	while (tmp)
 	{
-		// free(tmp->in_out_code);
-		// ft_free_tab(tmp->content);
-		// ft_free_tab(tmp->in_out);
-		// free(tmp);
+		tmp2 = tmp;
+		ft_free_tab(tmp->content);
+		ft_free_tab(tmp->in_out);
+		free(tmp->in_out_code);
 		tmp = tmp->next;
+		free(tmp2);
 	}
 }
 
 void	cmd_free(t_shell *shell)
 {
-	(void)shell;
+	// if (shell->input)
+	// 	free(shell->input);
+	free_cmd(&shell->command);
 }

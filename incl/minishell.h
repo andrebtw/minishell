@@ -19,9 +19,12 @@
 # include <unistd.h>
 # include <signal.h>
 # include <stdio.h>
+# include <sys/types.h>
+# include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
+#include <fcntl.h>
 
 /* HEADER FILES */
 # include "libft.h"
@@ -61,7 +64,7 @@
 /* CODES */
 # define NOT_INIT -1
 
-/* COMMAND TYPES */
+/* TYPES */
 # define IS_BUILTIN 55
 # define IS_CMD 60
 
@@ -70,6 +73,15 @@
 # define IS_OUT -96
 # define IS_OUT_APPEND -97
 # define IS_HEREDOC -98
+
+/* PIPES */
+typedef struct s_pipe
+{
+	int	cmd_nb;
+	int	pipe_nb;
+	int	index;
+	int	*pipes_tab;
+}	t_pipe;
 
 /* ENVP */
 typedef struct s_env
@@ -83,15 +95,22 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int		type;
+    int     fd_stdin;
+    int     fd_stdout;
+	int 	fd_in;
+	int 	fd_out;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
 	void	*next;
 }	t_cmd;
 
+/* ERROR CODES PARSING */
+# define ERR_ENV_EMPTY_REDIRECT -10001
+
 typedef struct s_parsing
 {
-	int		is_empty_env;
+	int		error_code_parsing;
 	char	*current_str;
 	char	**current_tab;
 	char	**current_redirect_tab;
@@ -106,13 +125,14 @@ typedef struct s_shell
 	t_cmd		*command;
 	char		*input;
 	int			last_err_code;
+	int 		fd_stdin;
+	int 		fd_stdout;
 	t_env		*env;
 }	t_shell;
 
 /* LINKED LISTS */
 t_cmd		*lstcreate(char **content, char **in_out, char *in_out_code);
 void		lstadd_back(t_cmd **lst, t_cmd *new);
-void 		test(t_shell *shell, char **env);
 t_cmd		*lstinit(void);
 
 /* PROMPT */
@@ -144,6 +164,7 @@ void		parsing(t_shell *shell);
 void		split_shell(t_shell *shell);
 
 /* CMD SPLITTING */
+void		split_shell_loop(t_shell *shell, size_t i, int state);
 void		separators_split(t_shell *shell, size_t *i, int *state);
 void		end_found(t_shell *shell, size_t i);
 void		empty_args(t_shell *shell, size_t *i, int state);
@@ -152,7 +173,8 @@ void		add_separator(t_shell *shell);
 void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
 int			find_env(t_shell *shell, int *state, char *env_name);
-int			empty_env_errors(t_shell *shell, size_t *i, int *state);
+int			empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name);
+int			error_code_dollar(t_shell *shell, size_t *i, int *state);
 
 /* QUOTE STATE */
 # define DOUBLE_QUOTE -15
@@ -172,6 +194,7 @@ int			pipe_check(t_shell *shell, size_t i, int state);
 int			quotes_state_error(t_shell *shell, size_t i, int state);
 int			quotes_check(t_shell *shell, size_t i, int state);
 int			redirections_check(t_shell *shell, size_t i, int state);
+int			error_cmd(char *cmd, char *file);
 
 /* EXITS */
 void		clean_exit(t_shell *shell);
@@ -181,16 +204,32 @@ void		debug_print(t_shell *shell);
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);
 
+/* COMMANDS */
+int		cmd_nb(t_shell *shell);
+int		exec_cmd(t_cmd *cmd, t_env *env);
+
+/* PIPES */
+int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
+int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
+void	close_pipes(t_pipe *pipe);
+
+/* REDIRECTIONS */
+int	do_dup(int in, int out);
+int	get_infile(t_cmd *cmd);
+int	get_outfile(t_cmd *cmd);
+int	check_redirections(t_shell *shell);
+int reset_fd(t_shell *shell);
+
 /* BUILTINS */
-void		print_builtin_error(char *builtin, char *arg);
-int			echo(char **arg);
-int			cd(t_env *env, char **arg);
-int			pwd(void);
-int			export(t_env *env, char **args);
-int			unset(char **args, t_env **env);
-int			env_builtin(char **args, t_env *env);
-int			exit_builtin(char **args, t_env *env);
-int			check_builtins(t_cmd *cmd, t_env *env);
+void	print_builtin_error(char *builtin, char *arg);
+int		echo(char **arg);
+int		cd(t_env *env, char **arg);
+int		pwd(void);
+int		export(t_env *env, char **args);
+int		unset(char **args, t_env *env);
+int		env_builtin(char **args, t_env *env);
+int		exit_builtin(t_shell *shell, char **args, t_env *env);
+int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int		ft_strcmp(char *str1, char *str2);

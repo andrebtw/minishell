@@ -12,9 +12,14 @@
 
 #include "minishell.h"
 
-int	exit_builtin(char **args, t_env *env)
+int	exit_builtin(t_shell *shell, char **args, t_env *env)
 {
-	(void)args;
+	printf("exit\n");
+	if (args[1])
+	{
+
+	}
+	(void)shell;
 	(void)env;
 	return (0);
 }

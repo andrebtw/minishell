@@ -32,7 +32,7 @@ char	*create_prompt(t_shell *shell)
 	char	*r_prompt;
 	char	*err_code;
 
-	if (shell->last_err_code == NOT_INIT)
+	if (shell->last_err_code == 0)
 	{
 		r_prompt = ft_strdup(PROMPT);
 		if (!r_prompt)
@@ -71,13 +71,11 @@ void	prompt(t_shell *shell)
 
 	prompt = create_prompt(shell);
 	rl_getc_function = getc;
-	if (shell->input)
-		free(shell->input);
 	g_state = IN_PROMPT;
 	signal(SIGQUIT, SIG_IGN);
 	shell->input = readline(prompt);
+	free(prompt);
 	if (!shell->input)
 		empty_prompt(shell);
 	add_history(shell->input);
-	free(prompt);
 }

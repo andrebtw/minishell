@@ -27,7 +27,7 @@ int cd(t_env *env, char **args)
 		return (ft_putstr_fd("🛸~> cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 		args[1] = replace_tilde(env);
-	if (chdir(args[1]) != 0)
+	if (args[1] && chdir(args[1]) != 0)
 	{
 		print_builtin_error("cd", args[1]);
 		perror(NULL);
@@ -69,6 +69,7 @@ static int cd_no_arg(t_env *env)
 		}
 		env = env->next;
 	}
+	ft_putstr_fd("🛸~> cd: HOME not set\n", STDERR_FILENO);
 	return (1);
 }
 

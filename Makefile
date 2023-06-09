@@ -30,6 +30,7 @@ SRCS =	main.c \
 		parsing/parsing.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
+		parsing/cmd_split/split_shell2.c \
 		parsing/cmd_split/split_shell_state.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
@@ -37,12 +38,11 @@ SRCS =	main.c \
 		parsing/cmd_split/env_gestion.c \
 		parsing/cmd_split/env_gestion2.c \
 		parsing/cmd_split/env_spaces.c \
-		parsing/cmd_split/empty_env_errors.c \
+		parsing/cmd_split/env_gestion3.c \
 		parsing/errors/errors.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \
 		parsing/errors/redirections.c \
-		parsing/errors/redirections2.c \
 		parsing/cmd_free/cmd_free.c \
 		signals/signals.c \
 		signals/signal_handler.c \
@@ -63,6 +63,11 @@ SRCS =	main.c \
 		exec/builtins/unset/unset.c \
 		exec/builtins/env/env_builtin.c \
 		debug_print.c \
+		exec/cmds/cmds.c \
+		exec/pipes/pipes_dup.c \
+		exec/pipes/pipes.c \
+		exec/redirections/redirections.c \
+		exec/errors/errors.c \
 
 
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))

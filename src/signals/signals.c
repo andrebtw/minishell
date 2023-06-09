@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:54:35 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/01 11:12:29 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/08 12:11:16 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ void	ctrl_c(void)
 {
 	if (g_state == IN_PROMPT)
 		g_state = CTRL_C;
+	if (g_state == EXECUTION)
+		ft_putchar_fd('\n', 1);
 }
 
 void	ctrl_slash(void)

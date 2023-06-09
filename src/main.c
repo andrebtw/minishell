@@ -10,8 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../incl/minishell.h"
-#include "../lib/libft.h"
+#include "minishell.h"
 
 int	g_state;
 
@@ -23,11 +22,14 @@ void	loop(t_shell *shell)
 		if (!errors(shell))
 		{
 			parsing(shell);
-			debug_print(shell);
-			/* EXEC FUNCTION HERE */
+			if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
+			{
+				debug_print(shell);
+				cmd_nb(shell);
+				wait(NULL);
+			}
 			cmd_free(shell);
 		}
-		// malloc_err_exit(shell);
 	}
 }
 
@@ -36,7 +38,7 @@ void	init(char **envp)
 	t_shell	shell;
 
 	g_state = BEFORE_PROMPT;
-	shell.last_err_code = NOT_INIT;
+	shell.last_err_code = 0;
 	shell.input = NULL;
 	shell.env = envp_to_list(envp);
 	signal_init(&shell);
