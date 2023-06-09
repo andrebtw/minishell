@@ -15,8 +15,11 @@
 int	exit_builtin(t_shell *shell, char **args, t_env *env)
 {
 	printf("exit\n");
+	if (args[1])
+	{
+
+	}
 	(void)shell;
-	(void)args;
 	(void)env;
 	return (0);
 }

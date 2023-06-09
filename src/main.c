@@ -24,7 +24,7 @@ void	loop(t_shell *shell)
 			parsing(shell);
 			if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
 			{
-				//debug_print(shell);
+				debug_print(shell);
 				cmd_nb(shell);
 				wait(NULL);
 			}
