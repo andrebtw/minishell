@@ -25,6 +25,8 @@ t_cmd   *lstinit(void)
 	r_value->type = IS_CMD;
 	r_value->content = NULL;
 	r_value->next = NULL;
+	r_value->in_out = NULL;
+	r_value->in_out_code = NULL;
 	return (r_value);
 }
 

@@ -24,6 +24,7 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 	tmp = *cmd;
 	if (!tmp->content)
 	{
+		free(*cmd);
 		*cmd = lstcreate(shell->parsing.current_tab, shell->parsing.current_redirect_tab, shell->parsing.current_in_out_code);
 		if (!(*cmd))
 			return (free(shell->parsing.current_tab), ERR_MALLOC);
@@ -166,5 +167,4 @@ void	split_shell(t_shell *shell)
 			break ;
 	}
 	end_found(shell, i);
-	free(shell->input);
 }

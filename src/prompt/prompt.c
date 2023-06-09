@@ -74,8 +74,8 @@ void	prompt(t_shell *shell)
 	g_state = IN_PROMPT;
 	signal(SIGQUIT, SIG_IGN);
 	shell->input = readline(prompt);
+	free(prompt);
 	if (!shell->input)
 		empty_prompt(shell);
 	add_history(shell->input);
-	free(prompt);
 }
