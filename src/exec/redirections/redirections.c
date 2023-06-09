@@ -115,7 +115,7 @@ int reset_fd(t_shell *shell)
 {
     dup2(shell->fd_stdin, STDIN_FILENO);
 	close(shell->fd_stdin);
-	close(4);
+//	close(4);
     dup2(shell->fd_stdout, STDOUT_FILENO);
 	close(shell->fd_stdout);
 	return (0);

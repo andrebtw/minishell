@@ -36,7 +36,10 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
     if (pid < 0)
         return (-1);
 	else if (cmd_path && pid == 0)
+	{
 		execve(cmd_path, cmd->content, env_str);
+		exit(0);
+	}
 	else if (pid == 0)
 	{
 		execve(cmd->content[0], cmd->content, env_str);
