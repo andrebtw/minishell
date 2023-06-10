@@ -95,10 +95,9 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int		type;
-    int     fd_stdin;
-    int     fd_stdout;
 	int 	fd_in;
 	int 	fd_out;
+	int 	here_doc;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
@@ -219,6 +218,7 @@ int	get_infile(t_cmd *cmd);
 int	get_outfile(t_cmd *cmd);
 int	check_redirections(t_shell *shell);
 int reset_fd(t_shell *shell);
+int	ft_here_doc(char *delimiter);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);

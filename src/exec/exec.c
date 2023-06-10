@@ -40,6 +40,8 @@ int	cmd_nb(t_shell *shell)
 	{
 		if (check_cmd(shell, shell->env, shell->command) < 0)
 			return (-1);
+		if (shell->command->here_doc == TRUE)
+			unlink(".here_doc");
 		return (reset_fd(shell), 0);
 	}
 }

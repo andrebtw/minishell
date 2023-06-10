@@ -65,6 +65,8 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
             pipes_dup(&pipe, cmd);
             if (find_builtin(shell, cmd, env) < 0)
                 exec_cmd(cmd, env);
+			if (cmd->here_doc == TRUE)
+				unlink(".here_doc");
             exit(0);
         }
 		cmd = cmd->next;
