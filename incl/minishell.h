@@ -233,6 +233,6 @@ int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
 int				ft_strcmp(char *str1, char *str2);
-long long int	atoll(const char *nptr);
+long long		ft_atoll(const char *nptr);
 
 #endif

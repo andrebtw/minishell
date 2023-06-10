@@ -26,7 +26,6 @@ void	loop(t_shell *shell)
 			{
 				//debug_print(shell);
 				cmd_nb(shell);
-				wait(NULL);
 			}
 			cmd_free(shell);
 		}

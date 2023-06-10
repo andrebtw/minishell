@@ -43,6 +43,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 {
 	t_pipe	pipe;
     pid_t   pid;
+	int		i;
 
     pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
@@ -68,10 +69,10 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
         }
 		cmd = cmd->next;
 	}
-	int i = 0;
+	close_pipes(&pipe);
+	i = -1;
 	while (++i < cmd_nb)
 		waitpid(-1, NULL, 0);
-	close_pipes(&pipe);
 	free(pipe.pipes_tab);
 	return (0);
 }

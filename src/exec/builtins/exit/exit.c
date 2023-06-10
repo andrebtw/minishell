@@ -13,20 +13,21 @@
 #include "minishell.h"
 
 int	is_num(char *str);
+static void exit_clean(long long return_value, t_shell *shell, t_env *env);
 
 int	exit_builtin(t_shell *shell, char **args, t_env *env)
 {
-	long long int return_value;
+	long long return_value;
 
+	errno = 0;
+	return_value = 0;
 	printf("exit\n");
-	if (args[1])
+	if (args && args[1])
 	{
 		if (args[2])
-		{
 			return (ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO), 0);
-		}
-		return_value = atoll(args[1]);
-		if (!is_num || )
+		return_value = ft_atoll(args[1]);
+		if (!is_num(args[1]) || errno)
 		{
 			ft_putstr_fd("exit: ", STDERR_FILENO);
 			ft_putstr_fd(args[1], STDERR_FILENO);
@@ -34,7 +35,17 @@ int	exit_builtin(t_shell *shell, char **args, t_env *env)
 			return (0);
 		}
 	}
+	exit_clean(return_value, shell, env);
 	return (0);
+}
+
+static void exit_clean(long long return_value, t_shell *shell, t_env *env)
+{
+	if (env)
+		free_env(env);
+	//if (shell)
+	shell = NULL;	//FREE SHELL
+	exit((unsigned char) return_value);
 }
 
 int	is_num(char *str)
