@@ -14,11 +14,10 @@
 
 #include "../../../incl/minishell.h"
 
-int             env_size(t_env *env);
-char    *add_env(t_env *env);
-void    free_env_str(char **env);
+static int     env_size(t_env *env);
+static char    *add_env(t_env *env, int quotes);
 
-char **env_to_str(t_env *env)
+char **env_to_str(t_env *env, int quotes)
 {
         char    **env_str;
         int             i;
@@ -29,17 +28,20 @@ char **env_to_str(t_env *env)
         i = 0;
         while (env)
         {
-                env_str[i] = add_env(env);
-                if (!env_str[i])
-                        return (free_env_str(env_str), NULL);
+                if ((quotes == FALSE && env->is_env == TRUE) || quotes == TRUE)
+                {
+                        env_str[i] = add_env(env, quotes);
+                        if (!env_str[i])
+                                return (free_env_str(env_str), NULL);
+                        i++;
+                }
                 env = env->next;
-                i++;
         }
         env_str[i++] = NULL;
         return (env_str);
 }
 
-int     env_size(t_env *env)
+static int      env_size(t_env *env)
 {
         int i;
 
@@ -52,13 +54,22 @@ int     env_size(t_env *env)
         return (i);
 }
 
-char    *add_env(t_env *env)
+static char    *add_env(t_env *env, int quotes)
 {
 	char *env_str;
 
-	env_str = ft_strjoin(env->name, "=");
-	if (env->value)
-		env_str = ft_strjoin(env_str, env->value);
+        if (env->is_env == TRUE)
+        {
+                env_str = ft_strjoin(env->name, "=");
+                if (quotes == TRUE)
+                        env_str = ft_strjoin(env_str, "\"");
+	        if (env->value)
+		        env_str = ft_strjoin(env_str, env->value);
+                if (quotes == TRUE)
+                        env_str = ft_strjoin(env_str, "\"");
+        }
+        else
+                env_str = env->name;
 	return (env_str);
 }
 

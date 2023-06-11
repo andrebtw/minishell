@@ -88,6 +88,7 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
+	int				is_env;
 	struct s_env	*next;
 }	t_env;
 
@@ -152,11 +153,11 @@ char		*find_name(char *envp);
 char		*find_value(char *envp);
 void		free_env(t_env *env);
 void		free_env_str(char **env);
-char		**env_to_str(t_env *env);
+char		**env_to_str(t_env *env, int quotes);
 t_env		*envp_to_list(char **envp);
-int			envadd_elem(t_env *env, char *name, char *value);
+int			envadd_elem(t_env *env, char *name, char *value, int is_env);
 void 		envadd_back(t_env *env, t_env *new);
-t_env		*env_create(char *name, char *value);
+t_env		*env_create(char *name, char *value, int is_env);
 
 /* PARSING */
 void		parsing(t_shell *shell);

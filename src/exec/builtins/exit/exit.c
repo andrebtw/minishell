@@ -29,8 +29,7 @@ int	exit_builtin(t_shell *shell, char **args, t_env *env)
 		return_value = ft_atoll(args[1]);
 		if (!is_num(args[1]) || errno)
 		{
-			ft_putstr_fd("exit: ", STDERR_FILENO);
-			ft_putstr_fd(args[1], STDERR_FILENO);
+			print_builtin_error("exit", args[1]);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
 			return (0);
 		}
@@ -44,7 +43,7 @@ static void exit_clean(long long return_value, t_shell *shell, t_env *env)
 	if (env)
 		free_env(env);
 	//if (shell)
-	shell = NULL;	//FREE SHELL
+	(void)shell;	//FREE SHELL
 	exit((unsigned char) return_value);
 }
 
