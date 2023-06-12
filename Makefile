@@ -49,6 +49,7 @@ SRCS =	main.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \
+		envp/empty_envp/empty_envp.c \
 		envp/envp_to_list/find_list_content.c \
 		envp/envp_to_list/free_env.c \
 		envp/env_to_str/env_to_str.c \

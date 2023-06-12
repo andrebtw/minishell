@@ -3,14 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   envp_to_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/06 17:47:38 by marvin           ###   ########.fr       */
+/*   Updated: 2023/06/12 15:13:18 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
-#include "../../../incl/minishell.h"
 
 #include "../../../incl/minishell.h"
 
