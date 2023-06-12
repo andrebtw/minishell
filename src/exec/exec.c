@@ -33,7 +33,6 @@ int	cmd_nb(t_shell *shell)
 	if (count > 1)
 	{
 		pipes(shell->env, shell->command, count, shell);
-		reset_fd(shell);
 		return (0);
 	}
 	else
@@ -42,7 +41,7 @@ int	cmd_nb(t_shell *shell)
 			return (-1);
 		if (shell->command->here_doc == TRUE)
 			unlink(".here_doc");
-		return (reset_fd(shell), 0);
+		return (0);
 	}
 }
 

@@ -48,23 +48,23 @@ t_env   *env_create(char *name, char *value, int is_env)
 
 int envadd_elem(t_env *env, char *name, char *value, int is_env)
 {
-        t_env *new;
+    t_env *new;
 
-        new = env_create(name, value, is_env);
-        if (!new)
-                return (1);
-        envadd_back(env, new);
-        return (0);
+    new = env_create(name, value, is_env);
+    if (!new)
+            return (1);
+    envadd_back(env, new);
+    return (0);
 }
 
 void envadd_back(t_env *env, t_env *new)
 {
-        if (!env)
-        {
-                env = new;
-                return ;
-        }
-        while (env->next)
-                env = env->next;
-        env->next = new;
+    if (!env)
+    {
+            env = new;
+            return ;
+    }
+    while (env->next)
+            env = env->next;
+    env->next = new;
 }

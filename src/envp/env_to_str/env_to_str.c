@@ -10,9 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incl/minishell.h"
-
-#include "../../../incl/minishell.h"
+#include "minishell.h"
 
 static int     env_size(t_env *env);
 static char    *add_env(t_env *env, int quotes);
@@ -28,13 +26,14 @@ char **env_to_str(t_env *env, int quotes)
         i = 0;
         while (env)
         {
+                printf("HERE : %s\n", env->name);
                 if ((quotes == FALSE && env->is_env == TRUE) || quotes == TRUE)
                 {
                         env_str[i] = add_env(env, quotes);
                         if (!env_str[i])
                                 return (free_env_str(env_str), NULL);
-                        i++;
                 }
+                i++;
                 env = env->next;
         }
         env_str[i++] = NULL;
@@ -67,10 +66,9 @@ static char    *add_env(t_env *env, int quotes)
 		        env_str = ft_strjoin(env_str, env->value);
                 if (quotes == TRUE)
                         env_str = ft_strjoin(env_str, "\"");
+                return (env_str);
         }
-        else
-                env_str = env->name;
-	return (env_str);
+        return (env->name);
 }
 
 void    free_env_str(char **env)
