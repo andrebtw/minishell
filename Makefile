@@ -80,7 +80,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
 
 DFLAGS = -MMD -MP
 
