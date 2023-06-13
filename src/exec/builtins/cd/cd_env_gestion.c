@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   empty_envp.c                                       :+:      :+:    :+:   */
+/*   cd_env_gestion.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/09 15:18:36 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/13 09:27:17 by anrodri2         ###   ########.fr       */
+/*   Created: 2023/06/13 09:20:04 by anrodri2          #+#    #+#             */
+/*   Updated: 2023/06/13 11:10:03 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-char	*get_pwd(void)
+char	*cd_save_pwd(void)
 {
 	char	*buf;
 	char	*copy_pwd;
@@ -28,18 +28,20 @@ char	*get_pwd(void)
 	return (copy_pwd);
 }
 
-t_env	*empty_envp(void)
+void	old_pwd_save(t_env **env, char *saved_pwd)
 {
-	t_env	*new_env;
-	char	*pwd;
+	t_env	*tmp;
 
-	pwd = get_pwd();
-	if (!pwd)
-		return (NULL);
-	new_env = env_create("PWD", pwd);
-	if (envadd_elem(new_env, "SHLVL", "1"))
-		return (NULL);
-	if (!new_env)
-		return (NULL);
-	return (new_env);
+	tmp = *env;
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, "OLDPWD") == 0)
+		{
+			tmp->value = saved_pwd;
+			return ;
+		}
+		tmp = tmp->next;
+	}
+	if (envadd_elem(*env, "OLDPWD", saved_pwd))
+		malloc_err_exit(NULL);
 }

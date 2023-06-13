@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:54:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/17 13:43:57 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:04:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,17 @@
 static int	args_nb(char **args);
 static int	cd_no_arg(t_env *env);
 static char	*replace_tilde(t_env *env);
+char		*cd_save_pwd(void);
+void		old_pwd_save(t_env **env, char *pwd_saved);
 
 int cd(t_env *env, char **args)
 {
-	int len;
+	int 	len;
+	char	*pwd_saved;
 
+	pwd_saved = cd_save_pwd();
+	if (!pwd_saved)
+		malloc_err_exit(NULL);
 	len = args_nb(args);
 	if (len == 1)
 		return (cd_no_arg(env));
@@ -33,6 +39,7 @@ int cd(t_env *env, char **args)
 		perror(NULL);
 		return (1);
 	}
+	old_pwd_save(&env, pwd_saved);
 	return (0);
 }
 
@@ -75,7 +82,7 @@ static int cd_no_arg(t_env *env)
 
 static int args_nb(char **args)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (args[i])

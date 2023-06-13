@@ -145,6 +145,7 @@ void		prompt(t_shell *shell);
 # define EXECUTION 6557
 # define CTRL_C 6558
 # define CTRL_SLASH 6560
+# define IN_MINISHELL 6561
 
 int		signal_init(t_shell *shell);
 

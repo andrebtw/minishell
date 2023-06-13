@@ -59,6 +59,7 @@ SRCS =	main.c \
 		exec/builtins/print_builtin_error.c \
 		exec/builtins/echo/echo.c \
 		exec/builtins/cd/cd.c \
+		exec/builtins/cd/cd_env_gestion.c \
 		exec/builtins/pwd/pwd.c \
 		exec/builtins/export/export.c \
 		exec/builtins/unset/unset.c \
@@ -80,7 +81,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra -g3 -fsanitize=address
+CFLAGS = -Wall -Werror -Wextra -g3 
 
 DFLAGS = -MMD -MP
 
