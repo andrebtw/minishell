@@ -25,18 +25,17 @@ char **env_to_str(t_env *env, int quotes)
                 return (NULL);
         i = 0;
         while (env)
-        {
-                printf("HERE : %s\n", env->name);
-                if ((quotes == FALSE && env->is_env == TRUE) || quotes == TRUE)
-                {
-                        env_str[i] = add_env(env, quotes);
-                        if (!env_str[i])
-                                return (free_env_str(env_str), NULL);
-                }
-                i++;
-                env = env->next;
+		{
+			if ((quotes == FALSE && env->is_env == TRUE) || quotes == TRUE)
+			{
+				env_str[i] = add_env(env, quotes);
+				if (!env_str[i])
+					return (free_env_str(env_str), NULL);
+				i++;
+			}
+			env = env->next;
         }
-        env_str[i++] = NULL;
+        env_str[i] = NULL;
         return (env_str);
 }
 
@@ -57,18 +56,18 @@ static char    *add_env(t_env *env, int quotes)
 {
 	char *env_str;
 
-        if (env->is_env == TRUE)
-        {
-                env_str = ft_strjoin(env->name, "=");
-                if (quotes == TRUE)
-                        env_str = ft_strjoin(env_str, "\"");
-	        if (env->value)
-		        env_str = ft_strjoin(env_str, env->value);
-                if (quotes == TRUE)
-                        env_str = ft_strjoin(env_str, "\"");
-                return (env_str);
-        }
-        return (env->name);
+	if (env->is_env == TRUE)
+	{
+		env_str = ft_strjoin(env->name, "=");
+		if (quotes == TRUE)
+			env_str = ft_strjoin(env_str, "\"");
+		if (env->value)
+			env_str = ft_strjoin(env_str, env->value);
+		if (quotes == TRUE)
+			env_str = ft_strjoin(env_str, "\"");
+		return (env_str);
+	}
+	return (env->name);
 }
 
 void    free_env_str(char **env)

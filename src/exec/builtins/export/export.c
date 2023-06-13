@@ -51,7 +51,7 @@ static int check_arg(char *arg, t_env *env)
 		}
 		i++;
 	}
-	return (envadd_elem(env, arg, NULL, FALSE));
+	return (envadd_elem(env, find_name(arg), NULL, FALSE));
 }
 
 static int	print_export(t_env *env)
