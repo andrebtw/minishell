@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 09:20:04 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/13 11:10:03 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:14:36 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	old_pwd_save(t_env **env, char *saved_pwd)
 	{
 		if (ft_strcmp(tmp->name, "OLDPWD") == 0)
 		{
+			free(tmp->value);
 			tmp->value = saved_pwd;
 			return ;
 		}
@@ -44,4 +45,25 @@ void	old_pwd_save(t_env **env, char *saved_pwd)
 	}
 	if (envadd_elem(*env, "OLDPWD", saved_pwd))
 		malloc_err_exit(NULL);
+}
+
+void	update_pwd(t_env **env)
+{
+	t_env	*tmp;
+	char	*new_pwd;
+
+	tmp = *env;
+	new_pwd = cd_save_pwd();
+	if (!new_pwd)
+		malloc_err_exit(NULL);
+	while (tmp)
+	{
+		if (ft_strcmp(tmp->name, "PWD") == 0)
+		{
+			free(tmp->value);
+			tmp->value = new_pwd;
+			return ;
+		}
+		tmp = tmp->next;
+	}
 }

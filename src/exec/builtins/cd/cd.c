@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:54:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/13 11:04:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/13 11:12:39 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static int	cd_no_arg(t_env *env);
 static char	*replace_tilde(t_env *env);
 char		*cd_save_pwd(void);
 void		old_pwd_save(t_env **env, char *pwd_saved);
+void		update_pwd(t_env **env);
 
 int cd(t_env *env, char **args)
 {
@@ -40,6 +41,7 @@ int cd(t_env *env, char **args)
 		return (1);
 	}
 	old_pwd_save(&env, pwd_saved);
+	update_pwd(&env);
 	return (0);
 }
 
