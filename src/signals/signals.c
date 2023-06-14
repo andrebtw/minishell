@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:54:35 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/08 12:11:16 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/14 07:55:45 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ void	psighandler(int sig, siginfo_t *info, void *ucontext)
 {
 	(void)info;
 	(void)ucontext;
+	if (g_state == IN_MINISHELL)
+	{
+		ft_printf("TEST\n");
+	}
 	if (sig == SIGINT)
 		ctrl_c();
 	if (sig == SIGQUIT)
