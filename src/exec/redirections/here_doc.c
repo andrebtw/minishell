@@ -29,11 +29,20 @@ int	ft_here_doc(char *delimiter)
 		free(line);
 		line = readline("> ");
 		if (!line)
-			return (-1);
-		if (check_here_doc(delimiter, line) > 0)
 		{
-			line = ft_strjoin(line, "\n");
-			write(fd, line, ft_strlen(line));
+
+			ft_putstr_fd("warning: here-document at line 2 delimited by end-of-file (wanted `", 2);
+			ft_putstr_fd(delimiter, 2);
+			ft_putstr_fd("')\n", 2);
+			break ;
+		}
+		else
+		{
+			if (check_here_doc(delimiter, line) > 0)
+			{
+				line = ft_strjoin(line, "\n");
+				write(fd, line, ft_strlen(line));
+			}
 		}
 	}
 	free(line);
