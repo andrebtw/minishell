@@ -49,7 +49,7 @@ static int	check_arg(char *arg)
 	return (0);
 }
 
-static void	envdel_elem(char *arg, t_env *env)
+void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
 
