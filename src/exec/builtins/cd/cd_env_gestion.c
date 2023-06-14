@@ -43,7 +43,7 @@ void	old_pwd_save(t_env **env, char *saved_pwd)
 		}
 		tmp = tmp->next;
 	}
-	if (envadd_elem(*env, "OLDPWD", saved_pwd))
+	if (envadd_elem(*env, "OLDPWD", saved_pwd, TRUE))
 		malloc_err_exit(NULL);
 }
 

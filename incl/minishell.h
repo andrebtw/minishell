@@ -158,7 +158,7 @@ char		**env_to_str(t_env *env, int quotes);
 t_env		*envp_to_list(char **envp);
 int			envadd_elem(t_env *env, char *name, char *value, int is_env);
 void 		envadd_back(t_env *env, t_env *new);
-t_env		*env_create(char *name, char *value);
+t_env		*env_create(char *name, char *value, int is_env);
 t_env		*empty_envp(void);
 
 /* PARSING */

@@ -21,7 +21,7 @@ int	echo(char **arg)
 	if (*arg && is_newline(*arg))
 	{
 		arg++;
-		while (is_newline(*arg))
+		while (*arg && is_newline(*arg))
 			arg++;
 		if (print_args(arg) != 0)
 			return (1);
@@ -35,6 +35,7 @@ int	echo(char **arg)
 			return (1);
 		return (0);
 	}
+	printf("\n");
 	return (1);
 }
 

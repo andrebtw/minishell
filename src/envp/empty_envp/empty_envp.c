@@ -36,8 +36,8 @@ t_env	*empty_envp(void)
 	pwd = get_pwd();
 	if (!pwd)
 		return (NULL);
-	new_env = env_create("PWD", pwd);
-	if (envadd_elem(new_env, "SHLVL", "1"))
+	new_env = env_create("PWD", pwd, TRUE);
+	if (envadd_elem(new_env, "SHLVL", "1", TRUE))
 		return (NULL);
 	if (!new_env)
 		return (NULL);
