@@ -23,5 +23,5 @@ int	error_cmd(char *cmd, char *file)
 	else
 		error = file;
 	perror(error);
-	return (free(error), -1);
+	return (-1);
 }

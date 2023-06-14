@@ -17,8 +17,8 @@ int env_builtin(char **args, t_env *env)
 	char	**env_str;
 
 	if (args[1])
-		return(ft_putstr_fd("🛸~> env: too many arguments\n", STDERR_FILENO), 1);
-	env_str = env_to_str(env);
+		return(ft_putstr_fd("env: too many arguments\n", STDERR_FILENO), 1);
+	env_str = env_to_str(env, FALSE);
 	if (!env_str)
 		return (1);
 	while (*env_str)

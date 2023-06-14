@@ -103,6 +103,6 @@ add_executable(minishell
         src/prompt/prompt.c
         src/debug_print.c
         src/main.c
-        src/test.c src/parsing/errors/redirections.c src/parsing/errors/quotes_check.c src/parsing/errors/pipes.c src/parsing/errors/errors.c src/parsing/cmd_split/empty_args.c src/parsing/cmd_split/env_gestion.c src/parsing/cmd_split/env_gestion2.c src/parsing/cmd_split/env_gestion3.c src/parsing/cmd_split/env_spaces.c src/parsing/cmd_split/split_shell2.c src/parsing/cmd_split/split_shell_state.c src/parsing/cmd_split/split_shell_utils2.c src/parsing/cmd_free/cmd_free.c)
+        src/test.c src/parsing/errors/redirections.c src/parsing/errors/quotes_check.c src/parsing/errors/pipes.c src/parsing/errors/errors.c src/parsing/cmd_split/empty_args.c src/parsing/cmd_split/env_gestion.c src/parsing/cmd_split/env_gestion2.c src/parsing/cmd_split/env_gestion3.c src/parsing/cmd_split/env_spaces.c src/parsing/cmd_split/split_shell2.c src/parsing/cmd_split/split_shell_state.c src/parsing/cmd_split/split_shell_utils2.c src/parsing/cmd_free/cmd_free.c src/exec/errors/errors.c src/signals/signals.c src/exec/redirections/here_doc.c)
 
-target_link_libraries(minishell edit)
+target_link_libraries(minishell /usr/lib/x86_64-linux-gnu/libreadline.so)

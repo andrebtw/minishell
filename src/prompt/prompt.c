@@ -56,7 +56,7 @@ void	empty_prompt(t_shell *shell)
 	if (g_state != CTRL_C)
 	{
 		ft_putstr_fd("exit\n", 1);
-		clean_exit(shell);
+		exit_builtin(shell, NULL, NULL);
 	}
 	else
 	{

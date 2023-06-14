@@ -70,7 +70,7 @@ SRCS =	main.c \
 		exec/pipes/pipes.c \
 		exec/redirections/redirections.c \
 		exec/errors/errors.c \
-
+		exec/redirections/here_doc.c \
 
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 

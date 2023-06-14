@@ -31,7 +31,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
 	}
 	else
 		cmd_path = NULL;
-    env_str = env_to_str(env);
+    env_str = env_to_str(env, FALSE);
     pid = fork();
     if (pid < 0)
         return (-1);

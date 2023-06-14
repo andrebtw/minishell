@@ -50,13 +50,23 @@ int	get_infile(t_cmd *cmd)
 		return (fd_in);
 	while (cmd->in_out_code[++i])
 	{
-		if (cmd->in_out_code[i] == IS_IN)
+		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
+		{
 			infile = i;
+			if (cmd->in_out_code[i] == IS_IN)
+				cmd->here_doc = FALSE;
+			else if (cmd->in_out_code[i] == IS_HEREDOC)
+				cmd->here_doc = TRUE;
+		}
 	}
-	if (infile >= 0)
+	if (infile >= 0 && cmd->here_doc == FALSE)
+	{
 		fd_in = open(cmd->in_out[infile], O_RDONLY);
-	if (fd_in < 0)
-		error_cmd(cmd->content[0], cmd->in_out[infile]);
+		if (fd_in < 0)
+			error_cmd(cmd->content[0], cmd->in_out[infile]);
+	}
+	else if (cmd->here_doc == TRUE)
+		fd_in = ft_here_doc(cmd->in_out[infile]);
 	return (fd_in);
 }
 
@@ -115,7 +125,6 @@ int reset_fd(t_shell *shell)
 {
     dup2(shell->fd_stdin, STDIN_FILENO);
 	close(shell->fd_stdin);
-//	close(4);
     dup2(shell->fd_stdout, STDOUT_FILENO);
 	close(shell->fd_stdout);
 	return (0);

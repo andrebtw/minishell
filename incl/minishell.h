@@ -88,6 +88,7 @@ typedef struct s_env
 {
 	char			*name;
 	char			*value;
+	int				is_env;
 	struct s_env	*next;
 }	t_env;
 
@@ -95,10 +96,9 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int		type;
-    int     fd_stdin;
-    int     fd_stdout;
 	int 	fd_in;
 	int 	fd_out;
+	int 	here_doc;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
@@ -154,9 +154,9 @@ char		*find_name(char *envp);
 char		*find_value(char *envp);
 void		free_env(t_env *env);
 void		free_env_str(char **env);
-char		**env_to_str(t_env *env);
+char		**env_to_str(t_env *env, int quotes);
 t_env		*envp_to_list(char **envp);
-int			envadd_elem(t_env *env, char *name, char *value);
+int			envadd_elem(t_env *env, char *name, char *value, int is_env);
 void 		envadd_back(t_env *env, t_env *new);
 t_env		*env_create(char *name, char *value);
 t_env		*empty_envp(void);
@@ -221,6 +221,7 @@ int	get_infile(t_cmd *cmd);
 int	get_outfile(t_cmd *cmd);
 int	check_redirections(t_shell *shell);
 int reset_fd(t_shell *shell);
+int	ft_here_doc(char *delimiter);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
@@ -234,6 +235,7 @@ int		exit_builtin(t_shell *shell, char **args, t_env *env);
 int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
-int		ft_strcmp(char *str1, char *str2);
+int				ft_strcmp(char *str1, char *str2);
+long long		ft_atoll(const char *nptr);
 
 #endif
