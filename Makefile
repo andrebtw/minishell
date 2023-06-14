@@ -49,6 +49,7 @@ SRCS =	main.c \
 		linked_lists/lstcreate.c \
 		test.c \
 		envp/envp_to_list/envp_to_list.c \
+		envp/empty_envp/empty_envp.c \
 		envp/envp_to_list/find_list_content.c \
 		envp/envp_to_list/free_env.c \
 		envp/env_to_str/env_to_str.c \
@@ -58,6 +59,7 @@ SRCS =	main.c \
 		exec/builtins/print_builtin_error.c \
 		exec/builtins/echo/echo.c \
 		exec/builtins/cd/cd.c \
+		exec/builtins/cd/cd_env_gestion.c \
 		exec/builtins/pwd/pwd.c \
 		exec/builtins/export/export.c \
 		exec/builtins/unset/unset.c \
@@ -79,7 +81,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra -g3
+CFLAGS = -Wall -Werror -Wextra -g3 
 
 DFLAGS = -MMD -MP
 

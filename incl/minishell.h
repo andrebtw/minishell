@@ -145,6 +145,7 @@ void		prompt(t_shell *shell);
 # define EXECUTION 6557
 # define CTRL_C 6558
 # define CTRL_SLASH 6560
+# define IN_MINISHELL 6561
 
 int		signal_init(t_shell *shell);
 
@@ -158,6 +159,7 @@ t_env		*envp_to_list(char **envp);
 int			envadd_elem(t_env *env, char *name, char *value);
 void 		envadd_back(t_env *env, t_env *new);
 t_env		*env_create(char *name, char *value);
+t_env		*empty_envp(void);
 
 /* PARSING */
 void		parsing(t_shell *shell);
