@@ -38,14 +38,16 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
 	else if (cmd_path && pid == 0)
 	{
 		execve(cmd_path, cmd->content, env_str);
-		exit(0);
+		exit_builtin(NULL, NULL, env);
 	}
 	else if (pid == 0)
 	{
 		execve(cmd->content[0], cmd->content, env_str);
-		exit(0);
+		exit_builtin(NULL, NULL, env);
 	}
 	waitpid(pid, NULL, 0);
+	free(cmd_path);
+	free_env_str(env_str);
 	return (0);
 }
 
@@ -72,6 +74,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env)
 	while (*path)
 	{
 		cmd_path = ft_strjoin(*path, cmd->content[0]);
+		free(*path);
 		if (!cmd_path)
 			return (NULL);
 		if (access(cmd_path, F_OK | R_OK | X_OK) == 0)

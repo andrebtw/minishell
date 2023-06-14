@@ -39,34 +39,40 @@ int	check_redirections(t_shell *shell)
 
 int	get_infile(t_cmd *cmd)
 {
-	int infile;
 	int fd_in;
+	int tmp_fd;
 	int i;
 
-	infile = -1;
 	i = -1;
+	cmd->here_doc = FALSE;
 	fd_in = STDIN_FILENO;
+	tmp_fd = fd_in;
 	if (!cmd->in_out_code)
 		return (fd_in);
 	while (cmd->in_out_code[++i])
 	{
+		if (cmd->in_out_code[i] == IS_HEREDOC)
+			 tmp_fd = ft_here_doc(cmd->in_out[i]);
+	}
+	if (cmd->in_out_code[i--] == IS_HEREDOC)
+		fd_in = tmp_fd;
+	i = -1;
+	while (cmd->in_out_code[++i])
+	{
+		if (tmp_fd != STDIN_FILENO)
+			close(tmp_fd);
 		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
 		{
-			infile = i;
 			if (cmd->in_out_code[i] == IS_IN)
-				cmd->here_doc = FALSE;
-			else if (cmd->in_out_code[i] == IS_HEREDOC)
-				cmd->here_doc = TRUE;
+			{
+				tmp_fd = open(cmd->in_out[i], O_RDONLY);
+				if (tmp_fd < 0)
+					return (error_cmd(cmd->content[0], cmd->in_out[i]));
+			}
 		}
 	}
-	if (infile >= 0 && cmd->here_doc == FALSE)
-	{
-		fd_in = open(cmd->in_out[infile], O_RDONLY);
-		if (fd_in < 0)
-			error_cmd(cmd->content[0], cmd->in_out[infile]);
-	}
-	else if (cmd->here_doc == TRUE)
-		fd_in = ft_here_doc(cmd->in_out[infile]);
+	if (fd_in == STDIN_FILENO)
+		fd_in = tmp_fd;
 	return (fd_in);
 }
 
@@ -90,15 +96,16 @@ int	get_outfile(t_cmd *cmd)
 			outfile = i;
 			append = 0;
 			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC, 0644);
-			close(tmp);
 		}
 		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
 		{
 			outfile = i;
 			append = 1;
 			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
-			close(tmp);
 		}
+		if (tmp < 0)
+			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
+		close(tmp);
 	}
 	if (outfile >= 0)
 	{
