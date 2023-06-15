@@ -131,6 +131,7 @@ void	split_shell(t_shell *shell)
 	size_t	i;
 	int		state;
 
+	shell->parsing.is_heredoc = FALSE;
 	shell->parsing.current_in_out_code = NULL;
 	shell->parsing.error_code_parsing = FALSE;
 	state = NOT_INIT;

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/08 15:06:30 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/15 09:42:08 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int	quotes_state_redirect(t_shell *shell, size_t i, int state);
 int	quotes_state(t_shell *shell, size_t i, int state);
+int	heredoc_env_remove(t_shell *shell, size_t *i, int *state);
 
 int	write_dollar(t_shell *shell, size_t *i, int *state)
 {
@@ -79,6 +80,8 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 {
 	char	*env_name;
 
+	if (heredoc_env_remove(shell, i, state))
+		return ;
 	if (skip_special(shell, i, state) || error_code_dollar(shell, i, state))
 		return ;
 	*i = *i + 1;

@@ -117,6 +117,7 @@ typedef struct s_parsing
 	char	*current_redirect_str;
 	char	*current_in_out_code;
 	int		quote_end;
+	int		is_heredoc;
 }	t_parsing;
 
 typedef struct s_shell
