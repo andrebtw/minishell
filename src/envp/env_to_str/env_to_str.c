@@ -31,7 +31,8 @@ char **env_to_str(t_env *env, int quotes)
 				env_str[i] = add_env(env, quotes);
 				if (!env_str[i])
 					return (free_env_str(env_str), NULL);
-				i++;
+				if (env_str[i] != NULL)
+					i++;
 			}
 			env = env->next;
         }
@@ -56,7 +57,7 @@ static char    *add_env(t_env *env, int quotes)
 {
 	char *env_str;
 
-	if (env->is_env == TRUE)
+	if (env->name && env->is_env == TRUE)
 	{
 		env_str = ft_strjoin(env->name, "=");
 		if (quotes == TRUE)

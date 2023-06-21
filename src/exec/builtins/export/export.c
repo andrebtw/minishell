@@ -68,7 +68,10 @@ static int already_exists(char *name, char *value, t_env *env)
 		if (ft_strcmp(env->name, name) == 0)
 		{
 			if (value)
+			{
 				env->value = value;
+				env->is_env = TRUE;
+			}
 			return (TRUE);
 		}
 		env = env->next;

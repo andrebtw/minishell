@@ -53,6 +53,12 @@ void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
 
+	if (env && ft_strcmp(arg, env->name) == 0)
+	{
+		env->name = NULL;
+		env->value = NULL;
+		return ;
+	}
 	while (env && ft_strcmp(arg, env->name) != 0)
 	{
 		tmp = env;

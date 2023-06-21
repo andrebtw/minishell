@@ -13,7 +13,6 @@
 
 void	print_builtin_error(char *builtin, char *arg)
 {
-	ft_putstr_fd("🛸~> ", STDERR_FILENO);
 	ft_putstr_fd(builtin, STDERR_FILENO);
 	ft_putstr_fd(": '", STDERR_FILENO);
 	ft_putstr_fd(arg, STDERR_FILENO);
