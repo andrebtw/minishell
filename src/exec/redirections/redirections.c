@@ -18,8 +18,6 @@ int	check_redirections(t_shell *shell)
     shell->fd_stdout = dup(STDOUT_FILENO);
 	shell->command->fd_in = get_infile(shell->command);
 	shell->command->fd_out = get_outfile(shell->command);
-	printf("%d\n", shell->command->fd_out);
-	printf("%d\n", shell->command->fd_in);
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
 		return (-1);
 	if (shell->command->fd_in != STDIN_FILENO && shell->command->fd_out != STDOUT_FILENO)
@@ -46,7 +44,6 @@ int	get_infile(t_cmd *cmd)
 	int i;
 
 	i = -1;
-	errno = 0;
 	cmd->here_doc = FALSE;
 	fd_in = STDIN_FILENO;
 	tmp_fd = fd_in;
@@ -55,7 +52,7 @@ int	get_infile(t_cmd *cmd)
 	while (cmd->in_out_code[++i])
 	{
 		if (cmd->in_out_code[i] == IS_HEREDOC)
-			 tmp_fd = ft_here_doc(cmd->in_out[i]);
+			tmp_fd = ft_here_doc(cmd->in_out[i]);
 	}
 	if (cmd->in_out_code[i--] == IS_HEREDOC)
 		fd_in = tmp_fd;
@@ -64,11 +61,11 @@ int	get_infile(t_cmd *cmd)
 	{
 		if (tmp_fd != STDIN_FILENO)
 			close(tmp_fd);
-		if (cmd->in_out_code[i] == IS_IN)
+		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
 		{
 			if (cmd->in_out_code[i] == IS_IN)
 			{
-				tmp_fd = open(cmd->in_out[i], O_RDONLY);;
+				tmp_fd = open(cmd->in_out[i], O_RDONLY);
 				if (tmp_fd < 0)
 					return (error_cmd(cmd->content[0], cmd->in_out[i]));
 			}
@@ -81,36 +78,49 @@ int	get_infile(t_cmd *cmd)
 
 int	get_outfile(t_cmd *cmd)
 {
+	int outfile;
 	int	fd_out;
 	int tmp;
+	int append;
 	int i;
 
+	outfile = -1;
 	i = -1;
-	tmp = -1;
 	fd_out = STDOUT_FILENO;
+	tmp = STDOUT_FILENO;
 	if (!cmd->in_out_code)
 		return (fd_out);
 	while (cmd->in_out_code[++i])
 	{
-		if (tmp >= 0)
-			close(tmp);
 		if (cmd->in_out_code[i] == IS_OUT)
 		{
+			outfile = i;
+			append = 0;
 			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC, 0644);
-			if (tmp < 0)
-				return (error_cmd(cmd->content[0], cmd->in_out[i]));
 		}
 		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
 		{
+			outfile = i;
+			append = 1;
 			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
-			if (tmp < 0)
-				return (error_cmd(cmd->content[0], cmd->in_out[i]));
 		}
+		if (tmp < 0)
+			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
+		if (tmp != STDOUT_FILENO)
+			close(tmp);
 	}
-	if (tmp >= 0)
-		fd_out = tmp;
+	if (outfile >= 0)
+	{
+		if (append == 1)
+			fd_out = open(cmd->in_out[outfile], O_WRONLY | O_APPEND, 0644);
+		else
+			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
+	}
+	if (fd_out < 0)
+		error_cmd(cmd->content[0], cmd->in_out[outfile]);
 	return(fd_out);
 }
+
 
 int	do_dup(int in, int out)
 {

@@ -30,7 +30,6 @@ int	cmd_nb(t_shell *shell)
 	}
 	if (check_redirections(shell) < 0)
 		return (-1);
-	printf("%d\n", shell->command->fd_out);
 	if (count > 1)
 	{
 		pipes(shell->env, shell->command, count, shell);
