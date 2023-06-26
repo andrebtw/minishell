@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 08:10:55 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/09 08:11:27 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:58:51 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@ t_cmd	*lstcreate(char **content, char **in_out, char *in_out_code)
 		return (NULL);
 	r_value->content = content;
 	r_value->in_out = in_out;
-	r_value->in_out_code = in_out_code;
+	if (in_out_code)
+		r_value->in_out_code = ft_strdup(in_out_code);
 	r_value->type = IS_CMD;
 	r_value->next = NULL;
 	return (r_value);
