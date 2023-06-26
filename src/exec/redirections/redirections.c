@@ -21,7 +21,7 @@ int	check_redirections(t_shell *shell)
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
 		return (-1);
 	if (shell->command->fd_in != STDIN_FILENO && shell->command->fd_out != STDOUT_FILENO)
-		return (printf("HERE\n"), do_dup(shell->command->fd_in, shell->command->fd_out));
+		return (do_dup(shell->command->fd_in, shell->command->fd_out));
 	else if (shell->command->fd_in != STDIN_FILENO)
 	{
 		if (dup2(shell->command->fd_in, STDIN_FILENO) < 0)
@@ -60,10 +60,10 @@ int	get_infile(t_cmd *cmd)
 	tmp_fd = STDIN_FILENO;
 	while (cmd->in_out_code[++i])
 	{
-		if (tmp_fd != STDIN_FILENO)
-			close(tmp_fd);
 		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
 		{
+			if (tmp_fd != STDIN_FILENO)
+				close(tmp_fd);
 			if (cmd->in_out_code[i] == IS_IN)
 			{
 				tmp_fd = open(cmd->in_out[i], O_RDONLY);
@@ -74,7 +74,6 @@ int	get_infile(t_cmd *cmd)
 	}
 	if (fd_in == STDIN_FILENO)
 		fd_in = tmp_fd;
-	//printf("IN : %d\n", fd_in);
 	return (fd_in);
 }
 
@@ -100,7 +99,7 @@ int	get_outfile(t_cmd *cmd)
 		{
 			outfile = i;
 			append = 0;
-			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC, 0644);
+			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		}
 		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
 		{

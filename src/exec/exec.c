@@ -28,8 +28,6 @@ int	cmd_nb(t_shell *shell)
 		tmp = tmp->next;
 		count++;
 	}
-	if (check_redirections(shell) < 0)
-		return (-1);
 	if (count > 1)
 	{
 		pipes(shell->env, shell->command, count, shell);
@@ -37,6 +35,8 @@ int	cmd_nb(t_shell *shell)
 	}
 	else
 	{
+		if (check_redirections(shell) < 0)
+			return (-1);
 		if (check_cmd(shell, shell->env, shell->command) < 0)
 			return (-1);
 		if (shell->command->here_doc == TRUE)
