@@ -1,18 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   here_doc_bonus.c                                   :+:      :+:    :+:   */
+/*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:09:49 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/02/03 15:08:20 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:28:10 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	check_here_doc(char *av, char *line);
+int		check_here_doc(char *av, char *line);
+// char	*here_doc_env(char *line);
 
 int	ft_here_doc(char *delimiter)
 {
@@ -28,6 +29,7 @@ int	ft_here_doc(char *delimiter)
 	{
 		free(line);
 		line = readline("> ");
+		
 		if (!line)
 		{
 

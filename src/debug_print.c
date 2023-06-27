@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 15:35:38 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/08 09:26:49 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:44:16 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	print_list(t_cmd *lst)
 {
 	size_t	i;
 
+	ft_printf("\n");
 	while (lst)
 	{
 		i = 0;
