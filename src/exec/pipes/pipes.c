@@ -60,13 +60,13 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
             return (-1);
         else if (pid == 0)
         {
-			close(shell->fd_stdout);
-			close(shell->fd_stdin);
+			check_redirections(shell);
             pipes_dup(&pipe, cmd);
             if (find_builtin(shell, cmd, env) < 0)
                 exec_cmd(cmd, env);
 			if (cmd->here_doc == TRUE)
 				unlink(".here_doc");
+			reset_fd(shell);
             exit(0);
         }
 		cmd = cmd->next;

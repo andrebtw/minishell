@@ -29,7 +29,7 @@ void	clean_exit(t_shell *shell)
 
 void	malloc_err_exit(t_shell *shell)
 {
-	if (shell->input)
+	if (shell && shell->input)
 		free(shell->input);
 	print_error(ERR_MALLOC_MSG);
 	exit(ERR_MALLOC);

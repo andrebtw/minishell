@@ -41,6 +41,7 @@ int	cmd_nb(t_shell *shell)
 			return (-1);
 		if (shell->command->here_doc == TRUE)
 			unlink(".here_doc");
+		reset_fd(shell);
 		return (0);
 	}
 }

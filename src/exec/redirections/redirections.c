@@ -54,7 +54,7 @@ int	get_infile(t_cmd *cmd)
 		if (cmd->in_out_code[i] == IS_HEREDOC)
 			tmp_fd = ft_here_doc(cmd->in_out[i]);
 	}
-	if (cmd->in_out_code[--i] == IS_HEREDOC)
+	if (i > 0 && cmd->in_out_code[--i] == IS_HEREDOC)
 		fd_in = tmp_fd;
 	i = -1;
 	tmp_fd = STDIN_FILENO;
