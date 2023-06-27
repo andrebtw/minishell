@@ -31,7 +31,7 @@ int cd(t_env *env, char **args, t_shell *shell)
 	if (len == 1)
 		return (cd_no_arg(env));
 	else if (len > 2)
-		return (ft_putstr_fd("🛸~> cd: too many arguments\n", STDERR_FILENO), 1);
+		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 		args[1] = replace_tilde(env);
 	if (args[1] && chdir(args[1]) != 0)

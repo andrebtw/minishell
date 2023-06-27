@@ -18,15 +18,19 @@ static int	already_exists(char *name, char*value, t_env *env);
 
 int export(t_env *env, char **arg)
 {
+	int ret_value;
+
+	ret_value = 0;
 	if (!arg[1])
 		return (print_export(env));
 	arg++;
 	while (*arg)
 	{
-		check_arg(*arg, env);
+		if (check_arg(*arg, env) != 0)
+			ret_value = 1;
 		arg++;
 	}
-	return (0);
+	return (ret_value);
 }
 
 static int check_arg(char *arg, t_env *env)

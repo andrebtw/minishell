@@ -48,6 +48,7 @@
 
 /* ERROR CODES */
 # define ERR_MALLOC -2
+# define COMMAND_NOT_FOUND 127
 
 /* ERROR MSG */
 # define ERR_MALLOC_MSG "Memory allocation has failed. \x1B[0m\n\x1B[33mPlease make sure enough memory is dedicated to the process.\n"
@@ -209,7 +210,7 @@ void		cmd_free(t_shell *shell);
 
 /* COMMANDS */
 int		cmd_nb(t_shell *shell);
-int		exec_cmd(t_cmd *cmd, t_env *env);
+int		exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 
 /* PIPES */
 int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);

@@ -25,13 +25,13 @@ int	exit_builtin(t_shell *shell, char **args, t_env *env)
 	if (args && args[1])
 	{
 		if (args[2])
-			return (ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO), 0);
+			return (ft_putstr_fd("exit: too many arguments\n", STDERR_FILENO), 1);
 		return_value = ft_atoll(args[1]);
 		if (!is_num(args[1]) || errno)
 		{
 			print_builtin_error("exit", args[1]);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			return (0);
+			return (1);
 		}
 	}
 	exit_clean(return_value, shell, env);

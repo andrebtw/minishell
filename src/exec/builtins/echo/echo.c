@@ -36,7 +36,7 @@ int	echo(char **arg)
 		return (0);
 	}
 	printf("\n");
-	return (1);
+	return (0);
 }
 
 int is_newline(char *arg)

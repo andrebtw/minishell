@@ -48,14 +48,20 @@ int	cmd_nb(t_shell *shell)
 
 int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 {
+	int	ret_value;
+
+	ret_value = 0;
 	if (!cmd->content[0])
 		return (0);
 	if (cmd->content[0][0] == '\0')
 		return (ft_putstr_fd("'': command not found\n", STDERR_FILENO), 0);
-	if (find_builtin(shell, cmd, env) != -1)
-		return (0);
-	else if (exec_cmd(cmd, env) != -1)
-		return (0);
+	if ((ret_value = find_builtin(shell, cmd, env)) != -1)
+	{
+		shell->last_err_code = ret_value;
+		return (ret_value);
+	}
+	else if (exec_cmd(cmd, env, shell) != -1)
+		return (1);
 	return (-1);
 }
 

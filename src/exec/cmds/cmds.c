@@ -14,18 +14,20 @@
 extern int	g_state;
 
 char	**find_path(t_env *env);
-char	*find_cmd(t_cmd *cmd, t_env *env);
+char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 int		find_slash(char *cmd);
 
-int	exec_cmd(t_cmd *cmd, t_env *env)
+int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
+	int 	ret_value;
 	char	*cmd_path;
 	char	**env_str;
     pid_t   pid;
 
+	ret_value = 0;
 	if (find_slash(cmd->content[0]) == 1)
 	{
-		cmd_path = find_cmd(cmd, env);
+		cmd_path = find_cmd(cmd, env, shell);
 		if (!cmd_path)
 			return (-1);
 	}
@@ -45,9 +47,10 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
 		execve(cmd->content[0], cmd->content, env_str);
 		exit_builtin(NULL, NULL, env);
 	}
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &ret_value, 0);
 	free(cmd_path);
 	free_env_str(env_str);
+	shell->last_err_code = ret_value;
 	return (0);
 }
 
@@ -65,7 +68,7 @@ int	find_slash(char *cmd)
 	return (1);
 }
 
-char	*find_cmd(t_cmd *cmd, t_env *env)
+char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
 	char	**path;
 	char	*cmd_path;
@@ -83,6 +86,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env)
 	}
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
+	shell->last_err_code = COMMAND_NOT_FOUND;
 	return (0);
 }
 
