@@ -64,7 +64,7 @@ int find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
         if (ft_strcmp(cmd->content[0], "echo") == 0)
             return (echo(cmd->content));
         else if (ft_strcmp(cmd->content[0], "cd") == 0)
-            return (cd(env, cmd->content));
+            return (cd(env, cmd->content, shell));
         else if (ft_strcmp(cmd->content[0], "pwd") == 0)
             return (pwd());
         else if (ft_strcmp(cmd->content[0], "export") == 0)

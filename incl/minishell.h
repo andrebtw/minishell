@@ -227,7 +227,7 @@ int	ft_here_doc(char *delimiter);
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
 int		echo(char **arg);
-int		cd(t_env *env, char **arg);
+int		cd(t_env *env, char **arg, t_shell *shell);
 int		pwd(void);
 int		export(t_env *env, char **args);
 int		unset(char **args, t_env *env);

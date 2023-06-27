@@ -88,13 +88,11 @@ int	get_outfile(t_cmd *cmd)
 	outfile = -1;
 	i = -1;
 	fd_out = STDOUT_FILENO;
-	tmp = STDOUT_FILENO;
+	tmp = fd_out;
 	if (!cmd->in_out_code)
 		return (fd_out);
 	while (cmd->in_out_code[++i])
 	{
-		if (tmp != STDOUT_FILENO)
-			close(tmp);
 		if (cmd->in_out_code[i] == IS_OUT)
 		{
 			outfile = i;
@@ -109,6 +107,8 @@ int	get_outfile(t_cmd *cmd)
 		}
 		if (tmp < 0)
 			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
+		if (tmp != fd_out)
+			close(tmp);
 	}
 	if (outfile >= 0)
 	{

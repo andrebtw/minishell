@@ -19,14 +19,14 @@ char		*cd_save_pwd(void);
 void		old_pwd_save(t_env **env, char *pwd_saved);
 void		update_pwd(t_env **env);
 
-int cd(t_env *env, char **args)
+int cd(t_env *env, char **args, t_shell *shell)
 {
 	int 	len;
 	char	*pwd_saved;
 
 	pwd_saved = cd_save_pwd();
 	if (!pwd_saved)
-		malloc_err_exit(NULL);
+		malloc_err_exit(shell);
 	len = args_nb(args);
 	if (len == 1)
 		return (cd_no_arg(env));
