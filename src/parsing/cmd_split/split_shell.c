@@ -42,6 +42,7 @@ int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 
 void	end_found(t_shell *shell, size_t i)
 {
+	shell->parsing.is_heredoc = FALSE;
 	shell->parsing.current_tab = ft_split(\
 	shell->parsing.current_str, SEPARATOR);
 	if (!shell->parsing.current_tab)
@@ -52,6 +53,11 @@ void	end_found(t_shell *shell, size_t i)
 		malloc_err_exit(shell);
 	replace_empty_spaces(shell);
 	if (add_node(&shell->command, i, shell))
+		malloc_err_exit(shell);
+	free(shell->parsing.current_in_out_code);
+	shell->parsing.current_in_out_code = NULL;
+	shell->parsing.current_in_out_code = ft_strdup("");
+	if (!shell->parsing.current_in_out_code)
 		malloc_err_exit(shell);
 	free(shell->parsing.current_str);
 	free(shell->parsing.current_redirect_str);

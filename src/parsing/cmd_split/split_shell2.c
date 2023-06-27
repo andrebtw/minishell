@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/09 08:42:06 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/09 11:06:17 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/26 18:33:28 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@ void	split_shell_loop(t_shell *shell, size_t i, int state)
 {
 	while (shell->input[i])
 	{
+		if (!shell->parsing.current_in_out_code)
+			shell->parsing.current_in_out_code = ft_strdup("");
+		if (!shell->parsing.current_in_out_code)
+			malloc_err_exit(shell);
 		empty_args(shell, &i, state);
 		shell->parsing.quote_end = FALSE;
 		if (state > REDIRECT)
