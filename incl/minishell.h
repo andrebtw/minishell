@@ -213,16 +213,16 @@ int		exec_cmd(t_cmd *cmd, t_env *env);
 
 /* PIPES */
 int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
-int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
+int		pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd);
 void	close_pipes(t_pipe *pipe);
 
 /* REDIRECTIONS */
 int	do_dup(int in, int out);
-int	get_infile(t_cmd *cmd);
+int	get_infile(t_shell *shell, t_cmd *cmd);
 int	get_outfile(t_cmd *cmd);
 int	check_redirections(t_shell *shell);
 int reset_fd(t_shell *shell);
-int	ft_here_doc(char *delimiter);
+int	ft_here_doc(t_shell *shell, char *delimiter);
 
 /* BUILTINS */
 void	print_builtin_error(char *builtin, char *arg);
