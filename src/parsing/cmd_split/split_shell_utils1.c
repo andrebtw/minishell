@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/15 09:45:02 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/27 09:33:52 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,8 @@ void	heredoc_append(t_shell *shell, size_t *i, int *state)
 	&& shell->input[*i + 1] == '<')
 	{
 		shell->parsing.is_heredoc = TRUE;
-		shell->parsing.current_in_out_code = malloc_int_code(shell, IS_HEREDOC);
+		shell->parsing.current_in_out_code = malloc_int_code(\
+		shell, IS_HEREDOC);
 		*state = REDIRECT;
 		*i = *i + 2;
 		while (ft_strchr(" \t", shell->input[*i]))
@@ -64,8 +65,6 @@ void	heredoc_append(t_shell *shell, size_t *i, int *state)
 
 void	separators_split(t_shell *shell, size_t *i, int *state)
 {
-	if (shell->parsing.is_heredoc)
-		shell->parsing.is_heredoc = FALSE;
 	if (*state == NOT_INIT && shell->input[*i] == '|')
 		end_found(shell, *i);
 	heredoc_append(shell, i, state);
