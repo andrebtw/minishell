@@ -41,9 +41,11 @@ int	get_infile(t_cmd *cmd)
 {
 	int fd_in;
 	int tmp_fd;
+	int	last_here_doc;
 	int i;
 
 	i = -1;
+	last_here_doc = 0;
 	cmd->here_doc = FALSE;
 	fd_in = STDIN_FILENO;
 	tmp_fd = fd_in;
@@ -52,9 +54,14 @@ int	get_infile(t_cmd *cmd)
 	while (cmd->in_out_code[++i])
 	{
 		if (cmd->in_out_code[i] == IS_HEREDOC)
+		{
+			last_here_doc = i;
 			tmp_fd = ft_here_doc(cmd->in_out[i]);
+		}
+		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
+			last_here_doc = -1;
 	}
-	if (i > 0 && cmd->in_out_code[--i] == IS_HEREDOC)
+	if (last_here_doc != -1)
 		fd_in = tmp_fd;
 	i = -1;
 	tmp_fd = STDIN_FILENO;
