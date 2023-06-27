@@ -54,15 +54,16 @@ int	get_infile(t_cmd *cmd)
 		if (cmd->in_out_code[i] == IS_HEREDOC)
 			tmp_fd = ft_here_doc(cmd->in_out[i]);
 	}
-	if (cmd->in_out_code[i--] == IS_HEREDOC)
+	if (cmd->in_out_code[--i] == IS_HEREDOC)
 		fd_in = tmp_fd;
 	i = -1;
+	tmp_fd = STDIN_FILENO;
 	while (cmd->in_out_code[++i])
 	{
-		if (tmp_fd != STDIN_FILENO)
-			close(tmp_fd);
 		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
 		{
+			if (tmp_fd != STDIN_FILENO)
+				close(tmp_fd);
 			if (cmd->in_out_code[i] == IS_IN)
 			{
 				tmp_fd = open(cmd->in_out[i], O_RDONLY);
@@ -92,11 +93,13 @@ int	get_outfile(t_cmd *cmd)
 		return (fd_out);
 	while (cmd->in_out_code[++i])
 	{
+		if (tmp != STDOUT_FILENO)
+			close(tmp);
 		if (cmd->in_out_code[i] == IS_OUT)
 		{
 			outfile = i;
 			append = 0;
-			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC, 0644);
+			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 		}
 		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
 		{
@@ -106,8 +109,6 @@ int	get_outfile(t_cmd *cmd)
 		}
 		if (tmp < 0)
 			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
-		if (tmp != STDOUT_FILENO)
-			close(tmp);
 	}
 	if (outfile >= 0)
 	{
