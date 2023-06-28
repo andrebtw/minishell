@@ -42,8 +42,8 @@ static void exit_clean(long long return_value, t_shell *shell, t_env *env)
 {
 	if (env)
 		free_env(env);
-	//if (shell)
-	(void)shell;	//FREE SHELL
+	if (shell && shell->input)
+		free(shell->input);
 	exit((unsigned char) return_value);
 }
 

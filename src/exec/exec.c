@@ -21,6 +21,8 @@ int	cmd_nb(t_shell *shell)
 	t_cmd	*tmp;
 
 	g_state = EXECUTION;
+	shell->fd_stdin = dup(STDIN_FILENO);
+	shell->fd_stdout = dup(STDOUT_FILENO);
 	count = 0;
 	tmp = shell->command;
 	while (tmp)
@@ -50,7 +52,6 @@ int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 {
 	int	ret_value;
 
-	ret_value = 0;
 	if (!cmd->content[0])
 		return (0);
 	if (cmd->content[0][0] == '\0')
@@ -76,7 +77,7 @@ int find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
         else if (ft_strcmp(cmd->content[0], "export") == 0)
             return (export(env, cmd->content));
         else if (ft_strcmp(cmd->content[0], "unset") == 0)
-            return (unset(cmd->content, env));
+            return (unset(cmd->content, env, shell));
         else if (ft_strcmp(cmd->content[0], "env") == 0)
             return (env_builtin(cmd->content, env));
         else if (ft_strcmp(cmd->content[0], "exit") == 0)

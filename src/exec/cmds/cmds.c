@@ -72,22 +72,24 @@ char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
 	char	**path;
 	char	*cmd_path;
+	int		i;
 
+	i = 0;
 	path = find_path(env);
-	while (*path)
+	while (path[i])
 	{
-		cmd_path = ft_strjoin(*path, cmd->content[0]);
-		free(*path);
+		cmd_path = ft_strjoin(path[i], cmd->content[0]);
 		if (!cmd_path)
-			return (NULL);
+			return (ft_free_tab(path), NULL);
 		if (access(cmd_path, F_OK | R_OK | X_OK) == 0)
-			return (cmd_path);
-		path++;
+			return (ft_free_tab(path), cmd_path);
+		free(cmd_path);
+		i++;
 	}
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	shell->last_err_code = COMMAND_NOT_FOUND;
-	return (0);
+	return (ft_free_tab(path), NULL);
 }
 
 char	**find_path(t_env *env)
@@ -103,7 +105,7 @@ char	**find_path(t_env *env)
 		return (NULL);
 	while (path[i])
 	{
-		path[i] = ft_strjoin(path[i], "/");
+		path[i] = ft_strjoin_free(path[i], "/", 1, 0);
 		if (!path[i])
 			return (NULL);
 		i++;

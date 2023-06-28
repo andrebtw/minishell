@@ -231,7 +231,7 @@ int		echo(char **arg);
 int		cd(t_env *env, char **arg, t_shell *shell);
 int		pwd(void);
 int		export(t_env *env, char **args);
-int		unset(char **args, t_env *env);
+int		unset(char **args, t_env *env, t_shell *shell);
 int		env_builtin(char **args, t_env *env);
 int		exit_builtin(t_shell *shell, char **args, t_env *env);
 int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);

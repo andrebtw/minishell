@@ -14,8 +14,6 @@
 
 int	check_redirections(t_shell *shell)
 {
-    shell->fd_stdin = dup(STDIN_FILENO);
-    shell->fd_stdout = dup(STDOUT_FILENO);
 	shell->command->fd_in = get_infile(shell->command);
 	shell->command->fd_out = get_outfile(shell->command);
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)

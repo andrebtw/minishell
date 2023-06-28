@@ -11,21 +11,21 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-static int	check_arg(char *arg);
+static int	check_arg(char *arg, t_shell *shell);
 static void	envdel_elem(char *arg, t_env *env);
 
-int	unset(char **args, t_env *env)
+int	unset(char **args, t_env *env, t_shell *shell)
 {
 	while (*args)
 	{
-		if (check_arg(*args) == 0)
+		if (check_arg(*args, shell) == 0)
 			envdel_elem(*args, env);
 		args++;
 	}
 	return (0);
 }
 
-static int	check_arg(char *arg)
+static int	check_arg(char *arg, t_shell *shell)
 {
 	int	i;
 
@@ -34,6 +34,7 @@ static int	check_arg(char *arg)
 	{
 		print_builtin_error("unset", arg);
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
+		shell->last_err_code = 1;
 		return (1);
 	}
 	while(arg[i])
@@ -42,6 +43,7 @@ static int	check_arg(char *arg)
 		{
 			print_builtin_error("unset", arg);
 			ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
+			shell->last_err_code = 1;
 			return (1);
 		}
 		i++;

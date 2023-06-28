@@ -82,7 +82,7 @@ CC = cc
 
 RM = rm -rf
 
-CFLAGS = -Wall -Werror -Wextra -g3 
+CFLAGS = -Wall -Werror -Wextra -g3
 
 DFLAGS = -MMD -MP
 

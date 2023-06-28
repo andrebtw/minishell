@@ -67,9 +67,10 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			if (cmd->here_doc == TRUE)
 				unlink(".here_doc");
 			reset_fd(shell);
-            exit(0);
+            clean_exit(shell);
         }
 		cmd = cmd->next;
+		shell->command = shell->command->next;
 	}
 	close_pipes(&pipe);
 	i = -1;
