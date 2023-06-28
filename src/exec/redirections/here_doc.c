@@ -6,16 +6,16 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:09:49 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/26 15:28:10 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:49:09 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 int		check_here_doc(char *av, char *line);
-// char	*here_doc_env(char *line);
+char	*here_doc_env(t_shell *shell, char *line);
 
-int	ft_here_doc(char *delimiter)
+int	ft_here_doc(t_shell *shell, char *delimiter)
 {
 	int		fd;
 	char	*line;
@@ -29,7 +29,6 @@ int	ft_here_doc(char *delimiter)
 	{
 		free(line);
 		line = readline("> ");
-		
 		if (!line)
 		{
 
@@ -40,6 +39,7 @@ int	ft_here_doc(char *delimiter)
 		}
 		else
 		{
+			line = here_doc_env(shell, line);
 			if (check_here_doc(delimiter, line) > 0)
 			{
 				line = ft_strjoin(line, "\n");

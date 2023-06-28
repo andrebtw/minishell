@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/15 23:17:19 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:30:00 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
         {
 			close(shell->fd_stdout);
 			close(shell->fd_stdin);
-            pipes_dup(&pipe, cmd);
+            pipes_dup(shell, &pipe, cmd);
             if (find_builtin(shell, cmd, env) < 0)
                 exec_cmd(cmd, env);
 			if (cmd->here_doc == TRUE)
