@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:38:44 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/27 13:46:39 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/06/28 14:11:28 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ char	*env_exec(t_shell *shell, char *line, size_t *i, char *output_str)
 {
 	char	*env_name;
 	char	*env_value;
-	// char	*r_value;
 
 	env_name = ft_strdup("");
 	if (!env_name)
@@ -34,11 +33,8 @@ char	*env_exec(t_shell *shell, char *line, size_t *i, char *output_str)
 	}
 	env_value = is_in_env(shell, &shell->env, env_name);
 	if (!env_value)
-		return (line);
+		return (output_str);
 	output_str = ft_strjoin_free(output_str, env_value, 1, 1);
-	// r_value = ft_strjoin_free(line, env_value, 1, 1);
-	// if (!r_value)
-	// 	return (malloc_err_exit(shell), NULL);
 	return (output_str);
 }
 
@@ -68,10 +64,11 @@ char	*here_doc_env(t_shell *shell, char *line)
 	{
 		if (check_if_env(line, &i))
 			r_string = env_exec(shell, line, &i, r_string);
-		r_string = ft_strjoin_free_char(r_string, line[i], 1);
+		r_string = ft_strjoin_free_char(r_string, line[i], 0);
 		if (!r_string)
-			return (malloc_err_exit(shell), NULL);	
-		i++;
+			return (malloc_err_exit(shell), NULL);
+		if (line[i])
+			i++;
 	}
 	return (r_string);
 }

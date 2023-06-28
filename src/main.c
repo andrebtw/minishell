@@ -36,7 +36,7 @@ void	loop(t_shell *shell)
 void	init(char **envp)
 {
 	t_shell	shell;
-
+ 
 	g_state = BEFORE_PROMPT;
 	shell.last_err_code = 0;
 	shell.input = NULL;
