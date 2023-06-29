@@ -144,9 +144,13 @@ void		prompt(t_shell *shell);
 # define IN_PARSING 6556
 # define IN_PROMPT 6559
 # define EXECUTION 6557
-# define CTRL_C 6558
-# define CTRL_SLASH 6560
-# define IN_MINISHELL 6561
+# define IN_HEREDOC 6561
+# define IN_EXECVE 6562
+
+/* SIGNALS RESPONSE */
+# define CTRL_C 7000
+# define CTRL_SLASH 7001
+# define CTRL_C_HEREDOC 7002
 
 int		signal_init(t_shell *shell);
 
