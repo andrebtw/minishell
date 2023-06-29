@@ -77,4 +77,6 @@ void	parsing(t_shell *shell)
 	split_shell(shell);
 	if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
 		detect_builtin(shell);
+	else
+		shell->last_err_code = 2;
 }

@@ -37,12 +37,18 @@ int	exec_cmd(t_cmd *cmd, t_env *env)
         return (-1);
 	else if (cmd_path && pid == 0)
 	{
+		g_state = IN_EXECVE;
+		signal_init(NULL);
 		execve(cmd_path, cmd->content, env_str);
+		g_state = EXECUTION;
 		exit_builtin(NULL, NULL, env);
 	}
 	else if (pid == 0)
 	{
+		g_state = IN_EXECVE;
+		signal_init(NULL);
 		execve(cmd->content[0], cmd->content, env_str);
+		g_state = EXECUTION;
 		exit_builtin(NULL, NULL, env);
 	}
 	waitpid(pid, NULL, 0);
