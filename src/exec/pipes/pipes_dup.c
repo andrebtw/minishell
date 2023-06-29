@@ -37,9 +37,9 @@ int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 	else
 	{
 		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
-			do_dup(cmd->fd_in, pipe->pipes_tab[2 * pipe->index + 1]);
+			dup2(pipe->pipes_tab[2 * pipe->index + 1], STDOUT_FILENO);
 		else if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
-			do_dup(pipe->pipes_tab[2 * pipe->index - 2], cmd->fd_out);
+			dup2(pipe->pipes_tab[2 * pipe->index - 2], STDIN_FILENO);
 		else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
 			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
 	}

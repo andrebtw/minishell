@@ -43,7 +43,6 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 {
 	t_pipe	pipe;
     pid_t   pid;
-	int		i;
 
     pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
@@ -61,7 +60,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
         else if (pid == 0)
         {
 			check_redirections(shell);
-            pipes_dup(&pipe, cmd);
+			pipes_dup(&pipe, cmd);
             if (find_builtin(shell, cmd, env) < 0)
                 exec_cmd(cmd, env, shell);
 			if (cmd->here_doc == TRUE)
@@ -69,13 +68,12 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			reset_fd(shell);
             clean_exit(shell);
         }
+		close(pipe.pipes_tab[pipe.index + 1]);
+		waitpid(pid, NULL, 0);
 		cmd = cmd->next;
 		shell->command = shell->command->next;
 	}
 	close_pipes(&pipe);
-	i = -1;
-	while (++i < cmd_nb)
-		waitpid(-1, NULL, 0);
 	free(pipe.pipes_tab);
 	return (0);
 }
