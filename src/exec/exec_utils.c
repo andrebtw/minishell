@@ -10,9 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "minishell.h"
 
-int ft_strcmp(char *str1, char *str2)
+int	ft_strcmp(char *str1, char *str2)
 {
 	size_t	i;
 
@@ -27,7 +27,6 @@ int ft_strcmp(char *str1, char *str2)
 		return (0);
 	return (1);
 }
-
 
 static int	return_error(int error_code)
 {
@@ -60,4 +59,18 @@ long long	ft_atoll(const char *nptr)
 		index++;
 	}
 	return (result);
+}
+
+int	is_here_doc(t_cmd *cmd)
+{
+	int	i;
+
+	i = 0;
+	while (cmd->in_out_code[i])
+	{
+		if (cmd->in_out_code[i] == IS_HEREDOC)
+			return (TRUE);
+		i++;
+	}
+	return (FALSE);
 }

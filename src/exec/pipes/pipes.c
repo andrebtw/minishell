@@ -12,7 +12,6 @@
 
 #include "minishell.h"
 
-
 void	close_pipes(t_pipe *pipe)
 {
 	int	i;
@@ -42,9 +41,11 @@ int	do_pipes(t_pipe *p)
 int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 {
 	t_pipe	pipe;
-    pid_t   pid;
+	pid_t	pid;
+	int		ret_value;
 
-    pipe.cmd_nb = cmd_nb;
+	ret_value = 0;
+	pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
 	pipe.pipes_tab = malloc(sizeof(int) * pipe.pipe_nb);
 	if (!pipe.pipes_tab)
@@ -54,29 +55,34 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 	pipe.index = -1;
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
-        pid = fork();
-        if (pid == -1)
-            return (-1);
-        else if (pid == 0)
-        {
-			check_redirections(shell);
+		pid = fork();
+		if (pid == -1)
+			return (-1);
+		else if (pid == 0)
+		{
+			if (check_redirections(shell) != 0)
+			{
+				close_pipes(&pipe);
+				clean_exit(shell);
+			}
 			pipes_dup(&pipe, cmd);
 			close_pipes(&pipe);
-            if (find_builtin(shell, cmd, env) < 0)
-                exec_cmd(cmd, env, shell);
+			if (find_builtin(shell, cmd, env) < 0)
+				exec_cmd(cmd, env, shell);
 			if (cmd->here_doc == TRUE)
 				unlink(".here_doc");
-            clean_exit(shell);
-        }
+			clean_exit(shell);
+		}
 		reset_fd(shell);
-		if (cmd->in_out_code[0])
-			waitpid(pid, NULL, 0);
+		if (is_here_doc(cmd))
+			waitpid(pid, &ret_value, 0);
 		cmd = cmd->next;
 		shell->command = shell->command->next;
 	}
 	reset_fd(shell);
 	close_pipes(&pipe);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, &ret_value, 0);
+	shell->last_err_code = ret_value;
 	free(pipe.pipes_tab);
 	return (0);
 }

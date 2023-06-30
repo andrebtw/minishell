@@ -54,6 +54,8 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 		{
 			last_here_doc = i;
 			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
+			if (tmp_fd == -1)
+				return (-1);
 		}
 		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
 			last_here_doc = -1;

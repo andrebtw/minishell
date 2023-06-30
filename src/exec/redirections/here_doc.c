@@ -37,8 +37,7 @@ int	ft_here_doc(t_shell *shell, char *delimiter)
 			if (g_state == CTRL_C_HEREDOC)
 			{
 				g_state = EXECUTION;
-				// CODE POUR QUITTER L'EXEC ICI!!!
-				break ;
+				return (-1);
 			}
 			else
 			{

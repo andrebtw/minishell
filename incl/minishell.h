@@ -24,7 +24,7 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 # include <errno.h>
-#include <fcntl.h>
+# include <fcntl.h>
 
 /* HEADER FILES */
 # include "libft.h"
@@ -51,12 +51,14 @@
 # define COMMAND_NOT_FOUND 127
 
 /* ERROR MSG */
-# define ERR_MALLOC_MSG "Memory allocation has failed. \x1B[0m\n\x1B[33mPlease make sure enough memory is dedicated to the process.\n"
+# define ERR_MALLOC_MSG "Memory allocation has failed. \x1B[0m\n\x1B[33mPlease\
+make sure enough memory is dedicated to the process.\n"
 # define PIPE_ERR_MSG "⛔️: syntax error near unexpected token `|'\n"
 # define PIPE_ERR_MSG2 "⛔️: syntax error near unexpected token `||'\n"
 # define SINGLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\''\n"
 # define DOUBLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\"'\n"
-# define REDIRECT_NOEND_ERR_MSG "⛔️: syntax error near unexpected token `newline'\n"
+# define REDIRECT_NOEND_ERR_MSG "⛔️: syntax error near unexpected\
+token `newline'\n"
 # define REDIRECT_INPUT_ERR_MSG "⛔️: syntax error near unexpected token `<'\n"
 # define REDIRECT_OUTPUT_ERR_MSG "⛔️: syntax error near unexpected token `>'\n"
 # define REDIRECT_INPUT_ERR_MSG2 "⛔️: syntax error near unexpected token `<<'\n"
@@ -97,9 +99,9 @@ typedef struct s_env
 typedef struct s_cmd
 {
 	int		type;
-	int 	fd_in;
-	int 	fd_out;
-	int 	here_doc;
+	int		fd_in;
+	int		fd_out;
+	int		here_doc;
 	char	**content;
 	char	**in_out;
 	char	*in_out_code;
@@ -127,8 +129,8 @@ typedef struct s_shell
 	t_cmd		*command;
 	char		*input;
 	int			last_err_code;
-	int 		fd_stdin;
-	int 		fd_stdout;
+	int			fd_stdin;
+	int			fd_stdout;
 	t_env		*env;
 }	t_shell;
 
@@ -153,7 +155,7 @@ void		prompt(t_shell *shell);
 # define CTRL_SLASH 7001
 # define CTRL_C_HEREDOC 7002
 
-int		signal_init(t_shell *shell);
+int			signal_init(t_shell *shell);
 
 /* ENVP */
 char		*find_name(char *envp);
@@ -163,7 +165,7 @@ void		free_env_str(char **env);
 char		**env_to_str(t_env *env, int quotes);
 t_env		*envp_to_list(char **envp);
 int			envadd_elem(t_env *env, char *name, char *value, int is_env);
-void 		envadd_back(t_env *env, t_env *new);
+void		envadd_back(t_env *env, t_env *new);
 t_env		*env_create(char *name, char *value, int is_env);
 t_env		*empty_envp(void);
 
@@ -181,7 +183,8 @@ void		add_separator(t_shell *shell);
 void		env_gestion(t_shell *shell, size_t *i, int *state);
 void		split_space_env(t_shell *shell, size_t *i, int *state);
 int			find_env(t_shell *shell, int *state, char *env_name);
-int			empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name);
+int			empty_env_errors(t_shell *shell, size_t *i,
+				int *state, char *env_name);
 int			error_code_dollar(t_shell *shell, size_t *i, int *state);
 
 /* QUOTE STATE */
@@ -194,7 +197,7 @@ int			error_code_dollar(t_shell *shell, size_t *i, int *state);
 # define REDIRECT_END -21
 
 /* ENV DETECTION */
-char	*env_spaces(char *env);
+char		*env_spaces(char *env);
 
 /* ERROR CHECK */
 int			errors(t_shell *shell);
@@ -213,35 +216,36 @@ void		debug_print(t_shell *shell);
 void		cmd_free(t_shell *shell);
 
 /* COMMANDS */
-int		cmd_nb(t_shell *shell);
-int		exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
+int			cmd_nb(t_shell *shell);
+int			exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 
 /* PIPES */
-int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
-int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
-void	close_pipes(t_pipe *pipe);
+int			pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
+int			pipes_dup(t_pipe *pipe, t_cmd *cmd);
+void		close_pipes(t_pipe *pipe);
 
 /* REDIRECTIONS */
-int	do_dup(int in, int out);
-int	get_infile(t_shell *shell, t_cmd *cmd);
-int	get_outfile(t_cmd *cmd);
-int	check_redirections(t_shell *shell);
-int reset_fd(t_shell *shell);
-int	ft_here_doc(t_shell *shell, char *delimiter);
+int			do_dup(int in, int out);
+int			get_infile(t_shell *shell, t_cmd *cmd);
+int			get_outfile(t_cmd *cmd);
+int			check_redirections(t_shell *shell);
+int			reset_fd(t_shell *shell);
+int			ft_here_doc(t_shell *shell, char *delimiter);
 
 /* BUILTINS */
-void	print_builtin_error(char *builtin, char *arg);
-int		echo(char **arg);
-int		cd(t_env *env, char **arg, t_shell *shell);
-int		pwd(void);
-int		export(t_env *env, char **args);
-int		unset(char **args, t_env *env, t_shell *shell);
-int		env_builtin(char **args, t_env *env);
-int		exit_builtin(t_shell *shell, char **args, t_env *env);
-int		find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
+void		print_builtin_error(char *builtin, char *arg);
+int			echo(char **arg);
+int			cd(t_env *env, char **arg, t_shell *shell);
+int			pwd(void);
+int			export(t_env *env, char **args);
+int			unset(char **args, t_env *env, t_shell *shell);
+int			env_builtin(char **args, t_env *env);
+int			exit_builtin(t_shell *shell, char **args, t_env *env);
+int			find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */
-int				ft_strcmp(char *str1, char *str2);
-long long		ft_atoll(const char *nptr);
+int			ft_strcmp(char *str1, char *str2);
+long long	ft_atoll(const char *nptr);
+int			is_here_doc(t_cmd *cmd);
 
 #endif

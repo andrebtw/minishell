@@ -11,9 +11,10 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int	g_state;
 
-int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd);
+extern int	g_state;
+int			check_cmd(t_shell *shell, t_env *env, t_cmd *cmd);
+static int	check_pipe(t_shell *shell, int cmd_nb);
 
 int	cmd_nb(t_shell *shell)
 {
@@ -30,9 +31,14 @@ int	cmd_nb(t_shell *shell)
 		tmp = tmp->next;
 		count++;
 	}
-	if (count > 1)
+	return (check_pipe(shell, count));
+}
+
+static int	check_pipe(t_shell *shell, int cmd_nb)
+{
+	if (cmd_nb > 1)
 	{
-		pipes(shell->env, shell->command, count, shell);
+		pipes(shell->env, shell->command, cmd_nb, shell);
 		return (0);
 	}
 	else
@@ -56,7 +62,8 @@ int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 		return (0);
 	if (cmd->content[0][0] == '\0')
 		return (ft_putstr_fd("'': command not found\n", STDERR_FILENO), 0);
-	if ((ret_value = find_builtin(shell, cmd, env)) != -1)
+	ret_value = find_builtin(shell, cmd, env);
+	if (ret_value != -1)
 	{
 		shell->last_err_code = ret_value;
 		return (ret_value);
@@ -66,22 +73,22 @@ int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 	return (-1);
 }
 
-int find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
+int	find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 {
-        if (ft_strcmp(cmd->content[0], "echo") == 0)
-            return (echo(cmd->content));
-        else if (ft_strcmp(cmd->content[0], "cd") == 0)
-            return (cd(env, cmd->content, shell));
-        else if (ft_strcmp(cmd->content[0], "pwd") == 0)
-            return (pwd());
-        else if (ft_strcmp(cmd->content[0], "export") == 0)
-            return (export(env, cmd->content));
-        else if (ft_strcmp(cmd->content[0], "unset") == 0)
-            return (unset(cmd->content, env, shell));
-        else if (ft_strcmp(cmd->content[0], "env") == 0)
-            return (env_builtin(cmd->content, env));
-        else if (ft_strcmp(cmd->content[0], "exit") == 0)
-            return (exit_builtin(shell, cmd->content, env));
-        else
-            return (-1);
+	if (ft_strcmp(cmd->content[0], "echo") == 0)
+		return (echo(cmd->content));
+	else if (ft_strcmp(cmd->content[0], "cd") == 0)
+		return (cd(env, cmd->content, shell));
+	else if (ft_strcmp(cmd->content[0], "pwd") == 0)
+		return (pwd());
+	else if (ft_strcmp(cmd->content[0], "export") == 0)
+		return (export(env, cmd->content));
+	else if (ft_strcmp(cmd->content[0], "unset") == 0)
+		return (unset(cmd->content, env, shell));
+	else if (ft_strcmp(cmd->content[0], "env") == 0)
+		return (env_builtin(cmd->content, env));
+	else if (ft_strcmp(cmd->content[0], "exit") == 0)
+		return (exit_builtin(shell, cmd->content, env));
+	else
+		return (-1);
 }

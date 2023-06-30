@@ -56,6 +56,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	waitpid(pid, &ret_value, 0);
 	free(cmd_path);
 	free_env_str(env_str);
+	if (ret_value > 128)
+		ret_value = 1;
 	shell->last_err_code = ret_value;
 	return (0);
 }
