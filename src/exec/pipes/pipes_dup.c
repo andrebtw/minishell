@@ -12,9 +12,8 @@
 
 #include "minishell.h"
 
-int	pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd)
+int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 {
-
 	if (pipe->index == 0)
 	{
 		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)

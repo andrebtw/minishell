@@ -218,7 +218,7 @@ int		exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 
 /* PIPES */
 int		pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell);
-int		pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd);
+int		pipes_dup(t_pipe *pipe, t_cmd *cmd);
 void	close_pipes(t_pipe *pipe);
 
 /* REDIRECTIONS */

@@ -14,7 +14,7 @@
 
 int	check_redirections(t_shell *shell)
 {
-	shell->command->fd_in = get_infile(shell->command);
+	shell->command->fd_in = get_infile(shell, shell->command);
 	shell->command->fd_out = get_outfile(shell->command);
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
 		return (-1);
@@ -53,7 +53,7 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 		if (cmd->in_out_code[i] == IS_HEREDOC)
 		{
 			last_here_doc = i;
-			tmp_fd = ft_here_doc(cmd->in_out[i]);
+			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
 		}
 		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
 			last_here_doc = -1;
