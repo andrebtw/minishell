@@ -17,7 +17,7 @@ void	close_pipes(t_pipe *pipe)
 	int	i;
 
 	i = 0;
-	while (pipe->pipes_tab[i])
+	while (i < pipe->cmd_nb * 2)
 	{
 		close(pipe->pipes_tab[i]);
 		i++;
@@ -67,6 +67,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			}
 			pipes_dup(&pipe, cmd);
 			close_pipes(&pipe);
+			//close(pipe.pipes_tab[pipe.index - 1]);
 			if (find_builtin(shell, cmd, env) < 0)
 				exec_cmd(cmd, env, shell);
 			clean_exit(shell);
