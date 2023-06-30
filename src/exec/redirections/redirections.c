@@ -44,7 +44,6 @@ int	get_infile(t_cmd *cmd)
 
 	i = -1;
 	last_here_doc = 0;
-	cmd->here_doc = FALSE;
 	fd_in = STDIN_FILENO;
 	tmp_fd = fd_in;
 	if (!cmd->in_out_code)
