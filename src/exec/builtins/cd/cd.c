@@ -19,19 +19,19 @@ char		*cd_save_pwd(void);
 void		old_pwd_save(t_env **env, char *pwd_saved);
 void		update_pwd(t_env **env);
 
-int cd(t_env *env, char **args)
+int cd(t_env *env, char **args, t_shell *shell)
 {
 	int 	len;
 	char	*pwd_saved;
 
 	pwd_saved = cd_save_pwd();
 	if (!pwd_saved)
-		malloc_err_exit(NULL);
+		malloc_err_exit(shell);
 	len = args_nb(args);
 	if (len == 1)
 		return (cd_no_arg(env));
 	else if (len > 2)
-		return (ft_putstr_fd("🛸~> cd: too many arguments\n", STDERR_FILENO), 1);
+		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 		args[1] = replace_tilde(env);
 	if (args[1] && chdir(args[1]) != 0)

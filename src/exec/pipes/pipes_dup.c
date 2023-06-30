@@ -14,16 +14,12 @@
 
 int	pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd)
 {
-	int fd;
 
 	if (pipe->index == 0)
 	{
-		fd = get_infile(shell, cmd);
-		if (fd < 0)
-			return (-1);
-		if (fd != STDIN_FILENO)
-			do_dup(fd, pipe->pipes_tab[1]);
-		else
+		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
+			dup2(pipe->pipes_tab[1], 1);
+		else if (cmd->fd_in == STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
         {
             dup2(pipe->pipes_tab[1], 1);
             close(pipe->pipes_tab[1]);
@@ -31,19 +27,22 @@ int	pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd)
 	}
 	else if (pipe->index == pipe->cmd_nb - 1)
 	{
-		fd = get_outfile(cmd);
-		if (fd < 0)
-			return (-1);
-		if (fd != STDOUT_FILENO)
-			do_dup(pipe->pipes_tab[2 * pipe->index - 2], fd);
-		else
+		if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+			do_dup(pipe->pipes_tab[2 * pipe->index - 2], cmd->fd_out);
+		else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
         {
             dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
             close(pipe->pipes_tab[2 * pipe->index - 2]);
         }
 	}
 	else
-		do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
-	close_pipes(pipe);
+	{
+		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
+			dup2(pipe->pipes_tab[2 * pipe->index + 1], STDOUT_FILENO);
+		else if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+			dup2(pipe->pipes_tab[2 * pipe->index - 2], STDIN_FILENO);
+		else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
+	}
 	return (0);
 }

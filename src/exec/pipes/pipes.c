@@ -18,7 +18,7 @@ void	close_pipes(t_pipe *pipe)
 	int	i;
 
 	i = 0;
-	while (i < pipe->pipe_nb)
+	while (pipe->pipes_tab[i])
 	{
 		close(pipe->pipes_tab[i]);
 		i++;
@@ -43,7 +43,6 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 {
 	t_pipe	pipe;
     pid_t   pid;
-	int		i;
 
     pipe.cmd_nb = cmd_nb;
 	pipe.pipe_nb = cmd_nb * 2;
@@ -60,21 +59,24 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
             return (-1);
         else if (pid == 0)
         {
-			close(shell->fd_stdout);
-			close(shell->fd_stdin);
-            pipes_dup(shell, &pipe, cmd);
+			check_redirections(shell);
+			pipes_dup(&pipe, cmd);
+			close_pipes(&pipe);
             if (find_builtin(shell, cmd, env) < 0)
-                exec_cmd(cmd, env);
+                exec_cmd(cmd, env, shell);
 			if (cmd->here_doc == TRUE)
 				unlink(".here_doc");
-            exit(0);
+            clean_exit(shell);
         }
+		reset_fd(shell);
+		if (cmd->in_out_code[0])
+			waitpid(pid, NULL, 0);
 		cmd = cmd->next;
+		shell->command = shell->command->next;
 	}
+	reset_fd(shell);
 	close_pipes(&pipe);
-	i = -1;
-	while (++i < cmd_nb)
-		waitpid(-1, NULL, 0);
+	waitpid(pid, NULL, 0);
 	free(pipe.pipes_tab);
 	return (0);
 }

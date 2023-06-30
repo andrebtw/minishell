@@ -14,9 +14,7 @@
 
 int	check_redirections(t_shell *shell)
 {
-    shell->fd_stdin = dup(STDIN_FILENO);
-    shell->fd_stdout = dup(STDOUT_FILENO);
-	shell->command->fd_in = get_infile(shell, shell->command);
+	shell->command->fd_in = get_infile(shell->command);
 	shell->command->fd_out = get_outfile(shell->command);
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
 		return (-1);
@@ -41,10 +39,11 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 {
 	int fd_in;
 	int tmp_fd;
+	int	last_here_doc;
 	int i;
 
 	i = -1;
-	cmd->here_doc = FALSE;
+	last_here_doc = 0;
 	fd_in = STDIN_FILENO;
 	tmp_fd = fd_in;
 	if (!cmd->in_out_code)
@@ -52,9 +51,14 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 	while (cmd->in_out_code[++i])
 	{
 		if (cmd->in_out_code[i] == IS_HEREDOC)
-			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
+		{
+			last_here_doc = i;
+			tmp_fd = ft_here_doc(cmd->in_out[i]);
+		}
+		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
+			last_here_doc = -1;
 	}
-	if (cmd->in_out_code[--i] == IS_HEREDOC)
+	if (last_here_doc != -1)
 		fd_in = tmp_fd;
 	i = -1;
 	tmp_fd = STDIN_FILENO;
@@ -88,13 +92,11 @@ int	get_outfile(t_cmd *cmd)
 	outfile = -1;
 	i = -1;
 	fd_out = STDOUT_FILENO;
-	tmp = STDOUT_FILENO;
+	tmp = fd_out;
 	if (!cmd->in_out_code)
 		return (fd_out);
 	while (cmd->in_out_code[++i])
 	{
-		if (tmp != STDOUT_FILENO)
-			close(tmp);
 		if (cmd->in_out_code[i] == IS_OUT)
 		{
 			outfile = i;
@@ -109,6 +111,8 @@ int	get_outfile(t_cmd *cmd)
 		}
 		if (tmp < 0)
 			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
+		if (tmp != fd_out)
+			close(tmp);
 	}
 	if (outfile >= 0)
 	{
