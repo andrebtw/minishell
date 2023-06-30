@@ -69,13 +69,14 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			close_pipes(&pipe);
 			if (find_builtin(shell, cmd, env) < 0)
 				exec_cmd(cmd, env, shell);
-			if (cmd->here_doc == TRUE)
-				unlink(".here_doc");
 			clean_exit(shell);
 		}
 		reset_fd(shell);
 		if (is_here_doc(cmd))
+		{
 			waitpid(pid, &ret_value, 0);
+			unlink(".here_doc");
+		}
 		cmd = cmd->next;
 		shell->command = shell->command->next;
 	}

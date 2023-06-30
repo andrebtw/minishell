@@ -65,7 +65,7 @@ int	find_env(t_shell *shell, int *state, char *env_name)
 	env_value = is_in_env(shell, &shell->env, env_name);
 	if (!env_value)
 		return (FALSE);
-	free(env_name);
+	free(env_name); // DOUBLE FREE
 	env_value = env_spaces(env_value);
 	if (!env_value)
 		malloc_err_exit(shell);
