@@ -35,7 +35,7 @@ int	check_redirections(t_shell *shell)
 	return (0);
 }
 
-int	get_infile(t_cmd *cmd)
+int	get_infile(t_shell *shell, t_cmd *cmd)
 {
 	int fd_in;
 	int tmp_fd;

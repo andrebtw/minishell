@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 13:12:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/08 13:12:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/06/29 14:50:15 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
 int	error_cmd(char *cmd, char *file)

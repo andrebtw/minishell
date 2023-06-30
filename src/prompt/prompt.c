@@ -57,6 +57,7 @@ void	empty_prompt(t_shell *shell)
 		exit_builtin(shell, NULL, shell->env);
 	else
 	{
+		shell->last_err_code = 130;
 		ft_putchar_fd('\n', 1);
 		prompt(shell);
 	}
@@ -71,6 +72,7 @@ void	prompt(t_shell *shell)
 	g_state = IN_PROMPT;
 	signal(SIGQUIT, SIG_IGN);
 	shell->input = readline(prompt);
+	shell->last_err_code = 0;
 	free(prompt);
 	if (!shell->input)
 		empty_prompt(shell);

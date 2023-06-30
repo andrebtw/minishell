@@ -24,7 +24,7 @@ void	loop(t_shell *shell)
 			parsing(shell);
 			if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
 			{
-				//debug_print(shell);
+				// debug_print(shell);
 				cmd_nb(shell);
 			}
 			cmd_free(shell);
@@ -35,7 +35,7 @@ void	loop(t_shell *shell)
 void	init(char **envp)
 {
 	t_shell	shell;
-
+ 
 	g_state = BEFORE_PROMPT;
 	shell.last_err_code = 0;
 	shell.input = NULL;

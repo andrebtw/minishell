@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   pipes_dup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 18:08:48 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/14 15:29:17 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/06/27 12:29:36 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
+int	pipes_dup(t_shell *shell, t_pipe *pipe, t_cmd *cmd)
 {
 
 	if (pipe->index == 0)
