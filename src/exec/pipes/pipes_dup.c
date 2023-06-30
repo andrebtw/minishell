@@ -14,10 +14,11 @@
 
 int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
 {
+
 	if (pipe->index == 0)
 	{
 		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
-			do_dup(cmd->fd_in, pipe->pipes_tab[1]);
+			dup2(pipe->pipes_tab[1], 1);
 		else if (cmd->fd_in == STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
         {
             dup2(pipe->pipes_tab[1], 1);
