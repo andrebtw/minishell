@@ -58,8 +58,8 @@ void	envdel_elem(char *arg, t_env *env)
 	if (env && ft_strcmp(arg, env->name) == 0)
 	{
 		tmp = env->next;
-		env->name = strdup(tmp->name);
-		env->value = strdup(tmp->value);
+		env->name = ft_strdup(tmp->name);
+		env->value = ft_strdup(tmp->value);
 		env->next = tmp->next;
 		free(tmp->name);
 		free(tmp->value);
