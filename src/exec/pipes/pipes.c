@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipes.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/27 12:30:00 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/04 14:29:14 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,16 +67,17 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			}
 			pipes_dup(&pipe, cmd);
 			close_pipes(&pipe);
-			//close(pipe.pipes_tab[pipe.index - 1]);
 			if (find_builtin(shell, cmd, env) < 0)
 				exec_cmd(cmd, env, shell);
 			clean_exit(shell);
 		}
 		reset_fd(shell);
-		if (is_here_doc(cmd))
+		//waitpid(pid, &ret_value, 0);
+		if (is_here_doc(cmd) || cmd->in_out_code[0])
 		{
 			waitpid(pid, &ret_value, 0);
-			unlink(".here_doc");
+			if (is_here_doc(cmd))
+				unlink(".here_doc");
 		}
 		cmd = cmd->next;
 		shell->command = shell->command->next;
