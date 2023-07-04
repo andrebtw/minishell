@@ -6,11 +6,12 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/08 15:12:57 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/04 01:33:32 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
+extern int	g_code;
 
 int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 {
@@ -31,7 +32,7 @@ int	error_code_dollar(t_shell *shell, size_t *i, int *state)
 
 	if (!(shell->input[*i] == '$' && shell->input[*i + 1] == '?'))
 		return (FALSE);
-	error_code = ft_itoa(shell->last_err_code);
+	error_code = ft_itoa(g_code);
 	if (!error_code)
 		malloc_err_exit(shell);
 	if ((*state == DOUBLE_QUOTE || *state == NOT_INIT) || (*state == SPACE_SEP))

@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   unset.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:32:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/12 17:32:00 by mthibaul         ###   ########lyon.fr   */
+/*   Updated: 2023/07/04 01:35:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include "minishell.h"
 
+extern int	g_code;
 static int	check_arg(char *arg, t_shell *shell);
 static void	envdel_elem(char *arg, t_env *env);
 
@@ -29,12 +31,13 @@ static int	check_arg(char *arg, t_shell *shell)
 {
 	int	i;
 
+	(void)shell;
 	i = 0;
 	if (!ft_isalpha(arg[i]) && arg[i] != '_')
 	{
 		print_builtin_error("unset", arg);
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
-		shell->last_err_code = 1;
+		g_code = 1;
 		return (1);
 	}
 	while(arg[i])
@@ -43,7 +46,7 @@ static int	check_arg(char *arg, t_shell *shell)
 		{
 			print_builtin_error("unset", arg);
 			ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
-			shell->last_err_code = 1;
+			g_code = 1;
 			return (1);
 		}
 		i++;

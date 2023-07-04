@@ -6,11 +6,12 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:38:44 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/28 14:52:46 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/04 01:37:25 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	g_code;
 
 char	*is_in_env(t_shell *shell, t_env **env, char *env_name);
 
@@ -18,7 +19,7 @@ char	*last_err_code(t_shell *shell, char *line, size_t *i, char *output_str)
 {
 	char	*err_code;
 
-	err_code = ft_itoa(shell->last_err_code);
+	err_code = ft_itoa(g_code);
 	if (!err_code)
 		return (free(line), free(output_str), \
 		malloc_err_exit(shell), NULL);

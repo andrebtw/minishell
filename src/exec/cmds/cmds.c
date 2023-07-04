@@ -11,7 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int	g_state;
+extern int	g_code;
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
@@ -39,18 +39,12 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
         return (-1);
 	else if (cmd_path && pid == 0)
 	{
-		g_state = IN_EXECVE;
-		signal_init(NULL);
 		execve(cmd_path, cmd->content, env_str);
-		g_state = EXECUTION;
 		exit_builtin(NULL, NULL, env);
 	}
 	else if (pid == 0)
 	{
-		g_state = IN_EXECVE;
-		signal_init(NULL);
 		execve(cmd->content[0], cmd->content, env_str);
-		g_state = EXECUTION;
 		exit_builtin(NULL, NULL, env);
 	}
 	waitpid(pid, &ret_value, 0);
@@ -58,7 +52,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	free_env_str(env_str);
 	if (ret_value > 128)
 		ret_value = 1;
-	shell->last_err_code = ret_value;
+	g_code = ret_value;
 	return (0);
 }
 
@@ -82,6 +76,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	char	*cmd_path;
 	int		i;
 
+	(void)shell;
 	i = 0;
 	path = find_path(env);
 	while (path[i])
@@ -96,7 +91,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	}
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
-	shell->last_err_code = COMMAND_NOT_FOUND;
+	g_code = COMMAND_NOT_FOUND;
 	return (ft_free_tab(path), NULL);
 }
 

@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	g_state;
+int	g_code;
 
 void	loop(t_shell *shell)
 {
@@ -33,14 +33,12 @@ void	init(char **envp)
 {
 	t_shell	shell;
 
-	g_state = BEFORE_PROMPT;
-	shell.last_err_code = 0;
+	g_code = 0;
 	shell.input = NULL;
 	if (envp[0])
 		shell.env = envp_to_list(envp);
 	else
 		shell.env = empty_envp();
-	signal_init(&shell);
 	loop(&shell);
 }
 
