@@ -6,7 +6,7 @@
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/04 14:29:14 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/10 09:36:05 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 			clean_exit(shell);
 		}
 		reset_fd(shell);
-		//waitpid(pid, &ret_value, 0);
 		if (is_here_doc(cmd) || cmd->in_out_code[0])
 		{
 			waitpid(pid, &ret_value, 0);

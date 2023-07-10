@@ -18,7 +18,8 @@ int	check_redirections(t_shell *shell)
 	shell->command->fd_out = get_outfile(shell->command);
 	if (shell->command->fd_in < 0 || shell->command->fd_out < 0)
 		return (-1);
-	if (shell->command->fd_in != STDIN_FILENO && shell->command->fd_out != STDOUT_FILENO)
+	if (shell->command->fd_in != STDIN_FILENO
+		&& shell->command->fd_out != STDOUT_FILENO)
 		return (do_dup(shell->command->fd_in, shell->command->fd_out));
 	else if (shell->command->fd_in != STDIN_FILENO)
 	{
@@ -37,10 +38,10 @@ int	check_redirections(t_shell *shell)
 
 int	get_infile(t_shell *shell, t_cmd *cmd)
 {
-	int fd_in;
-	int tmp_fd;
+	int	fd_in;
+	int	tmp_fd;
 	int	last_here_doc;
-	int i;
+	int	i;
 
 	i = -1;
 	last_here_doc = 0;
@@ -85,11 +86,11 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 
 int	get_outfile(t_cmd *cmd)
 {
-	int outfile;
+	int	outfile;
 	int	fd_out;
-	int tmp;
-	int append;
-	int i;
+	int	tmp;
+	int	append;
+	int	i;
 
 	outfile = -1;
 	i = -1;
@@ -125,9 +126,8 @@ int	get_outfile(t_cmd *cmd)
 	}
 	if (fd_out < 0)
 		error_cmd(cmd->content[0], cmd->in_out[outfile]);
-	return(fd_out);
+	return (fd_out);
 }
-
 
 int	do_dup(int in, int out)
 {
