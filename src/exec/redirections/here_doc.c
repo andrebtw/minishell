@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:09:49 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/05 23:34:04 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 02:20:33 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ int	ft_here_doc(t_shell *shell, char *delimiter)
 		line = readline("> ");
 		if (g_code == 130)
 		{
-			signal(SIGQUIT, (void *)sig_handler_cmd);
-			signal(SIGINT, (void *)sig_handler_cmd);
+			signal(SIGQUIT, SIG_IGN);
+			signal(SIGINT, SIG_IGN);
 			return (-1);
 		}
 		if (!line)
@@ -59,8 +59,8 @@ int	ft_here_doc(t_shell *shell, char *delimiter)
 	free(line);
 	close(fd);
 	fd = open(".here_doc", O_RDONLY);
-	signal(SIGQUIT, (void *)sig_handler_cmd);
-	signal(SIGINT, (void *)sig_handler_cmd);
+	signal(SIGQUIT, (void *)SIG_IGN);
+	signal(SIGINT, (void *)SIG_IGN);
 	return (fd);
 }
 

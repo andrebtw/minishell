@@ -150,8 +150,8 @@ void		prompt(t_shell *shell);
 # define IN_EXECVE 6562
 
 void	sig_handler_prompt(const int signal);
-void	sig_handler_cmd(const int signal);
 void	sig_handler_heredoc(const int signal);
+void	sig_check_cmd_signal(int status);
 
 /* SIGNALS RESPONSE */
 # define CTRL_C 7000

@@ -24,8 +24,8 @@ void	prompt(t_shell *shell)
 	signal(SIGINT, (void *)sig_handler_prompt);
 	rl_getc_function = rl_getc;
 	shell->input = readline(PROMPT);
-	signal(SIGINT, (void *)sig_handler_cmd);
-	signal(SIGQUIT, (void *)sig_handler_cmd);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (!shell->input)
 		empty_prompt(shell);
 	add_history(shell->input);

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:54:35 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/04 02:12:06 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 02:19:10 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ void	sig_handler_cmd(const int signal)
 	{
 		g_code = 131;
 		ft_putstr_fd("Quit\n", 1);
+	}
+}
+
+void	sig_check_cmd_signal(int status)
+{
+	if (WIFSIGNALED(status))
+	{
+		if (WTERMSIG(status) == SIGINT)
+		{
+			g_code = 130;
+			ft_printf("\n");
+		}
+		if (WTERMSIG(status) == SIGQUIT)
+		{
+			g_code = 131;
+			ft_printf("Quit 3\n");
+		}
 	}
 }
 

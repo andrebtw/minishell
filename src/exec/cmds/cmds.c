@@ -36,18 +36,23 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
     env_str = env_to_str(env, FALSE);
     pid = fork();
     if (pid < 0)
-        return (-1);
+		return (-1);
 	else if (cmd_path && pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execve(cmd_path, cmd->content, env_str);
 		exit_builtin(NULL, NULL, env);
 	}
 	else if (pid == 0)
 	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
 		execve(cmd->content[0], cmd->content, env_str);
 		exit_builtin(NULL, NULL, env);
 	}
 	waitpid(pid, &ret_value, 0);
+	sig_check_cmd_signal(ret_value);
 	free(cmd_path);
 	free_env_str(env_str);
 	if (ret_value > 128)
