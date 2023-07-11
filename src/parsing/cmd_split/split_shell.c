@@ -14,6 +14,7 @@
 
 int		quotes_state_redirect(t_shell *shell, size_t i, int state);
 int		quotes_state(t_shell *shell, size_t i, int state);
+void	add_to_char(t_shell *shell, size_t *i, int *state);
 
 int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
 {
@@ -54,7 +55,6 @@ void	end_found(t_shell *shell, size_t i)
 	replace_empty_spaces(shell);
 	if (add_node(&shell->command, i, shell))
 		malloc_err_exit(shell);
-	free(shell->parsing.current_in_out_code);
 	shell->parsing.current_in_out_code = NULL;
 	shell->parsing.current_in_out_code = ft_strdup("");
 	if (!shell->parsing.current_in_out_code)
@@ -63,45 +63,6 @@ void	end_found(t_shell *shell, size_t i)
 	free(shell->parsing.current_redirect_str);
 	shell->parsing.current_str = NULL;
 	shell->parsing.current_redirect_str = NULL;
-}
-
-void	add_to_char(t_shell *shell, size_t *i, int *state)
-{
-	env_gestion(shell, i, state);
-	if (!shell->input[*i])
-		return ;
-	if (*state == NOT_INIT && !ft_strchr(" \t<>|\'\"", shell->input[*i]))
-	{
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);
-		if (ft_strchr("><", shell->input[*i + 1]))
-		{
-			shell->parsing.current_str = ft_strjoin_free_char(
-					shell->parsing.current_str, SEPARATOR, 1);
-			if (!shell->parsing.current_str)
-				malloc_err_exit(shell);
-		}
-		return ;
-	}
-	separators_split(shell, i, state);
-	if (*state == SINGLE_QUOTE)
-	{
-		if (shell->input[*i] != '\'')
-			shell->parsing.current_str = ft_strjoin_free_char(
-					shell->parsing.current_str, shell->input[*i], 1);
-		if (!shell->parsing.current_str)
-			malloc_err_exit(shell);
-		return ;
-	}
-	if (*state == DOUBLE_QUOTE)
-	{
-		if (shell->input[*i] != '\"')
-			shell->parsing.current_str = ft_strjoin_free_char(
-					shell->parsing.current_str, shell->input[*i], 1);
-		if (!shell->parsing.current_str)
-			malloc_err_exit(shell);
-		return ;
-	}
 }
 
 void	add_to_char_redirect(t_shell *shell, size_t *i, int *state)
@@ -157,4 +118,5 @@ void	split_shell(t_shell *shell)
 	}
 	split_shell_loop(shell, i, state);
 	end_found(shell, i);
+	free(shell->parsing.current_in_out_code);
 }

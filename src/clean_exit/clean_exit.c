@@ -24,6 +24,7 @@ void	clean_exit(t_shell *shell)
 	rl_clear_history();
 	if (shell->input)
 		free(shell->input);
+	cmd_free(shell);
 	exit(EXIT_SUCCESS);
 }
 

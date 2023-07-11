@@ -6,11 +6,12 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/04 01:33:32 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 04:37:32 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
+
 extern int	g_code;
 
 int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
@@ -21,7 +22,8 @@ int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 		ft_putstr_fd("⛔️: $", STDERR_FILENO);
 		ft_putstr_fd(env_name, STDERR_FILENO);
 		ft_putstr_fd(": ambiguous redirect\n", 2);
-		return (shell->parsing.error_code_parsing = ERR_ENV_EMPTY_REDIRECT, TRUE);
+		return (shell->parsing.error_code_parsing = \
+		ERR_ENV_EMPTY_REDIRECT, TRUE);
 	}
 	return (FALSE);
 }
@@ -37,8 +39,8 @@ int	error_code_dollar(t_shell *shell, size_t *i, int *state)
 		malloc_err_exit(shell);
 	if ((*state == DOUBLE_QUOTE || *state == NOT_INIT) || (*state == SPACE_SEP))
 	{
-		shell->parsing.current_str = ft_strjoin_free(shell->parsing.current_str,\
-		error_code, 1, 1);
+		shell->parsing.current_str = ft_strjoin_free(\
+		shell->parsing.current_str, error_code, 1, 1);
 		if (!shell->parsing.current_str)
 			malloc_err_exit(shell);
 	}
