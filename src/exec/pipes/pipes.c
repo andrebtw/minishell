@@ -6,11 +6,12 @@
 /*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/10 09:36:05 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/06 02:21:34 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+extern int	g_code;
 
 void	close_pipes(t_pipe *pipe)
 {
@@ -84,7 +85,7 @@ int	pipes(t_env *env, t_cmd *cmd, int cmd_nb, t_shell *shell)
 	reset_fd(shell);
 	close_pipes(&pipe);
 	waitpid(pid, &ret_value, 0);
-	shell->last_err_code = ret_value;
+	g_code = ret_value;
 	free(pipe.pipes_tab);
 	return (0);
 }

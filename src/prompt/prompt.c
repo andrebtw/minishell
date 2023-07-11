@@ -11,69 +11,21 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
-extern int	g_state;
-
-char	*join_code(t_shell *shell, char *r_prompt, char *err_code)
-{
-	r_prompt = ft_strjoin_free(r_prompt, "\x1B[31m[", 1, 0);
-	if (!r_prompt)
-		return (free(err_code), malloc_err_exit(shell), NULL);
-	r_prompt = ft_strjoin_free(r_prompt, err_code, 1, 1);
-	if (!r_prompt)
-		return (malloc_err_exit(shell), NULL);
-	r_prompt = ft_strjoin_free(r_prompt, "] \x1B[0m", 1, 0);
-	if (!r_prompt)
-		return (malloc_err_exit(shell), NULL);
-	return (r_prompt);
-}
-
-char	*create_prompt(t_shell *shell)
-{
-	char	*r_prompt;
-	char	*err_code;
-
-	if (shell->last_err_code == 0)
-	{
-		r_prompt = ft_strdup(PROMPT);
-		if (!r_prompt)
-			return (malloc_err_exit(shell), NULL);
-		return (r_prompt);
-	}
-	err_code = ft_itoa(shell->last_err_code);
-	if (!err_code)
-		return (malloc_err_exit(shell), NULL);
-	r_prompt = ft_strdup(PROMPT);
-	if (!r_prompt)
-		return (free(err_code), malloc_err_exit(shell), NULL);
-	r_prompt = join_code(shell, r_prompt, err_code);
-	return (r_prompt);
-}
+extern int	g_code;
 
 void	empty_prompt(t_shell *shell)
 {
-	if (g_state == CTRL_SLASH)
-		return ;
-	if (g_state != CTRL_C)
-		exit_builtin(shell, NULL, shell->env);
-	else
-	{
-		shell->last_err_code = 130;
-		ft_putchar_fd('\n', 1);
-		prompt(shell);
-	}
+	exit_builtin(shell, NULL, shell->env);
 }
 
 void	prompt(t_shell *shell)
 {
-	char	*prompt;
-
-	prompt = create_prompt(shell);
-	rl_getc_function = getc;
-	g_state = IN_PROMPT;
 	signal(SIGQUIT, SIG_IGN);
-	shell->input = readline(prompt);
-	shell->last_err_code = 0;
-	free(prompt);
+	signal(SIGINT, (void *)sig_handler_prompt);
+	rl_getc_function = rl_getc;
+	shell->input = readline(PROMPT);
+	signal(SIGINT, SIG_IGN);
+	signal(SIGQUIT, SIG_IGN);
 	if (!shell->input)
 		empty_prompt(shell);
 	add_history(shell->input);

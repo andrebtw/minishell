@@ -128,7 +128,6 @@ typedef struct s_shell
 	t_parsing	parsing;
 	t_cmd		*command;
 	char		*input;
-	int			last_err_code;
 	int			fd_stdin;
 	int			fd_stdout;
 	t_env		*env;
@@ -149,6 +148,10 @@ void		prompt(t_shell *shell);
 # define EXECUTION 6557
 # define IN_HEREDOC 6561
 # define IN_EXECVE 6562
+
+void	sig_handler_prompt(const int signal);
+void	sig_handler_heredoc(const int signal);
+void	sig_check_cmd_signal(int status);
 
 /* SIGNALS RESPONSE */
 # define CTRL_C 7000

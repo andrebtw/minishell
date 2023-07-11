@@ -21,7 +21,7 @@ int	exit_builtin(t_shell *shell, char **args, t_env *env)
 
 	errno = 0;
 	return_value = 0;
-	printf("exit\n");
+	ft_printf("exit\n");
 	if (args && args[1])
 	{
 		if (args[2])

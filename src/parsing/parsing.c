@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+extern int	g_code;
 
 int	same_word(char *cmd, char *string)
 {
@@ -78,5 +79,5 @@ void	parsing(t_shell *shell)
 	if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
 		detect_builtin(shell);
 	else
-		shell->last_err_code = 2;
+		g_code = 2;
 }

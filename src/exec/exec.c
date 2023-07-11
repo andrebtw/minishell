@@ -6,13 +6,13 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/07 11:12:54 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/04 02:17:09 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-extern int	g_state;
+extern int	g_code;
 int			check_cmd(t_shell *shell, t_env *env, t_cmd *cmd);
 static int	check_pipe(t_shell *shell, int cmd_nb);
 
@@ -21,7 +21,6 @@ int	cmd_nb(t_shell *shell)
 	int		count;
 	t_cmd	*tmp;
 
-	g_state = EXECUTION;
 	shell->fd_stdin = dup(STDIN_FILENO);
 	shell->fd_stdout = dup(STDOUT_FILENO);
 	count = 0;
@@ -65,7 +64,7 @@ int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 	ret_value = find_builtin(shell, cmd, env);
 	if (ret_value != -1)
 	{
-		shell->last_err_code = ret_value;
+		g_code = ret_value;
 		return (ret_value);
 	}
 	else if (exec_cmd(cmd, env, shell) != -1)
