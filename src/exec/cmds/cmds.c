@@ -110,7 +110,7 @@ char	**find_path(t_env *env)
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 {
 	pid_t	pid;
-	
+
 	pid = fork();
 	if (pid < 0)
 		return (-1);

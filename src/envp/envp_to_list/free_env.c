@@ -3,25 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:25:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/25 11:43:10 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/13 14:46:23 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incl/minishell.h"
+#include "minishell.h"
 
-void free_env(t_env *env)
+void	free_env(t_env *env)
 {
-        t_env   *tmp;
+	t_env	*tmp;
 
-        while (env)
-        {
-            tmp = env->next;
-            free(env->name);
-            free(env->value);
-            free(env);
-            env = tmp;
-        }
+	while (env)
+	{
+		tmp = env->next;
+		free(env->name);
+		free(env->value);
+		free(env);
+		env = tmp;
+	}
 }
