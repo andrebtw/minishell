@@ -19,9 +19,9 @@ char		*cd_save_pwd(void);
 void		old_pwd_save(t_env **env, char *pwd_saved);
 void		update_pwd(t_env **env);
 
-int cd(t_env *env, char **args, t_shell *shell)
+int	cd(t_env *env, char **args, t_shell *shell)
 {
-	int 	len;
+	int		len;
 	char	*pwd_saved;
 
 	pwd_saved = cd_save_pwd();
@@ -47,7 +47,7 @@ int cd(t_env *env, char **args, t_shell *shell)
 
 static char	*replace_tilde(t_env *env)
 {
-	char *path;
+	char	*path;
 
 	while (env)
 	{
@@ -62,7 +62,7 @@ static char	*replace_tilde(t_env *env)
 	return (NULL);
 }
 
-static int cd_no_arg(t_env *env)
+static int	cd_no_arg(t_env *env)
 {
 	while (env)
 	{
@@ -82,7 +82,7 @@ static int cd_no_arg(t_env *env)
 	return (1);
 }
 
-static int args_nb(char **args)
+static int	args_nb(char **args)
 {
 	int	i;
 

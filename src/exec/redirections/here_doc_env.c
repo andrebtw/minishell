@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:38:44 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/04 01:37:25 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/13 13:03:49 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 extern int	g_code;
 
 char	*is_in_env(t_shell *shell, t_env **env, char *env_name);

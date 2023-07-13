@@ -36,115 +36,20 @@ int	check_redirections(t_shell *shell)
 	return (0);
 }
 
-int	get_infile(t_shell *shell, t_cmd *cmd)
-{
-	int	fd_in;
-	int	tmp_fd;
-	int	last_here_doc;
-	int	i;
-
-	cmd->here_doc = FALSE;
-	i = -1;
-	last_here_doc = 0;
-	fd_in = STDIN_FILENO;
-	tmp_fd = fd_in;
-	if (!cmd->in_out_code)
-		return (fd_in);
-	while (cmd->in_out_code[++i])
-	{
-		if (cmd->in_out_code[i] == IS_HEREDOC)
-		{
-			last_here_doc = i;
-			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
-			cmd->here_doc = TRUE;
-			if (tmp_fd == -1)
-				return (-1);
-		}
-		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
-			last_here_doc = -1;
-	}
-	if (last_here_doc != -1)
-		fd_in = tmp_fd;
-	i = -1;
-	tmp_fd = STDIN_FILENO;
-	while (cmd->in_out_code[++i])
-	{
-		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
-		{
-			if (tmp_fd != STDIN_FILENO)
-				close(tmp_fd);
-			if (cmd->in_out_code[i] == IS_IN)
-			{
-				tmp_fd = open(cmd->in_out[i], O_RDONLY);
-				if (tmp_fd < 0)
-					return (error_cmd(cmd->content[0], cmd->in_out[i]));
-			}
-		}
-	}
-	if (fd_in == STDIN_FILENO)
-		fd_in = tmp_fd;
-	return (fd_in);
-}
-
-int	get_outfile(t_cmd *cmd)
-{
-	int	outfile;
-	int	fd_out;
-	int	tmp;
-	int	append;
-	int	i;
-
-	outfile = -1;
-	i = -1;
-	fd_out = STDOUT_FILENO;
-	tmp = fd_out;
-	if (!cmd->in_out_code)
-		return (fd_out);
-	while (cmd->in_out_code[++i])
-	{
-		if (cmd->in_out_code[i] == IS_OUT)
-		{
-			outfile = i;
-			append = 0;
-			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		}
-		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
-		{
-			outfile = i;
-			append = 1;
-			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
-		}
-		if (tmp < 0)
-			return (error_cmd(cmd->content[0], cmd->in_out[outfile]));
-		if (tmp != fd_out)
-			close(tmp);
-	}
-	if (outfile >= 0)
-	{
-		if (append == 1)
-			fd_out = open(cmd->in_out[outfile], O_WRONLY | O_APPEND, 0644);
-		else
-			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
-	}
-	if (fd_out < 0)
-		error_cmd(cmd->content[0], cmd->in_out[outfile]);
-	return (fd_out);
-}
-
 int	do_dup(int in, int out)
 {
 	if (dup2(in, STDIN_FILENO) < 0 || dup2(out, STDOUT_FILENO) < 0)
 		return (-1);
-    close(in);
-    close(out);
+	close(in);
+	close(out);
 	return (0);
 }
 
-int reset_fd(t_shell *shell)
+int	reset_fd(t_shell *shell)
 {
-    dup2(shell->fd_stdin, STDIN_FILENO);
+	dup2(shell->fd_stdin, STDIN_FILENO);
 	close(shell->fd_stdin);
-    dup2(shell->fd_stdout, STDOUT_FILENO);
+	dup2(shell->fd_stdout, STDOUT_FILENO);
 	close(shell->fd_stdout);
 	return (0);
 }

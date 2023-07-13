@@ -47,7 +47,6 @@ SRCS =	main.c \
 		signals/signals.c \
 		signals/signal_handler.c \
 		linked_lists/lstcreate.c \
-		test.c \
 		envp/envp_to_list/envp_to_list.c \
 		envp/empty_envp/empty_envp.c \
 		envp/envp_to_list/find_list_content.c \
@@ -72,6 +71,8 @@ SRCS =	main.c \
 		exec/errors/errors.c \
 		exec/redirections/here_doc.c \
 		exec/redirections/here_doc_env.c \
+		exec/redirections/get_infile.c \
+		exec/redirections/get_outfile.c \
 
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 

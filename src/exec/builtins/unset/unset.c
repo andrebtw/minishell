@@ -40,7 +40,7 @@ static int	check_arg(char *arg, t_shell *shell)
 		g_code = 1;
 		return (1);
 	}
-	while(arg[i])
+	while (arg[i])
 	{
 		if (!ft_isalnum(arg[i]) && arg[i] != '_')
 		{

@@ -3,28 +3,42 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 17:09:49 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/11 02:20:33 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/13 13:24:18 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_code;
-int		check_here_doc(char *av, char *line);
-char	*here_doc_env(t_shell *shell, char *line);
+static int	check_here_doc(char *av, char *line);
+char		*here_doc_env(t_shell *shell, char *line);
+static int	get_input(char *delimiter, int fd, t_shell *shell);
+static int	check_line(char *delimiter, char *line, int fd, t_shell *shell);
 
 int	ft_here_doc(t_shell *shell, char *delimiter)
 {
 	int		fd;
-	char	*line;
 
 	unlink(".here_doc");
 	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
+	if (get_input(delimiter, fd, shell) != 0)
+		return (-1);
+	close(fd);
+	fd = open(".here_doc", O_RDONLY);
+	signal(SIGQUIT, (void *)SIG_IGN);
+	signal(SIGINT, (void *)SIG_IGN);
+	return (fd);
+}
+
+static int	get_input(char *delimiter, int fd, t_shell *shell)
+{
+	char	*line;
+
 	line = NULL;
 	while (check_here_doc(delimiter, line) > 0)
 	{
@@ -39,32 +53,14 @@ int	ft_here_doc(t_shell *shell, char *delimiter)
 			signal(SIGINT, SIG_IGN);
 			return (-1);
 		}
-		if (!line)
-		{
-			ft_putstr_fd("warning: here-document at line 2 delimited by end-of-file (wanted `", 2);
-			ft_putstr_fd(delimiter, 2);
-			ft_putstr_fd("')\n", 2);
+		if (check_line(delimiter, line, fd, shell) != 0)
 			break ;
-		}
-		else
-		{
-			line = here_doc_env(shell, line);
-			if (check_here_doc(delimiter, line) > 0)
-			{
-				line = ft_strjoin(line, "\n");
-				write(fd, line, ft_strlen(line));
-			}
-		}
 	}
 	free(line);
-	close(fd);
-	fd = open(".here_doc", O_RDONLY);
-	signal(SIGQUIT, (void *)SIG_IGN);
-	signal(SIGINT, (void *)SIG_IGN);
-	return (fd);
+	return (0);
 }
 
-int	check_here_doc(char *delimiter, char *line)
+static int	check_here_doc(char *delimiter, char *line)
 {
 	if (line)
 	{
@@ -72,4 +68,26 @@ int	check_here_doc(char *delimiter, char *line)
 			return (0);
 	}
 	return (1);
+}
+
+int	check_line(char *delimiter, char *line, int fd, t_shell *shell)
+{
+	if (!line)
+	{
+		ft_putstr_fd("warning: here-document at line 2", 2);
+		ft_putstr_fd("delimited by end-of-file (wanted `", 2);
+		ft_putstr_fd(delimiter, 2);
+		ft_putstr_fd("')\n", 2);
+		return (-1);
+	}
+	else
+	{
+		line = here_doc_env(shell, line);
+		if (check_here_doc(delimiter, line) > 0)
+		{
+			line = ft_strjoin(line, "\n");
+			write(fd, line, ft_strlen(line));
+		}
+	}
+	return (0);
 }

@@ -14,7 +14,7 @@
 
 int	error_cmd(char *cmd, char *file)
 {
-	char *error;
+	char	*error;
 
 	if (cmd != NULL && ft_strcmp(cmd, "") != 0)
 	{

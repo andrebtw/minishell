@@ -12,8 +12,8 @@
 
 #include "minishell.h"
 
-int is_newline(char *arg);
-int print_args(char **arg);
+int	is_newline(char *arg);
+int	print_args(char **arg);
 
 int	echo(char **arg)
 {
@@ -39,9 +39,8 @@ int	echo(char **arg)
 	return (0);
 }
 
-int is_newline(char *arg)
+int	is_newline(char *arg)
 {
-
 	if (*arg == '-')
 	{
 		arg++;
@@ -57,9 +56,9 @@ int is_newline(char *arg)
 	return (0);
 }
 
-int print_args(char **arg)
+int	print_args(char **arg)
 {
-	while(*arg)
+	while (*arg)
 	{
 		if (printf("%s", *arg) < 0)
 			return (1);

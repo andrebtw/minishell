@@ -11,18 +11,20 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 extern int	g_code;
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 int		find_slash(char *cmd);
+pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell);
 
 int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
-	int 	ret_value;
+	int		ret_value;
 	char	*cmd_path;
 	char	**env_str;
-    pid_t   pid;
+	pid_t	pid;
 
 	ret_value = 0;
 	if (find_slash(cmd->content[0]) == 1)
@@ -33,24 +35,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	}
 	else
 		cmd_path = NULL;
-    env_str = env_to_str(env, FALSE);
-    pid = fork();
-    if (pid < 0)
-		return (-1);
-	else if (cmd_path && pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		execve(cmd_path, cmd->content, env_str);
-		exit_builtin(NULL, NULL, env);
-	}
-	else if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		execve(cmd->content[0], cmd->content, env_str);
-		exit_builtin(NULL, NULL, env);
-	}
+	env_str = env_to_str(env, FALSE);
+	pid = exec_fork(cmd_path, env_str, shell);
 	waitpid(pid, &ret_value, 0);
 	sig_check_cmd_signal(ret_value);
 	free(cmd_path);
@@ -119,4 +105,28 @@ char	**find_path(t_env *env)
 		i++;
 	}
 	return (path);
+}
+
+pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
+{
+	pid_t	pid;
+	
+	pid = fork();
+	if (pid < 0)
+		return (-1);
+	else if (cmd_path && pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		execve(cmd_path, shell->command->content, env_str);
+		exit_builtin(NULL, NULL, shell->env);
+	}
+	else if (pid == 0)
+	{
+		signal(SIGINT, SIG_DFL);
+		signal(SIGQUIT, SIG_DFL);
+		execve(shell->command->content[0], shell->command->content, env_str);
+		exit_builtin(NULL, NULL, shell->env);
+	}
+	return (pid);
 }
