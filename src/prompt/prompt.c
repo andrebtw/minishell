@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "minishell.h"
+
 extern int	g_code;
 
 void	empty_prompt(t_shell *shell)

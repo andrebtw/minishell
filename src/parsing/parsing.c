@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../../incl/minishell.h"
+
 extern int	g_code;
 
 int	same_word(char *cmd, char *string)

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/11 19:27:37 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/08 12:42:37 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 04:39:26 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ void	check_quotes(t_shell *shell, size_t *i, int is_redirect)
 	if (shell->input[*i] == '\"' && shell->input[*i + 1] == '\"')
 	{
 		*i = *i + 2;
-		if ((!shell->input[*i] || !ft_strchr("\'\"", shell->input[*i])) &&
-			(shell->parsing.quote_end == FALSE && ft_strchr(" \t", shell->input[*i])))
+		if ((!shell->input[*i] || !ft_strchr("\'\"", shell->input[*i])) && (\
+		shell->parsing.quote_end == FALSE && ft_strchr(" \t", shell->input[*i])))
 		{
 			if (is_redirect)
 				add_separator_redirect(shell);
@@ -61,8 +61,8 @@ void	check_quotes(t_shell *shell, size_t *i, int is_redirect)
 	if (shell->input[*i] == '\'' && shell->input[*i + 1] == '\'')
 	{
 		*i = *i + 2;
-		if ((!shell->input[*i] || !ft_strchr("\'\"", shell->input[*i])) &&
-			(shell->parsing.quote_end == FALSE && ft_strchr(" \t", shell->input[*i])))
+		if ((!shell->input[*i] || !ft_strchr("\'\"", shell->input[*i])) && (\
+		shell->parsing.quote_end == FALSE && ft_strchr(" \t", shell->input[*i])))
 		{
 			if (is_redirect)
 				add_separator_redirect(shell);

@@ -6,11 +6,12 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:55:09 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/04 02:44:09 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 04:36:02 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
+
 extern int	g_code;
 
 int	empty_check(t_shell *shell, size_t i)

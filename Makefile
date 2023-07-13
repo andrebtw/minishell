@@ -31,6 +31,7 @@ SRCS =	main.c \
 		clean_exit/clean_exit.c \
 		parsing/cmd_split/split_shell.c \
 		parsing/cmd_split/split_shell2.c \
+		parsing/cmd_split/split_shell3.c \
 		parsing/cmd_split/split_shell_state.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
@@ -45,7 +46,6 @@ SRCS =	main.c \
 		parsing/errors/redirections.c \
 		parsing/cmd_free/cmd_free.c \
 		signals/signals.c \
-		signals/signal_handler.c \
 		linked_lists/lstcreate.c \
 		envp/envp_to_list/envp_to_list.c \
 		envp/empty_envp/empty_envp.c \
