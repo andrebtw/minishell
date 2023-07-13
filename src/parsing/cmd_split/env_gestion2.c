@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/27 12:25:49 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 04:39:52 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	find_env(t_shell *shell, int *state, char *env_name)
 	env_value = is_in_env(shell, &shell->env, env_name);
 	if (!env_value)
 		return (FALSE);
-	free(env_name); // DOUBLE FREE
+	free(env_name);
 	env_value = env_spaces(env_value);
 	if (!env_value)
 		malloc_err_exit(shell);
@@ -85,6 +85,7 @@ int	find_env(t_shell *shell, int *state, char *env_name)
 	}
 	return (TRUE);
 }
+
 int	heredoc_env_remove(t_shell *shell, size_t *i, int *state)
 {
 	(void)*state;

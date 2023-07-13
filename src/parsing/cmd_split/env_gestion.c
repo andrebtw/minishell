@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/15 09:42:08 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/11 04:36:40 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ int	write_dollar(t_shell *shell, size_t *i, int *state)
 				malloc_err_exit(shell);
 		}
 		return (TRUE);
-		
 	}
 	return (FALSE);
 }
@@ -89,7 +88,7 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	if (!env_name)
 		malloc_err_exit(shell);
 	while (shell->input[*i] && 
-			(ft_isalnum(shell->input[*i]) || ft_strchr("_", shell->input[*i])))
+		(ft_isalnum(shell->input[*i]) || ft_strchr("_", shell->input[*i])))
 	{
 		env_name = ft_strjoin_free_char(env_name, shell->input[*i], TRUE);
 		if (!env_name)
