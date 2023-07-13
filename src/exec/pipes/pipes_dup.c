@@ -12,48 +12,47 @@
 
 #include "minishell.h"
 
-int	pipes_dup(t_pipe *pipe, t_cmd *cmd)
+void	pipes_dup2(t_pipe *pipe, t_cmd *cmd, int *ret_value);
+
+int	pipes_dup(t_pipe *p, t_cmd *cmd)
 {
-	if (pipe->index == 0)
+	int	ret_value;
+
+	ret_value = 0;
+	if (p->index == 0)
 	{
-		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
+		if (cmd->fd_out == STDOUT_FILENO)
 		{
-			dup2(pipe->pipes_tab[1], 1);
-			close(pipe->pipes_tab[1]);
+			ret_value = dup2(p->pipes_tab[1], 1);
+			close(p->pipes_tab[1]);
 		}
-		else if (cmd->fd_in == STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
-        {
-            dup2(pipe->pipes_tab[1], 1);
-            close(pipe->pipes_tab[1]);
-        }
 	}
-	else if (pipe->index == pipe->cmd_nb - 1)
+	else if (p->index == p->cmd_nb - 1)
 	{
-		if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+		if (cmd->fd_in == STDIN_FILENO)
 		{
-			dup2(pipe->pipes_tab[2 * pipe->index - 2], STDIN_FILENO);
-			close(pipe->pipes_tab[2 * pipe->index - 2]);
+			ret_value = dup2(p->pipes_tab[2 * p->index - 2], STDIN_FILENO);
+			close(p->pipes_tab[2 * p->index - 2]);
 		}
-		else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
-        {
-            dup2(pipe->pipes_tab[2 * pipe->index - 2], 0);
-            close(pipe->pipes_tab[2 * pipe->index - 2]);
-        }
 	}
 	else
+		pipes_dup2(p, cmd, &ret_value);
+	return (ret_value);
+}
+
+void	pipes_dup2(t_pipe *pipe, t_cmd *cmd, int *ret_value)
+{
+	if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
 	{
-		if (cmd->fd_in != STDIN_FILENO && cmd->fd_out == STDOUT_FILENO)
-		{
-			dup2(pipe->pipes_tab[2 * pipe->index + 1], STDOUT_FILENO);
-			close(pipe->pipes_tab[2 * pipe->index + 1]);
-		}
-		else if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
-		{
-			dup2(pipe->pipes_tab[2 * pipe->index - 2], STDIN_FILENO);
-			close(pipe->pipes_tab[2 * pipe->index - 2]);
-		}
-		else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
-			do_dup(pipe->pipes_tab[2 * pipe->index - 2], pipe->pipes_tab[2 * pipe->index + 1]);
+		*ret_value = dup2(pipe->pipes_tab[2 * pipe->index + 1], STDOUT_FILENO);
+		close(pipe->pipes_tab[2 * pipe->index + 1]);
 	}
-	return (0);
+	else if (cmd->fd_out != STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+	{
+		*ret_value = dup2(pipe->pipes_tab[2 * pipe->index - 2], STDIN_FILENO);
+		close(pipe->pipes_tab[2 * pipe->index - 2]);
+	}
+	else if (cmd->fd_out == STDOUT_FILENO && cmd->fd_in == STDIN_FILENO)
+		*ret_value = do_dup(pipe->pipes_tab[2 * pipe->index - 2], \
+			pipe->pipes_tab[2 * pipe->index + 1]);
 }

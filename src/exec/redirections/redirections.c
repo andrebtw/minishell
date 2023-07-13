@@ -43,6 +43,7 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 	int	last_here_doc;
 	int	i;
 
+	cmd->here_doc = FALSE;
 	i = -1;
 	last_here_doc = 0;
 	fd_in = STDIN_FILENO;
@@ -55,6 +56,7 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 		{
 			last_here_doc = i;
 			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
+			cmd->here_doc = TRUE;
 			if (tmp_fd == -1)
 				return (-1);
 		}

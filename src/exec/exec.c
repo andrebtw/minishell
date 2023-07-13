@@ -37,7 +37,8 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 {
 	if (cmd_nb > 1)
 	{
-		pipes(shell->env, shell->command, cmd_nb, shell);
+		pipes(shell->command, cmd_nb, shell);
+		unlink(".here_doc");
 		return (0);
 	}
 	else
@@ -49,6 +50,7 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 		if (shell->command->here_doc == TRUE)
 			unlink(".here_doc");
 		reset_fd(shell);
+		unlink(".here_doc");
 		return (0);
 	}
 }
