@@ -15,10 +15,11 @@
 static int	check_arg(char *arg, t_env *env);
 static int	print_export(t_env *env);
 static int	already_exists(char *name, char*value, t_env *env);
+int			check_arg2(char *arg, t_env *env, int i);
 
-int export(t_env *env, char **arg)
+int	export(t_env *env, char **arg)
 {
-	int ret_value;
+	int	ret_value;
 
 	ret_value = 0;
 	if (!arg[1])
@@ -33,7 +34,7 @@ int export(t_env *env, char **arg)
 	return (ret_value);
 }
 
-static int check_arg(char *arg, t_env *env)
+static int	check_arg(char *arg, t_env *env)
 {
 	int	i;
 
@@ -44,20 +45,12 @@ static int check_arg(char *arg, t_env *env)
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 		return (1);
 	}
-	while(arg[i])
+	while (arg[i])
 	{
-		if (arg[i] == '=')
-		{
-			if (already_exists(find_name(arg), find_value(arg), env) == FALSE)
-				return (envadd_elem(env, find_name(arg), find_value(arg), TRUE));
+		if (check_arg2(arg, env, i) == 0)
 			return (0);
-		}
-		if (!ft_isalnum(arg[i]) && arg[i] != '_')
-		{
-			print_builtin_error("export", arg);
-			ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
+		else if (check_arg2(arg, env, i) == 1)
 			return (1);
-		}
 		i++;
 	}
 	if (already_exists(find_name(arg), NULL, env) == FALSE)
@@ -65,7 +58,25 @@ static int check_arg(char *arg, t_env *env)
 	return (0);
 }
 
-static int already_exists(char *name, char *value, t_env *env)
+int	check_arg2(char *arg, t_env *env, int i)
+{
+	if (arg[i] == '=')
+	{
+		if (already_exists(find_name(arg), find_value(arg), env) == FALSE)
+			return (envadd_elem(env, find_name(arg), \
+					find_value(arg), TRUE));
+		return (0);
+	}
+	if (!ft_isalnum(arg[i]) && arg[i] != '_')
+	{
+		print_builtin_error("export", arg);
+		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
+		return (1);
+	}
+	return (2);
+}
+
+static int	already_exists(char *name, char *value, t_env *env)
 {
 	while (env)
 	{
