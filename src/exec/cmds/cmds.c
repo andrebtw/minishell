@@ -24,7 +24,6 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	int		ret_value;
 	char	*cmd_path;
 	char	**env_str;
-	pid_t	pid;
 
 	ret_value = 0;
 	if (find_slash(cmd->content[0]) == 1)
@@ -36,8 +35,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	else
 		cmd_path = NULL;
 	env_str = env_to_str(env, FALSE);
-	pid = exec_fork(cmd_path, env_str, shell);
-	waitpid(pid, &ret_value, 0);
+	ret_value = exec_fork(cmd_path, env_str, shell);
 	sig_check_cmd_signal(ret_value);
 	free(cmd_path);
 	free_env_str(env_str);
@@ -110,6 +108,7 @@ char	**find_path(t_env *env)
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 {
 	pid_t	pid;
+	int		ret_value;
 
 	pid = fork();
 	if (pid < 0)
@@ -128,5 +127,6 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		execve(shell->command->content[0], shell->command->content, env_str);
 		exit_builtin(NULL, NULL, shell->env);
 	}
-	return (pid);
+	waitpid(pid, &ret_value, 0);
+	return (ret_value);
 }

@@ -53,16 +53,15 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
 		pid = exec_pipe(pid, shell, cmd, &pipe);
-		if ((cmd->in_out_code[0] || (ft_strcmp(cmd->content[0], "cat") == 0 \
-					|| ft_strcmp(cmd->content[0], "grep") == 0)) \
-					&& pipe.index == 0)
+		if ((cmd->in_out_code[0]) && pipe.index + 1 <= cmd_nb)
 			waitpid(pid, &ret_value, 0);
 		cmd = cmd->next;
 		shell->command = shell->command->next;
 	}
 	reset_fd(shell);
 	close_pipes(&pipe);
-	waitpid(pid, &ret_value, 0);
+	while (--cmd_nb > -1)
+		waitpid(-1, &ret_value, 0);
 	g_code = ret_value;
 	free(pipe.pipes_tab);
 	return (0);
