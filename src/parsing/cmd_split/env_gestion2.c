@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/11 04:39:52 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/18 16:18:48 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name)
 				free(env_name);
 				return (malloc_err_exit(shell), NULL);
 			}
-			free(env_name);
 			return (r_string);
 		}
 		tmp = tmp->next;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_to_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:13:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/13 15:05:03 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/18 14:49:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ static char	*add_env(t_env *env, int quotes)
 
 	if (env->name && env->is_env == TRUE)
 	{
-		env_str = ft_strjoin(env->name, "=");
+		env_str = ft_strjoin_free(env->name, "=", 1, 0);
 		if (quotes == TRUE)
-			env_str = ft_strjoin(env_str, "\"");
+			env_str = ft_strjoin_free(env_str, "\"", 1, 0);
 		if (env->value)
-			env_str = ft_strjoin(env_str, env->value);
+			env_str = ft_strjoin_free(env_str, env->value, 1, 0);
 		if (quotes == TRUE)
-			env_str = ft_strjoin(env_str, "\"");
+			env_str = ft_strjoin_free(env_str, "\"", 1, 0);
 		return (env_str);
 	}
 	return (env->name);

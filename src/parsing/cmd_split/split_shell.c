@@ -17,6 +17,7 @@ int		quotes_state(t_shell *shell, size_t i, int state);
 void	add_to_char(t_shell *shell, size_t *i, int *state);
 
 int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
+
 {
 	t_cmd	*tmp;
 	t_cmd	*new;
