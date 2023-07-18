@@ -37,6 +37,7 @@ int	export(t_env *env, char **arg)
 static int	check_arg(char *arg, t_env *env)
 {
 	int	i;
+	int ret;
 
 	i = 0;
 	if (!ft_isalpha(arg[i]) && arg[i] != '_')
@@ -47,9 +48,10 @@ static int	check_arg(char *arg, t_env *env)
 	}
 	while (arg[i])
 	{
-		if (check_arg2(arg, env, i) == 0)
+		ret = check_arg2(arg, env, i);
+		if ( ret == 0)
 			return (0);
-		else if (check_arg2(arg, env, i) == 1)
+		else if (ret == 1)
 			return (1);
 		i++;
 	}
