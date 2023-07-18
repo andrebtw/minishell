@@ -56,4 +56,5 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 		return ;
 	}
 	separators_split(shell, i, state);
+	quotes_gestion(shell, i, state);
 }
