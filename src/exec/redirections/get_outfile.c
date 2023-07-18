@@ -60,10 +60,7 @@ static void	check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd)
 			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
 		}
 		if (tmp < 0)
-		{
-			*outfile = -1;
 			error_cmd(cmd->content[0], cmd->in_out[*outfile]);
-		}
 		if (tmp != STDOUT_FILENO && tmp > 0)
 			close(tmp);
 	}
