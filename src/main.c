@@ -23,12 +23,7 @@ void	loop(t_shell *shell)
 		{
 			parsing(shell);
 			if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
-			{
-				int i = -1;
-				while (shell->command->content[++i])
-					printf("INPUT : %s\n", shell->command->content[i]);
 				cmd_nb(shell);
-			}
 			cmd_free(shell);
 		}
 	}
