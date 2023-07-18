@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+extern int	g_code;
 static void	check_out_redirections(int i, int *outfile,
 				int *append, t_cmd *cmd);
 
@@ -29,7 +30,10 @@ int	get_outfile(t_cmd *cmd)
 		return (fd_out);
 	check_out_redirections(i, &outfile, &append, cmd);
 	if (outfile == -2)
+	{
+		g_code = 1;
 		return (-1);
+	}
 	if (outfile >= 0)
 	{
 		if (append == 1)
@@ -38,7 +42,10 @@ int	get_outfile(t_cmd *cmd)
 			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
 	}
 	if (fd_out < 0)
+	{
+		g_code = 1;
 		error_cmd(cmd->content[0], cmd->in_out[outfile]);
+	}
 	return (fd_out);
 }
 

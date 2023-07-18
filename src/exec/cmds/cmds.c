@@ -42,7 +42,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	if (ret_value > 128)
 		ret_value = 1;
 	g_code = ret_value;
-	return (0);
+	return (ret_value);
 }
 
 int	find_slash(char *cmd)
