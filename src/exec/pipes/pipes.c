@@ -102,6 +102,8 @@ int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 		close(shell->fd_stdout);
 		pipes_dup(pipe, cmd);
 		close_pipes(pipe);
+		if (!cmd->content[0])
+			exit_clean(0, shell, shell->env);
 		ret_value = find_builtin(shell, cmd, shell->env);
 		if (ret_value < 0)
 			ret_value = exec_cmd(cmd, shell->env, shell);
