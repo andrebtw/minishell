@@ -15,7 +15,7 @@
 extern int	g_code;
 
 char	**find_path(t_env *env);
-char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
+char	*find_cmd(t_cmd *cmd, t_env *env);
 int		find_slash(char *cmd);
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell);
 
@@ -28,7 +28,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	ret_value = 0;
 	if (find_slash(cmd->content[0]) == 1)
 	{
-		cmd_path = find_cmd(cmd, env, shell);
+		cmd_path = find_cmd(cmd, env);
 		if (!cmd_path)
 			return (-1);
 	}
@@ -59,13 +59,12 @@ int	find_slash(char *cmd)
 	return (1);
 }
 
-char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
+char	*find_cmd(t_cmd *cmd, t_env *env)
 {
 	char	**path;
 	char	*cmd_path;
 	int		i;
 
-	(void)shell;
 	i = 0;
 	path = find_path(env);
 	while (path[i])
@@ -110,23 +109,22 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 	pid_t	pid;
 	int		ret_value;
 
+	errno = 0;
 	pid = fork();
 	if (pid < 0)
 		return (-1);
-	else if (cmd_path && pid == 0)
+	if (pid == 0)
 	{
 		signal(SIGINT, SIG_DFL);
 		signal(SIGQUIT, SIG_DFL);
-		execve(cmd_path, shell->command->content, env_str);
-		exit_builtin(NULL, NULL, shell->env);
-	}
-	else if (pid == 0)
-	{
-		signal(SIGINT, SIG_DFL);
-		signal(SIGQUIT, SIG_DFL);
-		execve(shell->command->content[0], shell->command->content, env_str);
-		exit_builtin(NULL, NULL, shell->env);
+		if (cmd_path)
+			execve(cmd_path, shell->command->content, env_str);
+		else
+			execve(shell->command->content[0], shell->command->content, env_str);
+		perror(shell->command->content[0]);
+		clean_exit(shell);
 	}
 	waitpid(pid, &ret_value, 0);
+	printf("ret : %d\n", ret_value);
 	return (ret_value);
 }
