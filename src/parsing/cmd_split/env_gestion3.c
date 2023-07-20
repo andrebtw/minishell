@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/20 12:18:45 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:26:59 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,4 +53,29 @@ int	error_code_dollar(t_shell *shell, size_t *i, int *state)
 	}
 	*i = *i + 2;
 	return (TRUE);
+}
+int	double_quotes_dollar(t_shell *shell, size_t *i, int *state)
+{
+	if (shell->input[*i] == '$')
+	{
+		if (*state == DOUBLE_QUOTE && shell->input[*i + 1] == '\"')
+		{
+			shell->parsing.current_str = ft_strjoin_free(\
+			shell->parsing.current_str, "$", 1, 0);
+			if (!shell->parsing.current_str)
+				malloc_err_exit(shell);
+			*i = *i + 2;
+			return (TRUE);
+		}
+		else if (*state == REDIRECT_DOUBLE_QUOTE && shell->input[*i + 1] == '\"')
+		{
+			shell->parsing.current_redirect_str = ft_strjoin_free(\
+			shell->parsing.current_redirect_str, "$", 1, 0);
+			if (!shell->parsing.current_redirect_str)
+				malloc_err_exit(shell);
+			*i = *i + 2;
+			return (TRUE);
+		}
+	}
+	return (FALSE);
 }

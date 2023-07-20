@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/11 04:36:40 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/20 14:29:27 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,20 @@
 int	quotes_state_redirect(t_shell *shell, size_t i, int state);
 int	quotes_state(t_shell *shell, size_t i, int state);
 int	heredoc_env_remove(t_shell *shell, size_t *i, int *state);
+int	double_quotes_dollar(t_shell *shell, size_t *i, int *state);
 
 int	write_dollar(t_shell *shell, size_t *i, int *state)
 {
-	if (shell->input[*i] == '$' && ft_strchr(" \t\0", shell->input[*i + 1]))
+	if (shell->input[*i] == '$' && ft_strchr(" \t\0\"\'", shell->input[*i + 1]))
 	{
-		if (*state >= SPACE_SEP)
+		if (*state == SPACE_SEP || *state == NOT_INIT)
 		{
 			shell->parsing.current_str = ft_strjoin_free_char(\
 			shell->parsing.current_str, SEPARATOR, 1);
 			if (!shell->parsing.current_str)
 				malloc_err_exit(shell);
 		}
-		if (*state <= REDIRECT)
+		if (*state == REDIRECT || *state == REDIRECT_END)
 		{
 			shell->parsing.current_redirect_str = ft_strjoin_free_char(\
 			shell->parsing.current_redirect_str, SEPARATOR, 1);
@@ -64,6 +65,8 @@ void	put_state(t_shell *shell, size_t *i, int *state)
 
 int	skip_special(t_shell *shell, size_t *i, int *state)
 {
+	if (double_quotes_dollar(shell, i, state))
+		return (TRUE);
 	if (!(shell->input[*i] == '$'))
 		return (TRUE);
 	if (*state == SINGLE_QUOTE || *state == REDIRECT_SINGLE_QUOTE)
