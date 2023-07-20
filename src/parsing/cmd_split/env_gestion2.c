@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/18 16:18:48 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/20 12:35:07 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name)
 		}
 		tmp = tmp->next;
 	}
-	free(env_name);
 	return (NULL);
 }
 
@@ -94,12 +93,17 @@ int	heredoc_env_remove(t_shell *shell, size_t *i, int *state)
 		return (FALSE);
 	while (shell->input[*i] && !ft_strchr(" \t<>|", shell->input[*i]))
 	{
+		ft_printf("char:%c;\n", shell->input[*i]);
 		shell->parsing.current_redirect_str = ft_strjoin_free_char(\
 		shell->parsing.current_redirect_str, shell->input[*i], 1);
 		if (!shell->parsing.current_redirect_str)
 			malloc_err_exit(shell);
 		*i = *i + 1;
 	}
+	shell->parsing.current_redirect_str = ft_strjoin_free_char(
+		shell->parsing.current_redirect_str, SEPARATOR, 1);
+	if (!shell->parsing.current_redirect_str)
+		malloc_err_exit(shell);
 	shell->parsing.is_heredoc = FALSE;
 	return (TRUE);
 }
