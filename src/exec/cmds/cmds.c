@@ -136,5 +136,6 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		exit_clean(127, shell, shell->env);
 	}
 	waitpid(pid, &ret_value, 0);
+	sig_check_cmd_signal(ret_value);
 	return (WEXITSTATUS(ret_value));
 }
