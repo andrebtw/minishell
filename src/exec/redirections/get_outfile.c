@@ -13,10 +13,8 @@
 #include "minishell.h"
 
 extern int	g_code;
-static void	check_out_redirections(int i, int *outfile,
-				int *append, t_cmd *cmd);
 
-int	get_outfile(t_cmd *cmd)
+/*int	get_outfile(t_cmd *cmd)
 {
 	int	outfile;
 	int	fd_out;
@@ -47,34 +45,31 @@ int	get_outfile(t_cmd *cmd)
 		error_cmd(cmd->content[0], cmd->in_out[outfile]);
 	}
 	return (fd_out);
-}
+}*/
 
-static void	check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd)
+void	check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd)
 {
 	int	tmp;
 
 	tmp = STDOUT_FILENO;
-	while (cmd->in_out_code[++i])
+	if (cmd->in_out_code[i] == IS_OUT)
 	{
-		if (cmd->in_out_code[i] == IS_OUT)
-		{
-			*outfile = i;
-			*append = 0;
-			tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
-		}
-		else if (cmd->in_out_code[i] == IS_OUT_APPEND)
-		{
-			*outfile = i;
-			*append = 1;
-			tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
-		}
-		if (tmp < 0)
-		{
-			error_cmd(cmd->content[0], cmd->in_out[*outfile]);
-			*outfile = -2;
-			return ;
-		}
-		if (tmp != STDOUT_FILENO && tmp > 0)
-			close(tmp);
+		*outfile = i;
+		*append = 0;
+		tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	}
+	else if (cmd->in_out_code[i] == IS_OUT_APPEND)
+	{
+		*outfile = i;
+		*append = 1;
+		tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
+	}
+	if (tmp < 0)
+	{
+		error_cmd(cmd->content[0], cmd->in_out[*outfile]);
+		*outfile = -2;
+		return ;
+	}
+	if (tmp != STDOUT_FILENO && tmp > 0)
+		close(tmp);
 }

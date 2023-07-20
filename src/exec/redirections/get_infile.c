@@ -13,10 +13,8 @@
 #include "minishell.h"
 
 extern int g_code;
-static int	check_here_doc(t_cmd *cmd, t_shell *shell);
-static int	check_in_redirections(t_cmd *cmd);
 
-int	get_infile(t_shell *shell, t_cmd *cmd)
+/*int	get_infile(t_shell *shell, t_cmd *cmd)
 {
 	int	fd_in;
 	int	tmp_fd;
@@ -30,9 +28,9 @@ int	get_infile(t_shell *shell, t_cmd *cmd)
 	if (fd_in == STDIN_FILENO)
 		fd_in = tmp_fd;
 	return (fd_in);
-}
+}*/
 
-static int	check_here_doc(t_cmd *cmd, t_shell *shell)
+int	find_here_doc(t_cmd *cmd, t_shell *shell)
 {
 	int	i;
 	int	last_here_doc;
@@ -55,32 +53,22 @@ static int	check_here_doc(t_cmd *cmd, t_shell *shell)
 			last_here_doc = -1;
 	}
 	if (last_here_doc == -1)
-		tmp_fd = 0;
+		tmp_fd = STDIN_FILENO;
 	return (tmp_fd);
 }
 
-static int	check_in_redirections(t_cmd *cmd)
+int	check_in_redirections(t_cmd *cmd, int i)
 {
-	int	i;
 	int	tmp_fd;
 
-	i = -1;
 	tmp_fd = STDIN_FILENO;
-	while (cmd->in_out_code[++i])
+	if (cmd->in_out_code[i] == IS_IN)
 	{
-		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
+		tmp_fd = open(cmd->in_out[i], O_RDONLY);
+		if (tmp_fd < 0)
 		{
-			if (tmp_fd != STDIN_FILENO)
-				close(tmp_fd);
-			if (cmd->in_out_code[i] == IS_IN)
-			{
-				tmp_fd = open(cmd->in_out[i], O_RDONLY);
-				if (tmp_fd < 0)
-				{
-					g_code = 1;
-					return (error_cmd(cmd->content[0], cmd->in_out[i]));
-				}
-			}
+			g_code = 1;
+			return (error_cmd(cmd->content[0], cmd->in_out[i]));
 		}
 	}
 	return (tmp_fd);

@@ -230,11 +230,13 @@ void		close_pipes(t_pipe *pipe);
 
 /* REDIRECTIONS */
 int			do_dup(int in, int out);
-int			get_infile(t_shell *shell, t_cmd *cmd);
-int			get_outfile(t_cmd *cmd);
 int			check_redirections(t_shell *shell);
 int			reset_fd(t_shell *shell);
 int			ft_here_doc(t_shell *shell, char *delimiter);
+int			find_here_doc(t_cmd *cmd, t_shell *shell);
+int			check_in_redirections(t_cmd *cmd, int i);
+void		check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd);
+int			get_files(t_shell *shell, t_cmd *cmd);
 
 /* BUILTINS */
 void		print_builtin_error(char *builtin, char *arg);
