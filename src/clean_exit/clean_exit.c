@@ -10,7 +10,7 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../incl/minishell.h"
+#include "minishell.h"
 
 void	print_error(char *string)
 {

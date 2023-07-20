@@ -65,8 +65,8 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	while (--cmd_nb > -1)
 	{
 		waitpid(-1, &ret_value, 0);
-		if (ret_value != 0)
-			g_code = 1;
+		if (WEXITSTATUS(ret_value))
+			g_code = WEXITSTATUS(ret_value);
 	}
 	return (free(pipe.pipes_tab), 0);
 }

@@ -24,6 +24,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	int		ret_value;
 	char	*cmd_path;
 	char	**env_str;
+	int		fd;
 
 	ret_value = 0;
 	if (find_slash(cmd->content[0]) == 1)
@@ -33,7 +34,17 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 			return (-1);
 	}
 	else
+	{
+		fd = open(cmd->content[0], O_DIRECTORY);
+		if (fd >= 0)
+		{
+			errno = EISDIR;
+			g_code = 126;
+			perror(cmd->content[0]);
+			return(close(fd), 126);
+		}
 		cmd_path = NULL;
+	}
 	env_str = env_to_str(env, FALSE);
 	ret_value = exec_fork(cmd_path, env_str, shell);
 	sig_check_cmd_signal(ret_value);
@@ -122,9 +133,8 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		else
 			execve(shell->command->content[0], shell->command->content, env_str);
 		perror(shell->command->content[0]);
-		clean_exit(shell);
+		exit_clean(127, shell, shell->env);
 	}
 	waitpid(pid, &ret_value, 0);
-	printf("ret : %d\n", ret_value);
-	return (ret_value);
+	return (WEXITSTATUS(ret_value));
 }
