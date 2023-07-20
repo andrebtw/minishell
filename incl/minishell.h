@@ -214,6 +214,7 @@ int			error_cmd(char *cmd, char *file);
 void		clean_exit(t_shell *shell);
 void		malloc_err_exit(t_shell *shell);
 void		debug_print(t_shell *shell);
+void		exit_clean(long long return_value, t_shell *shell, t_env *env);
 
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);

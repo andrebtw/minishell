@@ -12,6 +12,7 @@
 
 #include "minishell.h"
 
+extern int g_code;
 static int	check_here_doc(t_cmd *cmd, t_shell *shell);
 static int	check_in_redirections(t_cmd *cmd);
 
@@ -75,7 +76,10 @@ static int	check_in_redirections(t_cmd *cmd)
 			{
 				tmp_fd = open(cmd->in_out[i], O_RDONLY);
 				if (tmp_fd < 0)
+				{
+					g_code = 1;
 					return (error_cmd(cmd->content[0], cmd->in_out[i]));
+				}
 			}
 		}
 	}
