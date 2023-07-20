@@ -47,11 +47,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	}
 	env_str = env_to_str(env, FALSE);
 	ret_value = exec_fork(cmd_path, env_str, shell);
-	sig_check_cmd_signal(ret_value);
 	free(cmd_path);
 	free_env_str(env_str);
-	if (ret_value > 128)
-		ret_value = 1;
 	g_code = ret_value;
 	return (ret_value);
 }
@@ -133,6 +130,8 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		else
 			execve(shell->command->content[0], shell->command->content, env_str);
 		perror(shell->command->content[0]);
+		if (errno == EACCES)
+			exit_clean(126, shell, shell->env);
 		exit_clean(127, shell, shell->env);
 	}
 	waitpid(pid, &ret_value, 0);
