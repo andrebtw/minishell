@@ -80,5 +80,5 @@ void	parsing(t_shell *shell)
 	if (!(shell->parsing.error_code_parsing == ERR_ENV_EMPTY_REDIRECT))
 		detect_builtin(shell);
 	else
-		g_code = 2;
+		g_code = 1;
 }

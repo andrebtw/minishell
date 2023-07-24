@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/28 09:55:09 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/11 04:36:02 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/24 13:52:02 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,10 @@ int	errors(t_shell *shell)
 	if (empty_check(shell, i))
 		return (TRUE);
 	if (pipe_check(shell, i, state))
-		return (TRUE);
+		return (g_code = 2, TRUE);
 	if (quotes_check(shell, i, state))
-		return (TRUE);
+		return (g_code = 2, TRUE);
 	if (redirections_check(shell, i, state))
-		return (TRUE);
+		return (g_code = 2, TRUE);
 	return (FALSE);
 }
