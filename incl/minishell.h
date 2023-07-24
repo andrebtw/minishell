@@ -31,8 +31,8 @@
 
 /* PROMPT */
 # define PROMPT "🛸~> "
-# define SEPARATOR '\1'
-# define EMPTY_SPACE '\2'
+# define SEPARATOR 1
+# define EMPTY_SPACE 2
 
 /* BOOLEAN */
 # define TRUE 1
