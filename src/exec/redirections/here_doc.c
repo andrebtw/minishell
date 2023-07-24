@@ -22,14 +22,14 @@ int	ft_here_doc(t_shell *shell, char *delimiter)
 {
 	int		fd;
 
-	unlink(".here_doc");
-	fd = open(".here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
+	unlink(".objs/.here_doc");
+	fd = open(".objs/.here_doc", O_CREAT | O_WRONLY | O_TRUNC, 0644);
 	if (fd < 0)
 		return (-1);
 	if (get_input(delimiter, fd, shell) != 0)
 		return (-1);
 	close(fd);
-	fd = open(".here_doc", O_RDONLY);
+	fd = open(".objs/.here_doc", O_RDONLY);
 	signal(SIGQUIT, (void *)SIG_IGN);
 	signal(SIGINT, (void *)SIG_IGN);
 	return (fd);

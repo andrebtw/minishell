@@ -38,7 +38,7 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 	if (cmd_nb > 1)
 	{
 		pipes(shell->command, cmd_nb, shell);
-		unlink(".here_doc");
+		unlink(".objs/.here_doc");
 		return (0);
 	}
 	else
@@ -47,10 +47,8 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 			return (-1);
 		if (check_cmd(shell, shell->env, shell->command) < 0)
 			return (-1);
-		if (shell->command->here_doc == TRUE)
-			unlink(".here_doc");
 		reset_fd(shell);
-		unlink(".here_doc");
+		unlink(".objs/.here_doc");
 		return (0);
 	}
 }

@@ -60,17 +60,3 @@ long long	ft_atoll(const char *nptr)
 	}
 	return (result);
 }
-
-int	is_here_doc(t_cmd *cmd)
-{
-	int	i;
-
-	i = 0;
-	while (cmd->in_out_code[i])
-	{
-		if (cmd->in_out_code[i] == IS_HEREDOC)
-			return (TRUE);
-		i++;
-	}
-	return (FALSE);
-}

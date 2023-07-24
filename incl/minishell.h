@@ -31,8 +31,8 @@
 
 /* PROMPT */
 # define PROMPT "🛸~> "
-# define SEPARATOR "\1"
-# define EMPTY_SPACE "\2"
+# define SEPARATOR '\1'
+# define EMPTY_SPACE '\2'
 
 /* BOOLEAN */
 # define TRUE 1
@@ -253,6 +253,5 @@ int			find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 /* UTILS */
 int			ft_strcmp(char *str1, char *str2);
 long long	ft_atoll(const char *nptr);
-int			is_here_doc(t_cmd *cmd);
 
 #endif
