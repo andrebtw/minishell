@@ -12,23 +12,7 @@
 
 #include "minishell.h"
 
-extern int g_code;
-
-/*int	get_infile(t_shell *shell, t_cmd *cmd)
-{
-	int	fd_in;
-	int	tmp_fd;
-
-	cmd->here_doc = FALSE;
-	fd_in = STDIN_FILENO;
-	if (!cmd->in_out_code)
-		return (fd_in);
-	fd_in = check_here_doc(cmd, shell);
-	tmp_fd = check_in_redirections(cmd);
-	if (fd_in == STDIN_FILENO)
-		fd_in = tmp_fd;
-	return (fd_in);
-}*/
+extern int	g_code;
 
 int	find_here_doc(t_cmd *cmd, t_shell *shell)
 {

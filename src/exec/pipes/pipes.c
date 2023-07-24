@@ -86,7 +86,7 @@ int	init_pipe(t_pipe *pipe, int cmd_nb)
 
 int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 {
-	int ret_value;
+	int	ret_value;
 
 	pid = fork();
 	if (pid == -1)

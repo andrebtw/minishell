@@ -54,6 +54,7 @@ int	error_code_dollar(t_shell *shell, size_t *i, int *state)
 	*i = *i + 2;
 	return (TRUE);
 }
+
 int	double_quotes_dollar(t_shell *shell, size_t *i, int *state)
 {
 	if (shell->input[*i] == '$')
@@ -67,7 +68,8 @@ int	double_quotes_dollar(t_shell *shell, size_t *i, int *state)
 			*i = *i + 2;
 			return (TRUE);
 		}
-		else if (*state == REDIRECT_DOUBLE_QUOTE && shell->input[*i + 1] == '\"')
+		else if (*state == REDIRECT_DOUBLE_QUOTE
+			&& shell->input[*i + 1] == '\"')
 		{
 			shell->parsing.current_redirect_str = ft_strjoin_free(\
 			shell->parsing.current_redirect_str, "$", 1, 0);

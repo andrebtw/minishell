@@ -16,7 +16,7 @@ extern int	g_code;
 
 char	**find_path(t_env *env);
 char	*find_cmd(t_cmd *cmd, t_env *env);
-int		find_slash(char *cmd);
+int		find_slash(t_cmd *cmd, t_env *env, char **cmd_path);
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell);
 
 int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
@@ -27,13 +27,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	int		fd;
 
 	ret_value = 0;
-	if (find_slash(cmd->content[0]) == 1)
-	{
-		cmd_path = find_cmd(cmd, env);
-		if (!cmd_path)
-			return (-1);
-	}
-	else
+	cmd_path = NULL;
+	if (find_slash(cmd, env, &cmd_path) == 0)
 	{
 		fd = open(cmd->content[0], O_DIRECTORY);
 		if (fd >= 0)
@@ -41,7 +36,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 			errno = EISDIR;
 			g_code = 126;
 			perror(cmd->content[0]);
-			return(close(fd), 126);
+			return (close(fd), 126);
 		}
 		cmd_path = NULL;
 	}
@@ -53,17 +48,22 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	return (ret_value);
 }
 
-int	find_slash(char *cmd)
+int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path)
 {
-	int	i;
+	int		i;
+	char	*command;
 
 	i = 0;
-	while (cmd[i])
+	command = cmd->content[0];
+	while (command[i])
 	{
-		if (cmd[i] == '/')
+		if (command[i] == '/')
 			return (0);
 		i++;
 	}
+	*cmd_path = find_cmd(cmd, env);
+	if (!(*cmd_path))
+		return (-1);
 	return (1);
 }
 
@@ -128,7 +128,8 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		if (cmd_path)
 			execve(cmd_path, shell->command->content, env_str);
 		else
-			execve(shell->command->content[0], shell->command->content, env_str);
+			execve(shell->command->content[0],
+				shell->command->content, env_str);
 		perror(shell->command->content[0]);
 		if (errno == EACCES)
 			exit_clean(126, shell, shell->env);

@@ -12,12 +12,13 @@
 #include "minishell.h"
 
 extern int	g_code;
+static int	open_file(int outfile, int append, int tmp_fd_in, t_cmd *cmd);
 
-int get_files(t_shell *shell, t_cmd *cmd)
+int	get_files(t_shell *shell, t_cmd *cmd)
 {
 	int	tmp_fd_in;
-	int outfile;
-	int append;
+	int	outfile;
+	int	append;
 	int	i;
 
 	i = -1;
@@ -39,6 +40,11 @@ int get_files(t_shell *shell, t_cmd *cmd)
 			return (-1);
 		}
 	}
+	return (open_file(outfile, append, tmp_fd_in, cmd));
+}
+
+static int	open_file(int outfile, int append, int tmp_fd_in, t_cmd *cmd)
+{
 	if (outfile >= 0)
 	{
 		if (append == 1)

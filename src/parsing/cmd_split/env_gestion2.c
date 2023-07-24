@@ -100,7 +100,7 @@ int	heredoc_env_remove(t_shell *shell, size_t *i, int *state)
 		*i = *i + 1;
 	}
 	shell->parsing.current_redirect_str = ft_strjoin_free_char(
-		shell->parsing.current_redirect_str, SEPARATOR, 1);
+			shell->parsing.current_redirect_str, SEPARATOR, 1);
 	if (!shell->parsing.current_redirect_str)
 		malloc_err_exit(shell);
 	shell->parsing.is_heredoc = FALSE;

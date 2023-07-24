@@ -73,6 +73,7 @@ SRCS =	main.c \
 		exec/redirections/here_doc_env.c \
 		exec/redirections/get_infile.c \
 		exec/redirections/get_outfile.c \
+		exec/redirections/get_files.c \
 
 OBJS = $(addprefix $(OBJS_DIR), $(SRCS:.c=.o))
 

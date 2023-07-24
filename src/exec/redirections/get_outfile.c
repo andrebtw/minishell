@@ -14,39 +14,6 @@
 
 extern int	g_code;
 
-/*int	get_outfile(t_cmd *cmd)
-{
-	int	outfile;
-	int	fd_out;
-	int	append;
-	int	i;
-
-	outfile = -1;
-	i = -1;
-	fd_out = STDOUT_FILENO;
-	if (!cmd->in_out_code)
-		return (fd_out);
-	check_out_redirections(i, &outfile, &append, cmd);
-	if (outfile == -2)
-	{
-		g_code = 1;
-		return (-1);
-	}
-	if (outfile >= 0)
-	{
-		if (append == 1)
-			fd_out = open(cmd->in_out[outfile], O_WRONLY | O_APPEND, 0644);
-		else
-			fd_out = open(cmd->in_out[outfile], O_WRONLY, 0644);
-	}
-	if (fd_out < 0)
-	{
-		g_code = 1;
-		error_cmd(cmd->content[0], cmd->in_out[outfile]);
-	}
-	return (fd_out);
-}*/
-
 void	check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd)
 {
 	int	tmp;
