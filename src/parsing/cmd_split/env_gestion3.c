@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/20 14:26:59 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/24 13:48:37 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,27 @@ int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 		ERR_ENV_EMPTY_REDIRECT, TRUE);
 	}
 	return (FALSE);
+}
+
+void	split_error_code(t_shell *shell, size_t *i, int *state)
+{
+	if (ft_strchr(" \t\0\"\'", shell->input[*i]))
+	{
+		if (*state == SPACE_SEP || *state == NOT_INIT)
+		{
+			shell->parsing.current_str = ft_strjoin_free_char(\
+			shell->parsing.current_str, SEPARATOR, 1);
+			if (!shell->parsing.current_str)
+				malloc_err_exit(shell);
+		}
+		if (*state == REDIRECT || *state == REDIRECT_END)
+		{
+			shell->parsing.current_redirect_str = ft_strjoin_free_char(\
+			shell->parsing.current_redirect_str, SEPARATOR, 1);
+			if (!shell->parsing.current_redirect_str)
+				malloc_err_exit(shell);
+		}
+	}
 }
 
 int	error_code_dollar(t_shell *shell, size_t *i, int *state)
@@ -52,6 +73,7 @@ int	error_code_dollar(t_shell *shell, size_t *i, int *state)
 			malloc_err_exit(shell);
 	}
 	*i = *i + 2;
+	split_error_code(shell, i, state);
 	return (TRUE);
 }
 
