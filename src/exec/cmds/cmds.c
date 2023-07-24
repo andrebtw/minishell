@@ -40,12 +40,12 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 		}
 		cmd_path = NULL;
 	}
+	else if (cmd_path == NULL)
+		return (-1);
 	env_str = env_to_str(env, FALSE);
 	ret_value = exec_fork(cmd_path, env_str, shell);
-	free(cmd_path);
-	free_env_str(env_str);
 	g_code = ret_value;
-	return (ret_value);
+	return (free(cmd_path), free_env_str(env_str), ret_value);
 }
 
 int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path)

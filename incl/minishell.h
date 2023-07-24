@@ -31,8 +31,8 @@
 
 /* PROMPT */
 # define PROMPT "🛸~> "
-# define SEPARATOR '\1'
-# define EMPTY_SPACE '\2'
+# define SEPARATOR "\1"
+# define EMPTY_SPACE "\2"
 
 /* BOOLEAN */
 # define TRUE 1
@@ -149,9 +149,9 @@ void		prompt(t_shell *shell);
 # define IN_HEREDOC 6561
 # define IN_EXECVE 6562
 
-void	sig_handler_prompt(const int signal);
-void	sig_handler_heredoc(const int signal);
-void	sig_check_cmd_signal(int status);
+void		sig_handler_prompt(const int signal);
+void		sig_handler_heredoc(const int signal);
+void		sig_check_cmd_signal(int status);
 
 /* SIGNALS RESPONSE */
 # define CTRL_C 7000
@@ -235,7 +235,8 @@ int			reset_fd(t_shell *shell);
 int			ft_here_doc(t_shell *shell, char *delimiter);
 int			find_here_doc(t_cmd *cmd, t_shell *shell);
 int			check_in_redirections(t_cmd *cmd, int i);
-void		check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd);
+void		check_out_redirections(int i, int *outfile,
+				int *append, t_cmd *cmd);
 int			get_files(t_shell *shell, t_cmd *cmd);
 
 /* BUILTINS */
