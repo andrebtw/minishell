@@ -44,7 +44,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 		return (-1);
 	env_str = env_to_str(env, FALSE);
 	ret_value = exec_fork(cmd_path, env_str, shell);
-	g_code = ret_value;
+	if (g_code == 130 || g_code == 131)
+		ret_value = g_code;
 	return (free(cmd_path), free_env_str(env_str), ret_value);
 }
 
