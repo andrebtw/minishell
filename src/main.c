@@ -27,6 +27,10 @@ void	loop(t_shell *shell)
 				cmd_nb(shell);
 			cmd_free(shell);
 		}
+		else
+		{
+			free(shell->input);
+		}
 	}
 }
 

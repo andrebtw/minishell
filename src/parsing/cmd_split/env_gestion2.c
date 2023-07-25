@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/20 14:18:33 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/25 14:49:44 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	split_space_env(t_shell *shell, size_t *i, int *state)
 	}
 }
 
-char	*is_in_env(t_shell *shell, t_env **env, char *env_name)
+char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state)
 {
 	t_env	*tmp;
 	char	*r_string;
@@ -53,6 +53,8 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name)
 		}
 		tmp = tmp->next;
 	}
+	if (*state != REDIRECT)
+		free(env_name);
 	return (NULL);
 }
 
@@ -60,7 +62,7 @@ int	find_env(t_shell *shell, int *state, char *env_name)
 {
 	char	*env_value;
 
-	env_value = is_in_env(shell, &shell->env, env_name);
+	env_value = is_in_env(shell, &shell->env, env_name, state);
 	if (!env_value)
 		return (FALSE);
 	free(env_name);
