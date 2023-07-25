@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:54:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/06/13 11:12:39 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/25 15:37:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,10 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	int		len;
 	char	*pwd_saved;
 
+	(void)shell;
 	pwd_saved = cd_save_pwd();
 	if (!pwd_saved)
-		malloc_err_exit(shell);
+		cd_no_arg(env);
 	len = args_nb(args);
 	if (len == 1)
 		return (free(pwd_saved), cd_no_arg(env));
