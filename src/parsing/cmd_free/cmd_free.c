@@ -14,6 +14,8 @@
 
 void	free_cmd_pipe(t_cmd *cmd)
 {
+	if (cmd->in_out_code[0])
+		waitpid(-1, NULL, 0);
 	ft_free_tab(cmd->content);
 	ft_free_tab(cmd->in_out);
 	free(cmd->in_out_code);
