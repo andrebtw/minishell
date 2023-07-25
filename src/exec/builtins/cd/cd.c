@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 15:54:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/25 16:05:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/25 16:12:52 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,18 +32,16 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	if (len == 1)
 		return (free(pwd_saved), cd_no_arg(env));
 	else if (len > 2)
-		return (free(pwd_saved), ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
+		return (free(pwd_saved), ft_putstr_fd(\
+		"cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 	{
 		free(args[1]);
 		args[1] = replace_tilde(env);
 	}
 	if (args[1] && chdir(args[1]) != 0)
-	{
-		print_builtin_error("cd", args[1]);
-		perror(NULL);
-		return (free(pwd_saved), 1);
-	}
+		return (print_builtin_error("cd", args[1]), \
+		perror(NULL), free(pwd_saved), 1);
 	old_pwd_save(&env, pwd_saved);
 	update_pwd(&env);
 	return (0);
