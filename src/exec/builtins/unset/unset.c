@@ -54,7 +54,7 @@ static int	check_arg(char *arg, t_shell *shell)
 	return (0);
 }
 
-int	envdel_elem2(t_env **env)
+void	envdel_elem2(t_env **env)
 {
 	t_env	*tmp;
 
@@ -64,7 +64,7 @@ int	envdel_elem2(t_env **env)
 		free((*env)->name);
 		free((*env)->value);
 		free(*env);
-		return (TRUE);
+		return ;
 	}
 	(*env)->name = ft_strdup(tmp->name);
 	(*env)->value = ft_strdup(tmp->value);
@@ -72,13 +72,11 @@ int	envdel_elem2(t_env **env)
 	free(tmp->name);
 	free(tmp->value);
 	free(tmp);
-	return (TRUE);
 }
 
 void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
-
 
 	if (env && ft_strcmp(arg, env->name) == 0)
 	{
@@ -89,8 +87,7 @@ void	envdel_elem(char *arg, t_env *env)
 			env->name = NULL;
 			return ;
 		}
-		else if (envdel_elem2(&env))
-			return ;
+		return (envdel_elem2(&env));
 	}
 	while (env && ft_strcmp(arg, env->name) != 0)
 	{
