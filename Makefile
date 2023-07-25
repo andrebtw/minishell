@@ -63,7 +63,6 @@ SRCS =	main.c \
 		exec/builtins/export/export.c \
 		exec/builtins/unset/unset.c \
 		exec/builtins/env/env_builtin.c \
-		debug_print.c \
 		exec/cmds/cmds.c \
 		exec/pipes/pipes_dup.c \
 		exec/pipes/pipes.c \
