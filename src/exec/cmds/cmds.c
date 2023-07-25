@@ -35,8 +35,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 		{
 			errno = EISDIR;
 			g_code = 126;
-			perror(cmd->content[0]);
-			return (close(fd), 126);
+			return (perror(cmd->content[0]), close(fd), 126);
 		}
 		cmd_path = NULL;
 	}

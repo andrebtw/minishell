@@ -15,17 +15,19 @@
 int	env_builtin(char **args, t_env *env)
 {
 	char	**env_str;
+	int		i;
 
+	i = 0;
 	if (args[1])
 		return (ft_putstr_fd("env: too many arguments\n", STDERR_FILENO), 1);
 	env_str = env_to_str(env, FALSE);
 	if (!env_str)
 		return (1);
-	while (*env_str)
+	while (env_str[i])
 	{
-		ft_putstr_fd(*env_str, STDOUT_FILENO);
+		ft_putstr_fd(env_str[i], STDOUT_FILENO);
 		ft_putstr_fd("\n", STDOUT_FILENO);
-		env_str++;
+		i++;
 	}
-	return (0);
+	return (free_env_str(env_str), 0);
 }

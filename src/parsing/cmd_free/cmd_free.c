@@ -10,7 +10,14 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incl/minishell.h"
+#include "minishell.h"
+
+void	free_cmd_pipe(t_cmd *cmd)
+{
+	ft_free_tab(cmd->content);
+	ft_free_tab(cmd->in_out);
+	free(cmd->in_out_code);
+}
 
 void	free_cmd(t_cmd **cmd)
 {

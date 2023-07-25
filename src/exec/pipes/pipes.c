@@ -47,6 +47,7 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	t_pipe	pipe;
 	pid_t	pid;
 	int		ret_value;
+	t_cmd	*tmp;
 
 	ret_value = 0;
 	if (init_pipe(&pipe, cmd_nb) != 0)
@@ -54,11 +55,11 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
 		pid = exec_pipe(pid, shell, cmd, &pipe);
-		if ((cmd->in_out_code[0]) && pipe.index + 1 <= cmd_nb)
-			waitpid(pid, &ret_value, 0);
-		g_code = ret_value;
+		free_cmd_pipe(cmd);
+		tmp = cmd;
 		cmd = cmd->next;
 		shell->command = shell->command->next;
+		free(tmp);
 	}
 	reset_fd(shell);
 	close_pipes(&pipe);
