@@ -75,6 +75,8 @@ char	*find_cmd(t_cmd *cmd, t_env *env)
 
 	i = 0;
 	path = find_path(env);
+	if (!env->name)
+		return (NULL);
 	while (path[i])
 	{
 		cmd_path = ft_strjoin(path[i], cmd->content[0]);
@@ -97,7 +99,7 @@ char	**find_path(t_env *env)
 	int		i;
 
 	i = 0;
-	if (!env)
+	if (!env->name)
 		return (NULL);
 	while (ft_strcmp(env->name, "PATH") != 0 && env->next)
 		env = env->next;

@@ -54,7 +54,7 @@ static int	check_arg(char *arg, t_shell *shell)
 	return (0);
 }
 
-int	envadd_elem2(t_env **env)
+int	envdel_elem2(t_env **env)
 {
 	t_env	*tmp;
 
@@ -79,9 +79,17 @@ void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
 
+
 	if (env && ft_strcmp(arg, env->name) == 0)
 	{
-		if (envadd_elem2(&env))
+		if (!env->next)
+		{
+			free(env->name);
+			free(env->value);
+			env->name = NULL;
+			return ;
+		}
+		else if (envdel_elem2(&env))
 			return ;
 	}
 	while (env && ft_strcmp(arg, env->name) != 0)
