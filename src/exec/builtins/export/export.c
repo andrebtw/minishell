@@ -93,6 +93,8 @@ static int	already_exists(char *name, char *value, t_env *env)
 		}
 		env = env->next;
 	}
+	free(name);
+	free(value);
 	return (FALSE);
 }
 
@@ -108,5 +110,6 @@ static int	print_export(t_env *env)
 		ft_printf("declare -x %s\n", env_str[i]);
 		i++;
 	}
+	free_env_str(env_str);
 	return (0);
 }

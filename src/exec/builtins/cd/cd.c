@@ -29,7 +29,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 		malloc_err_exit(shell);
 	len = args_nb(args);
 	if (len == 1)
-		return (cd_no_arg(env));
+		return (free(pwd_saved), cd_no_arg(env));
 	else if (len > 2)
 		return (ft_putstr_fd("cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')

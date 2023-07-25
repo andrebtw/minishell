@@ -85,9 +85,9 @@ int	check_line(char *delimiter, char *line, int fd, t_shell *shell)
 		line = here_doc_env(shell, line);
 		if (check_here_doc(delimiter, line) > 0)
 		{
-			line = ft_strjoin(line, "\n");
+			line = ft_strjoin_free(line, "\n", 1, 0);
 			write(fd, line, ft_strlen(line));
 		}
 	}
-	return (0);
+	return (free(line), 0);
 }

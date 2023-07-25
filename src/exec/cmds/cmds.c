@@ -35,8 +35,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 		{
 			errno = EISDIR;
 			g_code = 126;
-			perror(cmd->content[0]);
-			return (close(fd), 126);
+			return (perror(cmd->content[0]), close(fd), 126);
 		}
 		cmd_path = NULL;
 	}
@@ -135,8 +134,8 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 				shell->command->content, env_str);
 		perror(shell->command->content[0]);
 		if (errno == EACCES)
-			exit_clean(126, shell, shell->env);
-		exit_clean(127, shell, shell->env);
+			exit_clean(126, shell);
+		exit_clean(127, shell);
 	}
 	waitpid(pid, &ret_value, 0);
 	sig_check_cmd_signal(ret_value);

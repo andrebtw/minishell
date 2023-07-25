@@ -16,7 +16,7 @@ extern int	g_code;
 
 void	empty_prompt(t_shell *shell)
 {
-	exit_builtin(shell, NULL, shell->env);
+	exit_builtin(shell, NULL);
 }
 
 void	prompt(t_shell *shell)

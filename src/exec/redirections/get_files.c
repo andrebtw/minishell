@@ -24,6 +24,7 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 	i = -1;
 	outfile = -1;
 	append = -1;
+	tmp_fd_in = STDIN_FILENO;
 	cmd->here_doc = FALSE;
 	if (!cmd->in_out_code[0])
 		return (0);
@@ -35,10 +36,7 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 		else
 			check_out_redirections(i, &outfile, &append, cmd);
 		if (outfile == -2 || tmp_fd_in < 0)
-		{
-			g_code = 1;
-			return (-1);
-		}
+			return (g_code = 1, -1);
 	}
 	return (open_file(outfile, append, tmp_fd_in, cmd));
 }

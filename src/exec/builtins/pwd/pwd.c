@@ -22,5 +22,6 @@ int	pwd(void)
 		return (1);
 	ft_putstr_fd(buf, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
+	free(buf);
 	return (0);
 }

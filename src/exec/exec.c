@@ -87,7 +87,7 @@ int	find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->content[0], "env") == 0)
 		return (env_builtin(cmd->content, env));
 	else if (ft_strcmp(cmd->content[0], "exit") == 0)
-		return (exit_builtin(shell, cmd->content, env));
+		return (exit_builtin(shell, cmd->content));
 	else
 		return (-1);
 }
