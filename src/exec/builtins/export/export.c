@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:04:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/17 13:45:18 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:08:13 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ static int	print_export(t_env *env)
 	env_str = env_to_str(env, TRUE);
 	while (env_str[i])
 	{
-		printf("declare -x %s\n", env_str[i]);
+		ft_printf("declare -x %s\n", env_str[i]);
 		i++;
 	}
 	return (0);

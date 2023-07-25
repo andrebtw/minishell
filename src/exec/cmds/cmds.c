@@ -98,6 +98,8 @@ char	**find_path(t_env *env)
 	int		i;
 
 	i = 0;
+	if (!env)
+		return (NULL);
 	while (ft_strcmp(env->name, "PATH") != 0 && env->next)
 		env = env->next;
 	path = ft_split(env->value, ':');

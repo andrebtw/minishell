@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:32:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/04 01:35:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/25 13:52:55 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,35 @@ static int	check_arg(char *arg, t_shell *shell)
 	return (0);
 }
 
+int	envadd_elem2(t_env **env)
+{
+	t_env	*tmp;
+
+	tmp = (*env)->next;
+	if (!tmp)
+	{
+		free((*env)->name);
+		free((*env)->value);
+		free(*env);
+		return (TRUE);
+	}
+	(*env)->name = ft_strdup(tmp->name);
+	(*env)->value = ft_strdup(tmp->value);
+	(*env)->next = tmp->next;
+	free(tmp->name);
+	free(tmp->value);
+	free(tmp);
+	return (TRUE);
+}
+
 void	envdel_elem(char *arg, t_env *env)
 {
 	t_env	*tmp;
 
 	if (env && ft_strcmp(arg, env->name) == 0)
 	{
-		tmp = env->next;
-		env->name = ft_strdup(tmp->name);
-		env->value = ft_strdup(tmp->value);
-		env->next = tmp->next;
-		free(tmp->name);
-		free(tmp->value);
-		free(tmp);
-		return ;
+		if (envadd_elem2(&env))
+			return ;
 	}
 	while (env && ft_strcmp(arg, env->name) != 0)
 	{

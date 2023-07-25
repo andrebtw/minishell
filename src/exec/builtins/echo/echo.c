@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42.fr>          +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 13:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/04/17 14:15:38 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/24 17:08:05 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ int	echo(char **arg)
 	{
 		if (print_args(arg) != 0)
 			return (1);
-		if (printf("\n") < 0)
+		if (ft_printf("\n") < 0)
 			return (1);
 		return (0);
 	}
-	printf("\n");
+	ft_printf("\n");
 	return (0);
 }
 
@@ -60,11 +60,11 @@ int	print_args(char **arg)
 {
 	while (*arg)
 	{
-		if (printf("%s", *arg) < 0)
+		if (ft_printf("%s", *arg) < 0)
 			return (1);
 		arg++;
 		if (*arg)
-			printf(" ");
+			ft_printf(" ");
 	}
 	return (0);
 }
