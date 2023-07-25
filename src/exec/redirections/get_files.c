@@ -24,6 +24,7 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 	i = -1;
 	outfile = -1;
 	append = -1;
+	tmp_fd_in = STDIN_FILENO;
 	cmd->here_doc = FALSE;
 	if (!cmd->in_out_code[0])
 		return (0);

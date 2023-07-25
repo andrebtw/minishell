@@ -90,7 +90,7 @@ char	*here_doc_env(t_shell *shell, char *line)
 			if (check_if_env(line, &i))
 				r_string = env_exec(shell, line, &i, r_string);
 		}
-		r_string = ft_strjoin_free_char(r_string, line[i], 0);
+		r_string = ft_strjoin_free_char(r_string, line[i], 1);
 		if (!r_string)
 			return (malloc_err_exit(shell), NULL);
 		if (line[i])

@@ -102,11 +102,12 @@ int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 		pipes_dup(pipe, cmd);
 		close_pipes(pipe);
 		if (!cmd->content[0])
-			exit_clean(0, shell, shell->env);
+			exit_clean(0, shell);
 		ret_value = find_builtin(shell, cmd, shell->env);
 		if (ret_value < 0)
 			ret_value = exec_cmd(cmd, shell->env, shell);
-		exit_clean(ret_value, shell, shell->env);
+		free(pipe->pipes_tab);
+		exit_clean(ret_value, shell);
 	}
 	return (pid);
 }

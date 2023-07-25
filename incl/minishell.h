@@ -214,7 +214,7 @@ int			error_cmd(char *cmd, char *file);
 void		clean_exit(t_shell *shell);
 void		malloc_err_exit(t_shell *shell);
 void		debug_print(t_shell *shell);
-void		exit_clean(long long return_value, t_shell *shell, t_env *env);
+void		exit_clean(long long return_value, t_shell *shell);
 
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);
@@ -247,7 +247,7 @@ int			pwd(void);
 int			export(t_env *env, char **args);
 int			unset(char **args, t_env *env, t_shell *shell);
 int			env_builtin(char **args, t_env *env);
-int			exit_builtin(t_shell *shell, char **args, t_env *env);
+int			exit_builtin(t_shell *shell, char **args);
 int			find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 
 /* UTILS */

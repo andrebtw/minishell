@@ -133,8 +133,8 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 				shell->command->content, env_str);
 		perror(shell->command->content[0]);
 		if (errno == EACCES)
-			exit_clean(126, shell, shell->env);
-		exit_clean(127, shell, shell->env);
+			exit_clean(126, shell);
+		exit_clean(127, shell);
 	}
 	waitpid(pid, &ret_value, 0);
 	sig_check_cmd_signal(ret_value);

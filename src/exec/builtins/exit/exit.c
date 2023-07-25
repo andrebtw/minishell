@@ -14,7 +14,7 @@
 
 int			is_num(char *str);
 
-int	exit_builtin(t_shell *shell, char **args, t_env *env)
+int	exit_builtin(t_shell *shell, char **args)
 {
 	long long	return_value;
 
@@ -31,21 +31,23 @@ int	exit_builtin(t_shell *shell, char **args, t_env *env)
 		{
 			print_builtin_error("exit", args[1]);
 			ft_putstr_fd(": numeric argument required\n", STDERR_FILENO);
-			exit_clean(2, shell, env);
+			exit_clean(2, shell);
 		}
 	}
-	exit_clean(return_value, shell, env);
+	exit_clean(return_value, shell);
 	return (0);
 }
 
-void	exit_clean(long long return_value, t_shell *shell, t_env *env)
+void	exit_clean(long long return_value, t_shell *shell)
 {
-	close(shell->fd_stdout);
-	close(shell->fd_stdin);
-	if (env)
-		free_env(env);
+	if (shell->fd_stdout >= 0 && shell->fd_stdin >= 0)
+	{
+		close(shell->fd_stdout);
+		close(shell->fd_stdin);
+	}
+	free_env(shell->env);
 	if (shell && shell->input)
-		free(shell->input);
+		cmd_free(shell);
 	exit((unsigned char) return_value);
 }
 
