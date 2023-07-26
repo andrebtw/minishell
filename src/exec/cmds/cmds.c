@@ -32,11 +32,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	{
 		fd = open(cmd->content[0], O_DIRECTORY);
 		if (fd >= 0)
-		{
-			errno = EISDIR;
-			g_code = 126;
-			return (perror(cmd->content[0]), close(fd), 126);
-		}
+			return (errno = EISDIR, g_code = 126, perror(\
+			cmd->content[0]), close(fd), 126);
 		cmd_path = NULL;
 	}
 	else if (cmd_path == NULL)
@@ -45,7 +42,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	ret_value = exec_fork(cmd_path, env_str, shell);
 	if (g_code == 130 || g_code == 131)
 		ret_value = g_code;
-	return (free(cmd_path), free_env_str(env_str), ret_value);
+	return (g_code = ret_value, free(\
+	cmd_path), free_env_str(env_str), ret_value);
 }
 
 int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path)
