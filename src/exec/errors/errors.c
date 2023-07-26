@@ -18,11 +18,12 @@ int	error_cmd(char *cmd, char *file)
 
 	if (cmd != NULL && ft_strcmp(cmd, "") != 0)
 	{
-		error = ft_strjoin(cmd, ": ");
-		error = ft_strjoin(error, file);
+		error = ft_strjoin_free(cmd, ": ", 0, 0);
+		error = ft_strjoin_free(error, file, 1, 0);
 	}
 	else
 		error = file;
 	perror(error);
+	free(error);
 	return (-1);
 }

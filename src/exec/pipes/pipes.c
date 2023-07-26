@@ -96,10 +96,9 @@ int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 		if (check_redirections(shell) != 0)
 		{
 			close_pipes(pipe);
-			clean_exit(shell);
+			free(pipe->pipes_tab);
+			exit_clean(1, shell);
 		}
-		close(shell->fd_stdin);
-		close(shell->fd_stdout);
 		pipes_dup(pipe, cmd);
 		close_pipes(pipe);
 		if (!cmd->content[0])
