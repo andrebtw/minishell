@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/26 11:13:53 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:34:51 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	quotes_state_redirect(t_shell *shell, size_t i, int state);
 int	quotes_state(t_shell *shell, size_t i, int state);
 int	heredoc_env_remove(t_shell *shell, size_t *i, int *state);
 int	double_quotes_dollar(t_shell *shell, size_t *i, int *state);
+int	check_all_special_env(t_shell *shell, size_t *i, int *state);
 
 int	write_dollar(t_shell *shell, size_t *i, int *state)
 {
@@ -82,9 +83,7 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 {
 	char	*env_name;
 
-	if (heredoc_env_remove(shell, i, state))
-		return ;
-	if (skip_special(shell, i, state) || error_code_dollar(shell, i, state))
+	if (check_all_special_env(shell, i, state))
 		return ;
 	*i = *i + 1;
 	env_name = ft_strdup("");
@@ -101,7 +100,6 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	if (!(find_env(shell, state, env_name)))
 		if (empty_env_errors(shell, i, state, env_name))
 			return ;
-	free(env_name);
 	split_space_env(shell, i, state);
 	if (shell->input[*i] == '$')
 		env_gestion(shell, i, state);

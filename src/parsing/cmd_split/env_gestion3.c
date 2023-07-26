@@ -6,13 +6,16 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/26 10:48:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:34:26 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../../incl/minishell.h"
 
 extern int	g_code;
+
+int	heredoc_env_remove(t_shell *shell, size_t *i, int *state);
+int	skip_special(t_shell *shell, size_t *i, int *state);
 
 int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 {
@@ -22,6 +25,7 @@ int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 		ft_putstr_fd("⛔️: $", STDERR_FILENO);
 		ft_putstr_fd(env_name, STDERR_FILENO);
 		free(env_name);
+		env_name = NULL;
 		ft_putstr_fd(": ambiguous redirect\n", 2);
 		return (shell->parsing.error_code_parsing = \
 		ERR_ENV_EMPTY_REDIRECT, TRUE);
@@ -102,5 +106,14 @@ int	double_quotes_dollar(t_shell *shell, size_t *i, int *state)
 			return (TRUE);
 		}
 	}
+	return (FALSE);
+}
+
+int	check_all_special_env(t_shell *shell, size_t *i, int *state)
+{
+	if (heredoc_env_remove(shell, i, state))
+		return (TRUE);
+	if (skip_special(shell, i, state) || error_code_dollar(shell, i, state))
+		return (TRUE);
 	return (FALSE);
 }
