@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   here_doc_env.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:38:44 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/13 13:03:49 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:38:21 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ char	*env_exec(t_shell *shell, char *line, size_t *i, char *output_str)
 		*i = *i + 1;
 	}
 	env_value = is_in_env(shell, &shell->env, env_name);
+	free(env_name);
 	if (!env_value)
 		return (output_str);
 	output_str = ft_strjoin_free(output_str, env_value, 1, 1);

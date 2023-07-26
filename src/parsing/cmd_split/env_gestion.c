@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/25 14:49:15 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:13:53 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	if (!(find_env(shell, state, env_name)))
 		if (empty_env_errors(shell, i, state, env_name))
 			return ;
+	free(env_name);
 	split_space_env(shell, i, state);
 	if (shell->input[*i] == '$')
 		env_gestion(shell, i, state);

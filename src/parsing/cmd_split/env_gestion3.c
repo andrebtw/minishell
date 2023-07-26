@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/04 16:14:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/25 14:48:45 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/26 10:48:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ extern int	g_code;
 int	empty_env_errors(t_shell *shell, size_t *i, int *state, char *env_name)
 {
 	(void)i;
-	if (*state == REDIRECT)
+	if (*state <= REDIRECT)
 	{
 		ft_putstr_fd("⛔️: $", STDERR_FILENO);
 		ft_putstr_fd(env_name, STDERR_FILENO);
