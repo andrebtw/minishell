@@ -21,10 +21,15 @@ t_cmd	*lstcreate(char **content, char **in_out, char *in_out_code)
 		return (NULL);
 	r_value->content = content;
 	r_value->in_out = in_out;
-	if (in_out_code)
+	if (in_out_code[0])
 	{
 		r_value->in_out_code = ft_strdup(in_out_code);
 		free(in_out_code);
+	}
+	else
+	{
+		free(in_out_code);
+		r_value->in_out_code = NULL;
 	}
 	r_value->type = IS_CMD;
 	r_value->next = NULL;

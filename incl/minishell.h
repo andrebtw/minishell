@@ -218,7 +218,7 @@ void		exit_clean(long long return_value, t_shell *shell);
 
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);
-void		free_cmd_pipe(t_cmd *cmd);
+void		free_cmd_pipe(t_cmd *cmd, pid_t pid);
 
 /* COMMANDS */
 int			cmd_nb(t_shell *shell);

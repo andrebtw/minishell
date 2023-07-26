@@ -26,7 +26,7 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 	append = -1;
 	tmp_fd_in = STDIN_FILENO;
 	cmd->here_doc = FALSE;
-	if (!cmd->in_out_code[0])
+	if (!cmd->in_out_code)
 		return (0);
 	cmd->fd_in = find_here_doc(cmd, shell);
 	while (cmd->in_out_code[++i])
