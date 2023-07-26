@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/26 14:38:44 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/26 10:38:21 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/26 11:55:53 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,8 @@ char	*here_doc_env(t_shell *shell, char *line)
 		{
 			if (check_if_env(line, &i))
 				r_string = env_exec(shell, line, &i, r_string);
+			else
+				break ;
 		}
 		r_string = ft_strjoin_free_char(r_string, line[i], 1);
 		if (!r_string)
