@@ -14,7 +14,7 @@
 
 extern int	g_code;
 
-char	*is_in_env(t_shell *shell, t_env **env, char *env_name);
+char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state);
 
 char	*last_err_code(t_shell *shell, char *line, size_t *i, char *output_str)
 {
@@ -50,7 +50,7 @@ char	*env_exec(t_shell *shell, char *line, size_t *i, char *output_str)
 			return (malloc_err_exit(shell), NULL);
 		*i = *i + 1;
 	}
-	env_value = is_in_env(shell, &shell->env, env_name);
+	env_value = is_in_env(shell, &shell->env, env_name, NULL);
 	free(env_name);
 	if (!env_value)
 		return (output_str);

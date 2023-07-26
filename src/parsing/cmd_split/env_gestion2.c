@@ -54,7 +54,7 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state)
 		}
 		tmp = tmp->next;
 	}
-	if (*state > REDIRECT)
+	if (state && *state > REDIRECT)
 	{
 		env_name = NULL;
 		free(env_name);
