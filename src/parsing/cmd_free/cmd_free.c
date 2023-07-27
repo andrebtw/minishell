@@ -12,10 +12,17 @@
 
 #include "minishell.h"
 
+extern int	g_code;
+
 void	free_cmd_pipe(t_cmd *cmd, pid_t pid)
 {
+	int	ret_value;
+
+	ret_value = 0;
 	if (cmd->in_out_code)
-		waitpid(pid, NULL, 0);
+		waitpid(pid, &ret_value, 0);
+	if (!cmd->next && ret_value != 0)
+		g_code = 1;
 	ft_free_tab(cmd->content);
 	ft_free_tab(cmd->in_out);
 	free(cmd->in_out_code);
