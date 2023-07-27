@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   env_gestion.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/26 11:34:51 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/07/27 15:39:17 by mthibaul         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../../incl/minishell.h"
+#include "minishell.h"
 
 int	quotes_state_redirect(t_shell *shell, size_t i, int state);
 int	quotes_state(t_shell *shell, size_t i, int state);
@@ -89,8 +89,8 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	env_name = ft_strdup("");
 	if (!env_name)
 		malloc_err_exit(shell);
-	while (shell->input[*i] && 
-		(ft_isalnum(shell->input[*i]) || ft_strchr("_", shell->input[*i])))
+	while (shell->input[*i] && \
+	(ft_isalnum(shell->input[*i]) || ft_strchr("_", shell->input[*i])))
 	{
 		env_name = ft_strjoin_free_char(env_name, shell->input[*i], TRUE);
 		if (!env_name)
