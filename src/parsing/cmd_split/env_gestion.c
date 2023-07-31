@@ -22,7 +22,7 @@ int	write_dollar(t_shell *shell, size_t *i, int *state)
 {
 	if (shell->input[*i] == '$' && ft_strchr(" \t\0\"\'", shell->input[*i + 1]))
 	{
-		if (*state == SPACE_SEP || *state == NOT_INIT)
+		if (*state == SPACE_SEP)
 		{
 			shell->parsing.current_str = ft_strjoin_free_char(\
 			shell->parsing.current_str, SEPARATOR, 1);
