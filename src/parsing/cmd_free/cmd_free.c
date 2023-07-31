@@ -12,6 +12,8 @@
 
 #include "minishell.h"
 
+static int	is_in_redirect(char *in_out_code);
+
 extern int	g_code;
 
 void	free_cmd_pipe(t_cmd *cmd, pid_t pid)
@@ -19,7 +21,7 @@ void	free_cmd_pipe(t_cmd *cmd, pid_t pid)
 	int	ret_value;
 
 	ret_value = 0;
-	if (cmd->in_out_code)
+	if (cmd->in_out_code && is_in_redirect(cmd->in_out_code))
 		waitpid(pid, &ret_value, 0);
 	if (!cmd->next && ret_value != 0)
 		g_code = 1;
@@ -50,4 +52,18 @@ void	cmd_free(t_shell *shell)
 	if (shell->input)
 		free(shell->input);
 	free_cmd(&shell->command);
+}
+
+static int	is_in_redirect(char *in_out_code)
+{
+	int	i;
+
+	i = 0;
+	while (in_out_code[i])
+	{
+		if (in_out_code[i] == IS_IN || in_out_code[i] == IS_HEREDOC)
+			return (1);
+		i++;
+	}
+	return (0);
 }
