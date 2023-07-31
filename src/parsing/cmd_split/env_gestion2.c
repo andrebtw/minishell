@@ -41,7 +41,7 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state)
 	tmp = *env;
 	while (tmp)
 	{
-		if (!ft_strcmp(tmp->name, env_name))
+		if (!ft_strcmp(tmp->name, env_name) && tmp->value)
 		{
 			r_string = ft_strdup(tmp->value);
 			if (!r_string)
