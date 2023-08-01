@@ -41,7 +41,7 @@ int	find_here_doc(t_cmd *cmd, t_shell *shell)
 	return (tmp_fd);
 }
 
-int	check_in_redirections(t_cmd *cmd, int i)
+int	check_in_redirections(t_cmd *cmd, int i, t_shell *shell)
 {
 	int	tmp_fd;
 
@@ -52,7 +52,7 @@ int	check_in_redirections(t_cmd *cmd, int i)
 		if (tmp_fd < 0)
 		{
 			g_code = 1;
-			return (error_cmd(cmd->content[0], cmd->in_out[i]));
+			return (error_cmd(cmd->content[0], cmd->in_out[i], shell));
 		}
 	}
 	return (tmp_fd);

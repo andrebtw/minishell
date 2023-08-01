@@ -41,13 +41,13 @@ char	*env_exec(t_shell *shell, char *line, size_t *i, char *output_str)
 		return (last_err_code(shell, line, i, output_str));
 	env_name = ft_strdup("");
 	if (!env_name)
-		return (malloc_err_exit(shell), NULL);
+		return (free(output_str), malloc_err_exit(shell), NULL);
 	while (line[*i] && \
 	(ft_isalnum(line[*i]) || ft_strchr("_", line[*i])))
 	{
 		env_name = ft_strjoin_free_char(env_name, line[*i], TRUE);
 		if (!env_name)
-			return (malloc_err_exit(shell), NULL);
+			return (free(output_str), malloc_err_exit(shell), NULL);
 		*i = *i + 1;
 	}
 	env_value = is_in_env(shell, &shell->env, env_name, NULL);

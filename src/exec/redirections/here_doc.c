@@ -86,6 +86,8 @@ int	check_line(char *delimiter, char *line, int fd, t_shell *shell)
 		if (check_here_doc(delimiter, line) > 0)
 		{
 			line = ft_strjoin_free(line, "\n", 1, 0);
+			if (!line)
+				malloc_err_exit(shell);
 			write(fd, line, ft_strlen(line));
 		}
 	}

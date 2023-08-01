@@ -32,9 +32,9 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 	while (cmd->in_out_code[++i])
 	{
 		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
-			tmp_fd_in = check_in_redirections(cmd, i);
+			tmp_fd_in = check_in_redirections(cmd, i, shell);
 		else
-			check_out_redirections(i, &outfile, &append, cmd);
+			check_out_redirections(i, &outfile, &append, shell);
 		if (outfile == -2 || tmp_fd_in < 0)
 			return (g_code = 1, -1);
 	}

@@ -208,7 +208,7 @@ int			pipe_check(t_shell *shell, size_t i, int state);
 int			quotes_state_error(t_shell *shell, size_t i, int state);
 int			quotes_check(t_shell *shell, size_t i, int state);
 int			redirections_check(t_shell *shell, size_t i, int state);
-int			error_cmd(char *cmd, char *file);
+int			error_cmd(char *cmd, char *file, t_shell *shell);
 
 /* EXITS */
 void		clean_exit(t_shell *shell);
@@ -235,9 +235,9 @@ int			check_redirections(t_shell *shell);
 int			reset_fd(t_shell *shell);
 int			ft_here_doc(t_shell *shell, char *delimiter);
 int			find_here_doc(t_cmd *cmd, t_shell *shell);
-int			check_in_redirections(t_cmd *cmd, int i);
+int			check_in_redirections(t_cmd *cmd, int i, t_shell *shell);
 void		check_out_redirections(int i, int *outfile,
-				int *append, t_cmd *cmd);
+				int *append, t_shell *shell);
 int			get_files(t_shell *shell, t_cmd *cmd);
 
 /* BUILTINS */

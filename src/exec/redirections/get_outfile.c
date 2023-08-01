@@ -14,26 +14,26 @@
 
 extern int	g_code;
 
-void	check_out_redirections(int i, int *outfile, int *append, t_cmd *cmd)
+void	check_out_redirections(int i, int *outfile, int *append, t_shell *shell)
 {
 	int	tmp;
 
 	tmp = STDOUT_FILENO;
-	if (cmd->in_out_code[i] == IS_OUT)
+	if (shell->command->in_out_code[i] == IS_OUT)
 	{
 		*outfile = i;
 		*append = 0;
-		tmp = open(cmd->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		tmp = open(shell->command->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	}
-	else if (cmd->in_out_code[i] == IS_OUT_APPEND)
+	else if (shell->command->in_out_code[i] == IS_OUT_APPEND)
 	{
 		*outfile = i;
 		*append = 1;
-		tmp = open(cmd->in_out[i], O_CREAT | O_APPEND, 0644);
+		tmp = open(shell->command->in_out[i], O_CREAT | O_APPEND, 0644);
 	}
 	if (tmp < 0)
 	{
-		error_cmd(cmd->content[0], cmd->in_out[*outfile]);
+		error_cmd(shell->command->content[0], shell->command->in_out[*outfile], shell);
 		*outfile = -2;
 		return ;
 	}
