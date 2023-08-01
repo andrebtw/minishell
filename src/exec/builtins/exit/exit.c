@@ -49,6 +49,7 @@ void	exit_clean(long long return_value, t_shell *shell)
 		free_env(shell->env);
 	if (shell && shell->input)
 		cmd_free(shell);
+	rl_clear_history();
 	exit((unsigned char) return_value);
 }
 

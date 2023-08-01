@@ -19,19 +19,8 @@ void	print_error(char *string)
 	ft_putstr_fd(KNORMAL, 2);
 }
 
-void	clean_exit(t_shell *shell)
-{
-	rl_clear_history();
-	if (shell->input)
-		free(shell->input);
-	exit(EXIT_SUCCESS);
-}
-
 void	malloc_err_exit(t_shell *shell)
 {
-	if (shell && shell->input)
-		free(shell->input);
-	reset_fd(shell);
 	print_error(ERR_MALLOC_MSG);
-	exit(ERR_MALLOC);
+	exit_clean(ENOMEM, shell);
 }
