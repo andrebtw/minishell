@@ -15,9 +15,9 @@
 static int	args_nb(char **args);
 static int	cd_no_arg(t_env *env);
 static char	*replace_tilde(t_env *env);
-char		*cd_save_pwd(void);
+char		*cd_save_pwd(t_shell *shell);
 void		old_pwd_save(t_env **env, char *pwd_saved);
-void		update_pwd(t_env *env);
+void		update_pwd(t_env *env, t_shell *shell);
 
 int	cd(t_env *env, char **args, t_shell *shell)
 {
@@ -25,7 +25,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	char	*pwd_saved;
 
 	(void)shell;
-	pwd_saved = cd_save_pwd();
+	pwd_saved = cd_save_pwd(shell);
 	if (!pwd_saved)
 		cd_no_arg(env);
 	len = args_nb(args);
@@ -38,13 +38,13 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	{
 		free(args[1]);
 		args[1] = replace_tilde(env);
+		if (!args[1])
+			return (free(pwd_saved), malloc_err_exit(shell), 0);
 	}
 	if (args[1] && chdir(args[1]) != 0)
 		return (print_builtin_error("cd", args[1]), \
 		perror(NULL), free(pwd_saved), 1);
-	old_pwd_save(&env, pwd_saved);
-	update_pwd(env);
-	return (0);
+	return (old_pwd_save(&env, pwd_saved), update_pwd(env, shell), 0);
 }
 
 static char	*replace_tilde(t_env *env)

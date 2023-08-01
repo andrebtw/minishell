@@ -12,12 +12,12 @@
 
 #include "minishell.h"
 
-static int	check_arg(char *arg, t_env *env);
+static int	check_arg(char *arg, t_env *env, t_shell *shell);
 static int	print_export(t_env *env);
-static int	already_exists(char *name, char*value, t_env *env);
-int			check_arg2(char *arg, t_env *env, int i);
+static int	already_exists(char *name, char*value, t_env *env, t_shell *shell);
+int			check_arg2(char *arg, t_env *env, int i, t_shell *shell);
 
-int	export(t_env *env, char **arg)
+int	export(t_env *env, char **arg, t_shell *shell)
 {
 	int	ret_value;
 
@@ -29,14 +29,14 @@ int	export(t_env *env, char **arg)
 	arg++;
 	while (*arg)
 	{
-		if (check_arg(*arg, env) != 0)
+		if (check_arg(*arg, env, shell) != 0)
 			ret_value = 1;
 		arg++;
 	}
 	return (ret_value);
 }
 
-static int	check_arg(char *arg, t_env *env)
+static int	check_arg(char *arg, t_env *env, t_shell *shell)
 {
 	int	i;
 	int	ret;
@@ -50,23 +50,24 @@ static int	check_arg(char *arg, t_env *env)
 	}
 	while (arg[i])
 	{
-		ret = check_arg2(arg, env, i);
+		ret = check_arg2(arg, env, i, shell);
 		if (ret == 0)
 			return (0);
 		else if (ret == 1)
 			return (1);
 		i++;
 	}
-	if (already_exists(find_name(arg), NULL, env) == FALSE)
+	if (already_exists(find_name(arg), NULL, env, shell) == FALSE)
 		envadd_elem(env, find_name(arg), NULL, FALSE);
 	return (0);
 }
 
-int	check_arg2(char *arg, t_env *env, int i)
+int	check_arg2(char *arg, t_env *env, int i, t_shell *shell)
 {
 	if (arg[i] == '=')
 	{
-		if (already_exists(find_name(arg), find_value(arg), env) == FALSE)
+		if (already_exists(find_name(arg), find_value(arg), \
+		env, shell) == FALSE)
 			return (envadd_elem(env, find_name(arg), \
 					find_value(arg), TRUE));
 		return (0);
@@ -80,7 +81,7 @@ int	check_arg2(char *arg, t_env *env, int i)
 	return (2);
 }
 
-static int	already_exists(char *name, char *value, t_env *env)
+static int	already_exists(char *name, char *value, t_env *env, t_shell *shell)
 {
 	while (env)
 	{
@@ -90,6 +91,8 @@ static int	already_exists(char *name, char *value, t_env *env)
 			{
 				free(env->value);
 				env->value = ft_strdup(value);
+				if (!env->value)
+					return (free(name), free(value), malloc_err_exit(shell), 0);
 				env->is_env = TRUE;
 			}
 			return (free(name), free(value), TRUE);

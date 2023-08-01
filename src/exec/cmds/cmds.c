@@ -14,9 +14,9 @@
 
 extern int	g_code;
 
-char	**find_path(t_env *env);
-char	*find_cmd(t_cmd *cmd, t_env *env);
-int		find_slash(t_cmd *cmd, t_env *env, char **cmd_path);
+char	**find_path(t_env *env, t_shell *shell);
+char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
+int		find_slash(t_cmd *cmd, t_env *env, char **cmd_path, t_shell *shell);
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell);
 
 int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
@@ -28,7 +28,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 
 	ret_value = 0;
 	cmd_path = NULL;
-	if (find_slash(cmd, env, &cmd_path) == 0)
+	if (find_slash(cmd, env, &cmd_path, shell) == 0)
 	{
 		fd = open(cmd->content[0], O_DIRECTORY);
 		if (fd >= 0)
@@ -46,7 +46,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	cmd_path), free_env_str(env_str), ret_value);
 }
 
-int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path)
+int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path, t_shell *shell)
 {
 	int		i;
 	char	*command;
@@ -59,27 +59,27 @@ int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path)
 			return (0);
 		i++;
 	}
-	*cmd_path = find_cmd(cmd, env);
+	*cmd_path = find_cmd(cmd, env, shell);
 	if (!(*cmd_path))
 		return (-1);
 	return (1);
 }
 
-char	*find_cmd(t_cmd *cmd, t_env *env)
+char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
 	char	**path;
 	char	*cmd_path;
 	int		i;
 
 	i = 0;
-	path = find_path(env);
+	path = find_path(env, shell);
 	if (!env->name)
 		return (NULL);
 	while (path[i])
 	{
 		cmd_path = ft_strjoin(path[i], cmd->content[0]);
 		if (!cmd_path)
-			return (ft_free_tab(path), NULL);
+			return (ft_free_tab(path), malloc_err_exit(shell), NULL);
 		if (access(cmd_path, F_OK | R_OK | X_OK) == 0)
 			return (ft_free_tab(path), cmd_path);
 		free(cmd_path);
@@ -91,7 +91,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env)
 	return (ft_free_tab(path), NULL);
 }
 
-char	**find_path(t_env *env)
+char	**find_path(t_env *env, t_shell *shell)
 {
 	char	**path;
 	int		i;
@@ -103,12 +103,16 @@ char	**find_path(t_env *env)
 		env = env->next;
 	path = ft_split(env->value, ':');
 	if (!path)
-		return (NULL);
+		return (malloc_err_exit(shell), NULL);
 	while (path[i])
 	{
 		path[i] = ft_strjoin_free(path[i], "/", 1, 0);
 		if (!path[i])
-			return (NULL);
+		{
+			while (path[++i])
+				free(path[i]);
+			return (ft_free_tab(path), malloc_err_exit(shell), NULL);
+		}
 		i++;
 	}
 	return (path);

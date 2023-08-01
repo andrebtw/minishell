@@ -80,9 +80,9 @@ int	find_builtin(t_shell *shell, t_cmd *cmd, t_env *env)
 	else if (ft_strcmp(cmd->content[0], "cd") == 0)
 		return (cd(env, cmd->content, shell));
 	else if (ft_strcmp(cmd->content[0], "pwd") == 0)
-		return (pwd());
+		return (pwd(shell));
 	else if (ft_strcmp(cmd->content[0], "export") == 0)
-		return (export(env, cmd->content));
+		return (export(env, cmd->content, shell));
 	else if (ft_strcmp(cmd->content[0], "unset") == 0)
 		return (unset(cmd->content, env, shell));
 	else if (ft_strcmp(cmd->content[0], "env") == 0)

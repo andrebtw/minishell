@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*cd_save_pwd(void)
+char	*cd_save_pwd(t_shell *shell)
 {
 	char	*buf;
 	char	*copy_pwd;
@@ -22,9 +22,9 @@ char	*cd_save_pwd(void)
 	if (!buf)
 		return (NULL);
 	copy_pwd = ft_strdup(buf);
-	if (!copy_pwd)
-		return (NULL);
 	free(buf);
+	if (!copy_pwd)
+		malloc_err_exit(shell);
 	return (copy_pwd);
 }
 
@@ -47,13 +47,13 @@ void	old_pwd_save(t_env **env, char *saved_pwd)
 		malloc_err_exit(NULL);
 }
 
-void	update_pwd(t_env *env)
+void	update_pwd(t_env *env, t_shell *shell)
 {
 	char	*new_pwd;
 
-	new_pwd = cd_save_pwd();
+	new_pwd = cd_save_pwd(shell);
 	if (!new_pwd)
-		malloc_err_exit(NULL);
+		malloc_err_exit(shell);
 	while (env)
 	{
 		if (ft_strcmp(env->name, "PWD") == 0)

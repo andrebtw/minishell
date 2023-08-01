@@ -12,14 +12,14 @@
 
 #include "minishell.h"
 
-int	pwd(void)
+int	pwd(t_shell *shell)
 {
 	char	*buf;
 
 	buf = NULL;
 	buf = getcwd(buf, 0);
 	if (!buf)
-		return (1);
+		malloc_err_exit(shell);
 	ft_putstr_fd(buf, STDOUT_FILENO);
 	ft_putstr_fd("\n", STDOUT_FILENO);
 	free(buf);
