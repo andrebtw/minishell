@@ -18,7 +18,6 @@ void	add_to_char(t_shell *shell, size_t *i, int *state);
 void	split_shell_init(t_shell *shell);
 
 int	add_node(t_cmd **cmd, size_t i, t_shell *shell)
-
 {
 	t_cmd	*tmp;
 	t_cmd	*new;

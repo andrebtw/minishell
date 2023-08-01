@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_gestion.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/15 06:53:19 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/27 15:39:17 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/08/01 22:24:33 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,8 @@ void	env_gestion(t_shell *shell, size_t *i, int *state)
 	if (!(find_env(shell, state, env_name)))
 		if (empty_env_errors(shell, i, state, env_name))
 			return ;
+	if (*state <= REDIRECT)
+		ft_free_char(&env_name);
 	split_space_env(shell, i, state);
 	if (shell->input[*i] == '$')
 		env_gestion(shell, i, state);
