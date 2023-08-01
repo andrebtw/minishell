@@ -46,6 +46,8 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 	{
 		shell->parsing.current_str = ft_strjoin_free_char(
 				shell->parsing.current_str, shell->input[*i], 1);
+		if (!shell->parsing.current_str)
+			malloc_err_exit(shell);
 		if (ft_strchr("><", shell->input[*i + 1]))
 		{
 			shell->parsing.current_str = ft_strjoin_free_char(
