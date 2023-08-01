@@ -1,0 +1,1 @@
+valgrind --suppressions=valgrind_ignore_leaks.txt --show-leak-kinds=all --leak-check=full ./minishell

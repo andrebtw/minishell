@@ -52,7 +52,7 @@
 
 /* ERROR MSG */
 # define ERR_MALLOC_MSG "Memory allocation has failed. \x1B[0m\n\x1B[33mPlease\
-make sure enough memory is dedicated to the process.\n"
+ make sure enough memory is dedicated to the process.\n"
 # define PIPE_ERR_MSG "⛔️: syntax error near unexpected token `|'\n"
 # define PIPE_ERR_MSG2 "⛔️: syntax error near unexpected token `||'\n"
 # define SINGLEQUOTE_ERR_MSG "⛔️: syntax error near unexpected token `\''\n"

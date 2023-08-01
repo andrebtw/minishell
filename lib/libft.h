@@ -35,6 +35,8 @@ void	ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 // strdup : Allocates and creates a copy of the string in arg
 char	*ft_strdup(const char *s);
+// ft_free : frees pointer and points it to NULL
+void	ft_free_char(char **ptr);
 
 // Character checking //
 int		ft_isalnum(int c);
