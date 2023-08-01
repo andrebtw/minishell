@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/29 14:42:08 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/27 11:58:10 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/01 22:12:18 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char	*env_spaces(char *env)
 
 	tab = ft_split(env, ' ');
 	if (!tab)
-		return (free(env), env = NULL, NULL);
-	free(env);
+		return (ft_free_char(&env), NULL);
+	ft_free_char(&env);
 	i = 0;
 	r_value = env_spaces_loop(tab, i);
 	if (!r_value)

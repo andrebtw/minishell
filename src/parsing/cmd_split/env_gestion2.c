@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/18 13:46:33 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/26 11:32:26 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/01 22:12:44 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state)
 			r_string = ft_strdup(tmp->value);
 			if (!r_string)
 			{
-				free(env_name);
-				env_name = NULL;
+				ft_free_char(&env_name);
 				return (malloc_err_exit(shell), NULL);
 			}
 			return (r_string);
@@ -57,7 +56,7 @@ char	*is_in_env(t_shell *shell, t_env **env, char *env_name, int *state)
 	if (state && *state > REDIRECT)
 	{
 		env_name = NULL;
-		free(env_name);
+		ft_free_char(&env_name);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/15 15:16:41 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/06/27 09:33:52 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/01 22:10:12 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ char	*malloc_int_code(t_shell *shell, char redirect)
 	shell->parsing.current_in_out_code, redirect, 1);
 	if (!new_str)
 	{
-		free(shell->parsing.current_in_out_code);
+		ft_free_char(&shell->parsing.current_in_out_code);
 		malloc_err_exit(shell);
 	}
 	return (new_str);

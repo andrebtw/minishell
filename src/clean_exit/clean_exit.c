@@ -21,6 +21,9 @@ void	print_error(char *string)
 
 void	malloc_err_exit(t_shell *shell)
 {
+	free(shell->parsing.current_redirect_str);
+	free(shell->parsing.current_str);
+	free(shell->parsing.current_in_out_code);
 	print_error(ERR_MALLOC_MSG);
 	exit_clean(ENOMEM, shell);
 }

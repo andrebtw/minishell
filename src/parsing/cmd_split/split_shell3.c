@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 04:40:31 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/11 04:43:34 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/01 21:58:15 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,16 @@ void	add_to_char(t_shell *shell, size_t *i, int *state)
 	}
 	separators_split(shell, i, state);
 	quotes_gestion(shell, i, state);
+}
+
+void	split_shell_init(t_shell *shell)
+{
+	shell->parsing.current_str = NULL;
+	shell->parsing.current_tab = NULL;
+	shell->parsing.current_redirect_tab = NULL;
+	shell->parsing.current_redirect_str = NULL;
+	shell->parsing.current_in_out_code = NULL;
+	shell->parsing.is_heredoc = FALSE;
+	shell->parsing.error_code_parsing = FALSE;
+	shell->parsing.quote_end = FALSE;
 }
