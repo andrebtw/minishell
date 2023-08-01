@@ -21,6 +21,7 @@ int	cmd_nb(t_shell *shell)
 	int		count;
 	t_cmd	*tmp;
 
+	g_code = 0;
 	shell->fd_stdin = dup(STDIN_FILENO);
 	shell->fd_stdout = dup(STDOUT_FILENO);
 	count = 0;
