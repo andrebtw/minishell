@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-int	env_builtin(char **args, t_env *env)
+int	env_builtin(char **args, t_env *env, t_shell *shell)
 {
 	char	**env_str;
 	int		i;
@@ -24,7 +24,7 @@ int	env_builtin(char **args, t_env *env)
 		return (ft_putstr_fd("env: too many arguments\n", STDERR_FILENO), 1);
 	env_str = env_to_str(env, FALSE);
 	if (!env_str)
-		return (1);
+		malloc_err_exit(shell);
 	while (env_str[i])
 	{
 		ft_putstr_fd(env_str[i], STDOUT_FILENO);

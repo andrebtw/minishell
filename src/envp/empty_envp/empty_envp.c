@@ -12,7 +12,7 @@
 
 #include "minishell.h"
 
-char	*get_pwd(void)
+char	*get_pwd(t_shell *shell)
 {
 	char	*buf;
 	char	*copy_pwd;
@@ -20,20 +20,20 @@ char	*get_pwd(void)
 	buf = NULL;
 	buf = getcwd(buf, 0);
 	if (!buf)
-		return (NULL);
+		malloc_err_exit(shell);
 	copy_pwd = ft_strdup(buf);
 	if (!copy_pwd)
-		return (NULL);
+		malloc_err_exit(shell);
 	free(buf);
 	return (copy_pwd);
 }
 
-t_env	*empty_envp(void)
+t_env	*empty_envp(t_shell *shell)
 {
 	t_env	*new_env;
 	char	*pwd;
 
-	pwd = get_pwd();
+	pwd = get_pwd(shell);
 	if (!pwd)
 		return (NULL);
 	new_env = env_create(ft_strdup("PWD"), pwd, TRUE);

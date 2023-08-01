@@ -18,7 +18,7 @@ t_env	*envp_to_list(char **envp)
 
 	env = env_create(find_name(*envp), find_value(*envp), TRUE);
 	if (!env)
-		return (NULL);
+		return (print_error(ERR_MALLOC_MSG), exit(ENOMEM), NULL);
 	envp++;
 	while (*envp)
 	{
@@ -35,7 +35,7 @@ t_env	*env_create(char *name, char *value, int is_env)
 
 	elem = (t_env *) malloc(sizeof(t_env));
 	if (!elem || !name)
-		return (free(name), free(value), NULL);
+		return (free(name), free(value), print_error(ERR_MALLOC_MSG), exit(ENOMEM), NULL);
 	elem->name = name;
 	elem->value = value;
 	elem->is_env = is_env;

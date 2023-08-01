@@ -39,6 +39,8 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	else if (cmd_path == NULL)
 		return (-1);
 	env_str = env_to_str(env, FALSE);
+	if (!env_str)
+		return (free(cmd_path), malloc_err_exit(shell), 0);
 	ret_value = exec_fork(cmd_path, env_str, shell);
 	if ((g_code == 130 || g_code == 131))
 		ret_value = g_code;

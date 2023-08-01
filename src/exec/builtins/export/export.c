@@ -13,7 +13,7 @@
 #include "minishell.h"
 
 static int	check_arg(char *arg, t_env *env, t_shell *shell);
-static int	print_export(t_env *env);
+static int	print_export(t_env *env, t_shell *shell);
 static int	already_exists(char *name, char*value, t_env *env, t_shell *shell);
 int			check_arg2(char *arg, t_env *env, int i, t_shell *shell);
 
@@ -25,7 +25,7 @@ int	export(t_env *env, char **arg, t_shell *shell)
 	if (!env->name)
 		return (0);
 	if (!arg[1])
-		return (print_export(env));
+		return (print_export(env, shell));
 	arg++;
 	while (*arg)
 	{
@@ -104,13 +104,15 @@ static int	already_exists(char *name, char *value, t_env *env, t_shell *shell)
 	return (FALSE);
 }
 
-static int	print_export(t_env *env)
+static int	print_export(t_env *env, t_shell *shell)
 {
 	int		i;
 	char	**env_str;
 
 	i = 0;
 	env_str = env_to_str(env, TRUE);
+	if (!env_str)
+		malloc_err_exit(shell);
 	while (env_str[i])
 	{
 		ft_printf("declare -x %s\n", env_str[i]);

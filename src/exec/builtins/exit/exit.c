@@ -45,7 +45,7 @@ void	exit_clean(long long return_value, t_shell *shell)
 		close(shell->fd_stdout);
 		close(shell->fd_stdin);
 	}
-	if (shell->env->name != NULL)
+	if (shell && shell->env && shell->env->name != NULL)
 		free_env(shell->env);
 	if (shell && shell->input)
 		cmd_free(shell);

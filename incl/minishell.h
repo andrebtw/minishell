@@ -170,7 +170,7 @@ t_env		*envp_to_list(char **envp);
 int			envadd_elem(t_env *env, char *name, char *value, int is_env);
 void		envadd_back(t_env *env, t_env *new);
 t_env		*env_create(char *name, char *value, int is_env);
-t_env		*empty_envp(void);
+t_env		*empty_envp(t_shell *shell);
 
 /* PARSING */
 void		parsing(t_shell *shell);
@@ -209,6 +209,7 @@ int			quotes_state_error(t_shell *shell, size_t i, int state);
 int			quotes_check(t_shell *shell, size_t i, int state);
 int			redirections_check(t_shell *shell, size_t i, int state);
 int			error_cmd(char *cmd, char *file, t_shell *shell);
+void		print_error(char *string);
 
 /* EXITS */
 void		clean_exit(t_shell *shell);
@@ -247,7 +248,7 @@ int			cd(t_env *env, char **arg, t_shell *shell);
 int			pwd(t_shell *shell);
 int			export(t_env *env, char **args, t_shell *shell);
 int			unset(char **args, t_env *env, t_shell *shell);
-int			env_builtin(char **args, t_env *env);
+int			env_builtin(char **args, t_env *env, t_shell *shell);
 int			exit_builtin(t_shell *shell, char **args);
 int			find_builtin(t_shell *shell, t_cmd *cmd, t_env *env);
 

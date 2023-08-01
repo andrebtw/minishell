@@ -60,11 +60,11 @@ static char	*add_env(t_env *env, int quotes)
 	if (env->name && env->is_env == TRUE)
 	{
 		env_str = ft_strjoin_free(env->name, "=", 0, 0);
-		if (quotes == TRUE)
+		if (quotes == TRUE && env_str)
 			env_str = ft_strjoin_free(env_str, "\"", 1, 0);
-		if (env->value)
+		if (env->value && env_str)
 			env_str = ft_strjoin_free(env_str, env->value, 1, 0);
-		if (quotes == TRUE)
+		if (quotes == TRUE && env_str)
 			env_str = ft_strjoin_free(env_str, "\"", 1, 0);
 		return (env_str);
 	}

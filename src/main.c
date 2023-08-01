@@ -38,13 +38,13 @@ void	init(char **envp)
 	t_shell	shell;
 
 	g_code = 0;
+	shell.fd_stdin = -1;
+	shell.fd_stdout = -1;
 	shell.input = NULL;
 	if (envp[0])
 		shell.env = envp_to_list(envp);
 	else
-		shell.env = empty_envp();
-	shell.fd_stdin = -1;
-	shell.fd_stdout = -1;
+		shell.env = empty_envp(&shell);
 	loop(&shell);
 }
 
