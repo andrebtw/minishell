@@ -89,7 +89,7 @@ void	envdel_elem(char *arg, t_env *env)
 		}
 		return (envdel_elem2(&env));
 	}
-	while (env && ft_strcmp(arg, env->name) != 0)
+	while (env && arg && ft_strcmp(arg, env->name) != 0)
 	{
 		tmp = env;
 		env = env->next;

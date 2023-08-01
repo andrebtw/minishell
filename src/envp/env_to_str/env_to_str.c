@@ -68,7 +68,7 @@ static char	*add_env(t_env *env, int quotes)
 			env_str = ft_strjoin_free(env_str, "\"", 1, 0);
 		return (env_str);
 	}
-	return (env->name);
+	return (ft_strdup(env->name));
 }
 
 void	free_env_str(char **env)

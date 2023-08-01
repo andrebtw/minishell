@@ -20,7 +20,8 @@ void	free_env(t_env *env)
 	{
 		tmp = env->next;
 		free(env->name);
-		free(env->value);
+		if (env->value)
+			free(env->value);
 		free(env);
 		env = tmp;
 	}

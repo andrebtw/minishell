@@ -25,7 +25,7 @@ char	*find_name(char *envp)
 			return (ft_strndup(envp, i));
 		i++;
 	}
-	return (ft_strndup(envp, i));
+	return (ft_strdup(envp));
 }
 
 char	*find_value(char *envp)
