@@ -36,7 +36,7 @@ char	*find_value(char *envp)
 		{
 			envp++;
 			if (*envp)
-				return (ft_strndup(envp, (int) ft_strlen(envp)));
+				return (ft_strdup(envp));
 			else
 				return (NULL);
 		}

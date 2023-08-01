@@ -22,6 +22,8 @@ int	export(t_env *env, char **arg)
 	int	ret_value;
 
 	ret_value = 0;
+	if (!env->name)
+		return (0);
 	if (!arg[1])
 		return (print_export(env));
 	arg++;
@@ -86,10 +88,11 @@ static int	already_exists(char *name, char *value, t_env *env)
 		{
 			if (value)
 			{
-				env->value = value;
+				free(env->value);
+				env->value = ft_strdup(value);
 				env->is_env = TRUE;
 			}
-			return (TRUE);
+			return (free(name), free(value), TRUE);
 		}
 		env = env->next;
 	}

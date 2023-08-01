@@ -14,7 +14,7 @@
 
 extern int	g_code;
 int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe);
-int	init_pipe(t_pipe *pipe, int cmd_nb);
+int	init_pipe(t_pipe *pipe, t_shell *shell, int cmd_nb);
 
 void	close_pipes(t_pipe *pipe)
 {
@@ -50,7 +50,7 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	t_cmd	*tmp;
 
 	ret_value = 0;
-	if (init_pipe(&pipe, cmd_nb) != 0)
+	if (init_pipe(&pipe, shell, cmd_nb) != 0)
 		return (-1);
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
@@ -71,13 +71,13 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	return (free(pipe.pipes_tab), 0);
 }
 
-int	init_pipe(t_pipe *pipe, int cmd_nb)
+int	init_pipe(t_pipe *pipe, t_shell *shell, int cmd_nb)
 {
 	pipe->cmd_nb = cmd_nb;
 	pipe->pipe_nb = cmd_nb * 2;
 	pipe->pipes_tab = malloc(sizeof(int) * pipe->pipe_nb);
 	if (!pipe->pipes_tab)
-		return (-1);
+		malloc_err_exit(shell);
 	if (do_pipes(pipe) < 0)
 		return (-1);
 	pipe->index = -1;

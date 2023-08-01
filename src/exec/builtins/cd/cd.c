@@ -17,7 +17,7 @@ static int	cd_no_arg(t_env *env);
 static char	*replace_tilde(t_env *env);
 char		*cd_save_pwd(void);
 void		old_pwd_save(t_env **env, char *pwd_saved);
-void		update_pwd(t_env **env);
+void		update_pwd(t_env *env);
 
 int	cd(t_env *env, char **args, t_shell *shell)
 {
@@ -43,7 +43,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 		return (print_builtin_error("cd", args[1]), \
 		perror(NULL), free(pwd_saved), 1);
 	old_pwd_save(&env, pwd_saved);
-	update_pwd(&env);
+	update_pwd(env);
 	return (0);
 }
 
