@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/11 04:40:31 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/08/01 21:58:15 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/02 00:11:07 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,6 @@ void	quotes_gestion(t_shell *shell, size_t *i, int *state)
 			malloc_err_exit(shell);
 		return ;
 	}
-}
-
-void	add_to_char(t_shell *shell, size_t *i, int *state)
-{
-	env_gestion(shell, i, state);
-	if (!shell->input[*i])
-		return ;
-	if (*state == NOT_INIT && !ft_strchr(" \t<>|\'\"", shell->input[*i]))
-	{
-		shell->parsing.current_str = ft_strjoin_free_char(
-				shell->parsing.current_str, shell->input[*i], 1);
-		if (!shell->parsing.current_str)
-			malloc_err_exit(shell);
-		if (ft_strchr("><", shell->input[*i + 1]))
-		{
-			shell->parsing.current_str = ft_strjoin_free_char(
-					shell->parsing.current_str, SEPARATOR, 1);
-			if (!shell->parsing.current_str)
-				malloc_err_exit(shell);
-		}
-		return ;
-	}
-	separators_split(shell, i, state);
-	quotes_gestion(shell, i, state);
 }
 
 void	split_shell_init(t_shell *shell)
