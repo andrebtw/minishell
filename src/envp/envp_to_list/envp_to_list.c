@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   envp_to_list.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/13 15:07:04 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/08/02 00:28:31 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ t_env	*env_create(char *name, char *value, int is_env)
 
 	elem = (t_env *) malloc(sizeof(t_env));
 	if (!elem || !name)
-		return (free(name), free(value), print_error(ERR_MALLOC_MSG), exit(ENOMEM), NULL);
+		return (free(name), free(value), \
+		print_error(ERR_MALLOC_MSG), exit(ENOMEM), NULL);
 	elem->name = name;
 	elem->value = value;
 	elem->is_env = is_env;

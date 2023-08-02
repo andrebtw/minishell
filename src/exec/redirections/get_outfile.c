@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_outfile.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/13 12:22:48 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/13 13:03:22 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/08/02 00:28:04 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ void	check_out_redirections(int i, int *outfile, int *append, t_shell *shell)
 	{
 		*outfile = i;
 		*append = 0;
-		tmp = open(shell->command->in_out[i], O_CREAT | O_TRUNC | O_WRONLY, 0644);
+		tmp = open(shell->command->in_out[i], \
+		O_CREAT | O_TRUNC | O_WRONLY, 0644);
 	}
 	else if (shell->command->in_out_code[i] == IS_OUT_APPEND)
 	{
@@ -33,7 +34,8 @@ void	check_out_redirections(int i, int *outfile, int *append, t_shell *shell)
 	}
 	if (tmp < 0)
 	{
-		error_cmd(shell->command->content[0], shell->command->in_out[*outfile], shell);
+		error_cmd(shell->command->content[0], \
+		shell->command->in_out[*outfile], shell);
 		*outfile = -2;
 		return ;
 	}
