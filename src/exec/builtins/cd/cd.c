@@ -40,6 +40,8 @@ int	cd(t_env *env, char **args, t_shell *shell)
 		args[1] = replace_tilde(env);
 		if (!args[1])
 			return (free(pwd_saved), malloc_err_exit(shell), 0);
+		if (ft_strcmp(args[1], "Home not set") == 0)
+			return (1);
 	}
 	if (args[1] && chdir(args[1]) != 0)
 		return (print_builtin_error("cd", args[1]), \
@@ -61,7 +63,7 @@ static char	*replace_tilde(t_env *env)
 		env = env->next;
 	}
 	ft_putstr_fd("🛸~> cd: HOME not set\n", STDERR_FILENO);
-	return (NULL);
+	return ("Home not set");
 }
 
 static int	cd_no_arg(t_env *env)
