@@ -68,6 +68,7 @@ SRCS =	main.c \
 		exec/cmds/cmds.c \
 		exec/pipes/pipes_dup.c \
 		exec/pipes/pipes.c \
+		exec/pipes/pipes_g_code.c \
 		exec/redirections/redirections.c \
 		exec/errors/errors.c \
 		exec/redirections/here_doc.c \

@@ -6,15 +6,16 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/08 17:34:17 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/11 04:10:35 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:17:37 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
 extern int	g_code;
-int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe);
-int	init_pipe(t_pipe *pipe, t_shell *shell, int cmd_nb);
+int		exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe);
+int		init_pipe(t_pipe *pipe, t_shell *shell, int cmd_nb);
+void	pipes_g_code(int ret_value);
 
 void	close_pipes(t_pipe *pipe)
 {
@@ -64,10 +65,10 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	reset_fd(shell);
 	close_pipes(&pipe);
 	waitpid(pid, &ret_value, 0);
-	if (WEXITSTATUS(ret_value))
-		g_code = WEXITSTATUS(ret_value) % 128;
+	pipes_g_code(ret_value);
 	while (--cmd_nb > 0)
 		waitpid(-1, NULL, 0);
+	pipes_g_code(ret_value);
 	return (free(pipe.pipes_tab), 0);
 }
 

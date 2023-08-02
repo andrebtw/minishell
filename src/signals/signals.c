@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:54:35 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/08/01 12:35:48 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/02 22:35:24 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,9 @@ void	sig_handler_cmd(const int signal)
 	}
 }
 
-void	sig_check_cmd_signal(int status)
+void	sig_check_cmd_signal(int status, t_shell *shell)
 {
+	reset_fd(shell);
 	if (WIFSIGNALED(status))
 	{
 		if (WTERMSIG(status) == SIGINT)
