@@ -74,10 +74,11 @@ int	check_line(char *delimiter, char *line, int fd, t_shell *shell)
 {
 	if (!line)
 	{
-		ft_putstr_fd("warning: here-document at line 2", 2);
+		ft_putstr_fd("warning: here-document at line 1 ", 2);
 		ft_putstr_fd("delimited by end-of-file (wanted `", 2);
 		ft_putstr_fd(delimiter, 2);
 		ft_putstr_fd("')\n", 2);
+		g_code = 0;
 		return (-1);
 	}
 	else

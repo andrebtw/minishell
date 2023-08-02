@@ -90,7 +90,7 @@ char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	ft_putstr_fd(cmd->content[0], STDERR_FILENO);
 	ft_putstr_fd(": command not found\n", STDERR_FILENO);
 	g_code = COMMAND_NOT_FOUND;
-	return (ft_free_tab(path), NULL);
+	return (ft_free_tab(path), reset_fd(shell), NULL);
 }
 
 char	**find_path(t_env *env, t_shell *shell)
@@ -139,11 +139,11 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 			execve(shell->command->content[0],
 				shell->command->content, env_str);
 		perror(shell->command->content[0]);
+		free_env_str(env_str);
 		if (errno == EACCES)
 			exit_clean(126, shell);
 		exit_clean(127, shell);
 	}
 	waitpid(pid, &ret_value, 0);
-	sig_check_cmd_signal(ret_value);
-	return (WEXITSTATUS(ret_value));
+	return (sig_check_cmd_signal(ret_value), WEXITSTATUS(ret_value));
 }

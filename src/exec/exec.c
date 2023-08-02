@@ -46,7 +46,7 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 	{
 		if (check_redirections(shell) < 0)
 			return (-1);
-		if (check_cmd(shell, shell->env, shell->command) < 0)
+		if (check_cmd(shell, shell->env, shell->command) != 0)
 			return (-1);
 		reset_fd(shell);
 		unlink("/tmp/.here_doc");
@@ -69,7 +69,7 @@ int	check_cmd(t_shell *shell, t_env *env, t_cmd *cmd)
 		return (ret_value);
 	}
 	else if (exec_cmd(cmd, env, shell) != -1)
-		return (1);
+		return (0);
 	return (-1);
 }
 
