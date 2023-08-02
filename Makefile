@@ -33,9 +33,11 @@ SRCS =	main.c \
 		parsing/cmd_split/split_shell2.c \
 		parsing/cmd_split/split_shell3.c \
 		parsing/cmd_split/split_shell_state.c \
+		parsing/cmd_split/linked_list_gestion.c \
 		parsing/cmd_split/split_shell_utils1.c \
 		parsing/cmd_split/split_shell_utils2.c \
 		parsing/cmd_split/empty_args.c \
+		parsing/cmd_split/add_to_char.c \
 		parsing/cmd_split/env_gestion.c \
 		parsing/cmd_split/env_gestion2.c \
 		parsing/cmd_split/env_spaces.c \
