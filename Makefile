@@ -42,8 +42,6 @@ SRCS =	main.c \
 		parsing/cmd_split/env_gestion2.c \
 		parsing/cmd_split/env_spaces.c \
 		parsing/cmd_split/env_gestion3.c \
-		parsing/cmd_split/linked_list_gestion.c \
-		parsing/cmd_split/add_to_char.c \
 		parsing/errors/errors.c \
 		parsing/errors/pipes.c \
 		parsing/errors/quotes_check.c \

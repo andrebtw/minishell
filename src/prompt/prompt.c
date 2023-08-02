@@ -29,5 +29,4 @@ void	prompt(t_shell *shell)
 	signal(SIGQUIT, SIG_IGN);
 	if (!shell->input)
 		empty_prompt(shell);
-	add_history(shell->input);
 }
