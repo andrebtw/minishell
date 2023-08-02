@@ -104,9 +104,9 @@ int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 		if (!cmd->content[0])
 			exit_clean(0, shell);
 		ret_value = find_builtin(shell, cmd, shell->env);
+		free(pipe->pipes_tab);
 		if (ret_value < 0)
 			ret_value = exec_cmd(cmd, shell->env, shell);
-		free(pipe->pipes_tab);
 		exit_clean(ret_value, shell);
 	}
 	return (pid);
