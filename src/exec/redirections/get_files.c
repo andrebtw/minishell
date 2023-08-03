@@ -13,6 +13,8 @@
 
 extern int	g_code;
 static int	open_file(int outfile, int append, int tmp_fd_in, t_cmd *cmd);
+static int	get_files_loop_check(t_cmd *cmd, int i, \
+t_shell *shell, int *tmp_fd_in);
 
 int	get_files(t_shell *shell, t_cmd *cmd)
 {
@@ -31,18 +33,25 @@ int	get_files(t_shell *shell, t_cmd *cmd)
 	cmd->fd_in = find_here_doc(cmd, shell);
 	while (cmd->in_out_code[++i])
 	{
-		if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
-		{
-			if (tmp_fd_in > 1)
-				close(tmp_fd_in);
-			tmp_fd_in = check_in_redirections(cmd, i, shell);
-		}
-		else
+		if (get_files_loop_check(cmd, i, shell, &tmp_fd_in))
 			check_out_redirections(i, &outfile, &append, shell);
 		if (outfile == -2 || tmp_fd_in < 0)
 			return (g_code = 1, -1);
 	}
 	return (open_file(outfile, append, tmp_fd_in, cmd));
+}
+
+static int	get_files_loop_check(t_cmd *cmd, int i, t_shell *shell, \
+int *tmp_fd_in)
+{
+	if (cmd->in_out_code[i] == IS_IN || cmd->in_out_code[i] == IS_HEREDOC)
+	{
+		if (*tmp_fd_in > 1)
+			close(*tmp_fd_in);
+		*tmp_fd_in = check_in_redirections(cmd, i, shell);
+		return (FALSE);
+	}
+	return (TRUE);
 }
 
 static int	open_file(int outfile, int append, int tmp_fd_in, t_cmd *cmd)

@@ -39,7 +39,10 @@ int	find_here_doc(t_cmd *cmd, t_shell *shell)
 			last_here_doc = -1;
 	}
 	if (last_here_doc == -1)
+	{
+		close (tmp_fd);
 		tmp_fd = STDIN_FILENO;
+	}
 	return (tmp_fd);
 }
 
