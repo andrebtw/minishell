@@ -14,7 +14,7 @@
 
 static int	args_nb(char **args);
 static int	cd_no_arg(t_env *env);
-static char	*replace_tilde(t_env *env);
+static char	*replace_tilde(t_env *env, char *arg);
 char		*cd_save_pwd(t_shell *shell);
 void		old_pwd_save(t_env **env, char *pwd_saved);
 void		update_pwd(t_env *env, t_shell *shell);
@@ -35,8 +35,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 		"cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 	{
-		free(args[1]);
-		args[1] = replace_tilde(env);
+		args[1] = replace_tilde(env, args[1]);
 		if (!args[1])
 			return (free(pwd_saved), malloc_err_exit(shell), 0);
 		if (ft_strcmp(args[1], "Home not set") == 0)
@@ -48,7 +47,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	return (old_pwd_save(&env, pwd_saved), update_pwd(env, shell), 0);
 }
 
-static char	*replace_tilde(t_env *env)
+static char	*replace_tilde(t_env *env, char *arg)
 {
 	char	*path;
 
@@ -57,13 +56,19 @@ static char	*replace_tilde(t_env *env)
 		if (ft_strcmp(env->name, "HOME") == 0)
 		{
 			path = ft_strdup(env->value);
-			return (path);
+			if (*(arg + 1))
+			{
+				arg++;
+				path = ft_strjoin_free(path, arg, 1, 0);
+				arg--;
+			}
+			return (free(arg), path);
 		}
 		env = env->next;
 	}
 	print_builtin_error("cd", "HOME not set");
 	perror(NULL);
-	return (strdup("Home not set"));
+	return (free(arg), strdup("Home not set"));
 }
 
 static int	cd_no_arg(t_env *env)
