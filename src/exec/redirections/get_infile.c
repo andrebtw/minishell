@@ -27,6 +27,8 @@ int	find_here_doc(t_cmd *cmd, t_shell *shell)
 	{
 		if (cmd->in_out_code[i] == IS_HEREDOC)
 		{
+			if (tmp_fd > 0)
+				close(tmp_fd);
 			last_here_doc = i;
 			tmp_fd = ft_here_doc(shell, cmd->in_out[i]);
 			cmd->here_doc = TRUE;
