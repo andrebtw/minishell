@@ -63,6 +63,7 @@ SRCS =	main.c \
 		exec/builtins/cd/cd_env_gestion.c \
 		exec/builtins/pwd/pwd.c \
 		exec/builtins/export/export.c \
+		exec/builtins/export/export_with_plus.c \
 		exec/builtins/unset/unset.c \
 		exec/builtins/env/env_builtin.c \
 		exec/cmds/cmds.c \

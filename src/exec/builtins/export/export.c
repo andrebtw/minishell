@@ -14,8 +14,9 @@
 
 static int	check_arg(char *arg, t_env *env, t_shell *shell);
 static int	print_export(t_env *env, t_shell *shell);
-static int	already_exists(char *name, char*value, t_env *env, t_shell *shell);
+int	already_exists(char *name, char*value, t_env *env, t_shell *shell);
 int			check_arg2(char *arg, t_env *env, int i, t_shell *shell);
+int			check_plus(char *arg, t_env *env, t_shell *shell);
 
 int	export(t_env *env, char **arg, t_shell *shell)
 {
@@ -50,6 +51,9 @@ static int	check_arg(char *arg, t_env *env, t_shell *shell)
 	}
 	while (arg[i])
 	{
+		ret = check_plus(arg, env, shell);
+		if (ret == 0)
+			return (0);
 		ret = check_arg2(arg, env, i, shell);
 		if (ret == 0)
 			return (0);
@@ -72,7 +76,7 @@ int	check_arg2(char *arg, t_env *env, int i, t_shell *shell)
 					find_value(arg), TRUE));
 		return (0);
 	}
-	if (!ft_isalnum(arg[i]) && arg[i] != '_')
+	if (!ft_isalnum(arg[i]) && arg[i] != '_' && (arg[i] == '+' && arg[i + 1] != '='))
 	{
 		print_builtin_error("export", arg);
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
@@ -81,7 +85,7 @@ int	check_arg2(char *arg, t_env *env, int i, t_shell *shell)
 	return (2);
 }
 
-static int	already_exists(char *name, char *value, t_env *env, t_shell *shell)
+int	already_exists(char *name, char *value, t_env *env, t_shell *shell)
 {
 	while (env)
 	{
