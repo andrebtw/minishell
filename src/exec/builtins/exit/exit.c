@@ -25,7 +25,7 @@ int	exit_builtin(t_shell *shell, char **args)
 	{
 		if (args[2])
 			return (ft_putstr_fd("exit: too many arguments\n" \
-				, STDERR_FILENO), 1);
+				, STDERR_FILENO), 127);
 		return_value = ft_atoll(args[1]);
 		if (!is_num(args[1]) || errno)
 		{
