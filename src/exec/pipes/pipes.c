@@ -56,7 +56,7 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
 		pid = exec_pipe(pid, shell, cmd, &pipe);
-		if (free_cmd_pipe(cmd, pid) < 0)
+		if (free_cmd_pipe(cmd, pid, shell) < 0)
 			break ;
 		shell->command = shell->command->next;
 		free(cmd);

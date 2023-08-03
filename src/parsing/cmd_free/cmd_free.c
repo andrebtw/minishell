@@ -16,10 +16,11 @@ static int	is_in_redirect(char *in_out_code);
 
 extern int	g_code;
 
-int	free_cmd_pipe(t_cmd *cmd, pid_t pid)
+int	free_cmd_pipe(t_cmd *cmd, pid_t pid, t_shell *shell)
 {
 	int	ret_value;
 
+	(void) shell;
 	ret_value = 0;
 	if (cmd->in_out_code && is_in_redirect(cmd->in_out_code))
 		waitpid(pid, &ret_value, 0);

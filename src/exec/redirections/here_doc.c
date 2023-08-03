@@ -51,6 +51,7 @@ static int	get_input(char *delimiter, int fd, t_shell *shell)
 		{
 			signal(SIGQUIT, SIG_IGN);
 			signal(SIGINT, SIG_IGN);
+			close(fd);
 			return (-1);
 		}
 		if (check_line(delimiter, line, fd, shell) != 0)

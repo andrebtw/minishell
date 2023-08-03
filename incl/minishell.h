@@ -220,7 +220,7 @@ void		exit_clean(long long return_value, t_shell *shell);
 
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);
-int			free_cmd_pipe(t_cmd *cmd, pid_t pid);
+int			free_cmd_pipe(t_cmd *cmd, pid_t pid, t_shell *shell);
 
 /* COMMANDS */
 int			cmd_nb(t_shell *shell);
