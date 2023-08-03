@@ -62,7 +62,6 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 		free(cmd);
 		cmd = shell->command;
 	}
-	reset_fd(shell);
 	close_pipes(&pipe);
 	waitpid(pid, &ret_value, 0);
 	pipes_g_code(shell, ret_value, TRUE);

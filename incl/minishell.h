@@ -152,7 +152,7 @@ void		prompt(t_shell *shell);
 
 void		sig_handler_prompt(const int signal);
 void		sig_handler_heredoc(const int signal);
-void		sig_check_cmd_signal(int status, t_shell *shell);
+int			sig_check_cmd_signal(int status, t_shell *shell);
 
 /* SIGNALS RESPONSE */
 # define CTRL_C 7000

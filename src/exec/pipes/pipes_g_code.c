@@ -16,6 +16,7 @@ extern int	g_code;
 
 void	pipes_g_code(t_shell *shell, int ret_value, int is_last)
 {
+	reset_fd(shell);
 	if (WEXITSTATUS(ret_value) == 130 || \
 	WEXITSTATUS(ret_value) == 131)
 	{
