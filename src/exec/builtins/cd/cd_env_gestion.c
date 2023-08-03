@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 09:20:04 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/07/25 15:59:13 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:36:18 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,25 +15,22 @@
 char	*cd_save_pwd(t_shell *shell)
 {
 	char	*buf;
-	char	*copy_pwd;
 
+	(void)shell;
 	buf = NULL;
 	buf = getcwd(buf, 0);
 	if (!buf)
 		return (NULL);
-	copy_pwd = ft_strdup(buf);
-	free(buf);
-	if (!copy_pwd)
-		malloc_err_exit(shell);
-	return (copy_pwd);
+	return (buf);
 }
 
 void	old_pwd_save(t_env **env, char *saved_pwd)
 {
 	t_env	*tmp;
+	char	*name;
 
 	tmp = *env;
-	while (tmp)
+	while (tmp && tmp->name)
 	{
 		if (ft_strcmp(tmp->name, "OLDPWD") == 0)
 		{
@@ -43,7 +40,10 @@ void	old_pwd_save(t_env **env, char *saved_pwd)
 		}
 		tmp = tmp->next;
 	}
-	if (envadd_elem(*env, "OLDPWD", saved_pwd, TRUE))
+	name = ft_strdup("OLDPWD");
+	if (!name)
+		malloc_err_exit(NULL);
+	if (envadd_elem(*env, name, saved_pwd, TRUE))
 		malloc_err_exit(NULL);
 }
 
@@ -64,4 +64,5 @@ void	update_pwd(t_env *env, t_shell *shell)
 		}
 		env = env->next;
 	}
+	free(new_pwd);
 }

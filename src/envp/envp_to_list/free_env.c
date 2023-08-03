@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   free_env.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mthibaul <mthibaul@student.42lyon.fr>      +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 12:25:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/13 15:09:42 by mthibaul         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:14:20 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	free_env(t_env *env)
 {
 	t_env	*tmp;
 
-	while (env)
+	while (env && env->name)
 	{
 		tmp = env->next;
 		free(env->name);

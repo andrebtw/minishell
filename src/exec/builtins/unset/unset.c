@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 17:32:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/25 13:52:55 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:18:10 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	unset(char **args, t_env *env, t_shell *shell)
 {
 	while (*args)
 	{
+		if (!env->name)
+			return (0);
 		if (check_arg(*args, shell) == 0)
 			envdel_elem(*args, env);
 		args++;
@@ -66,12 +68,17 @@ void	envdel_elem2(t_env **env)
 		free(*env);
 		return ;
 	}
+	free((*env)->name);
+	free((*env)->value);
 	(*env)->name = ft_strdup(tmp->name);
 	(*env)->value = ft_strdup(tmp->value);
 	(*env)->next = tmp->next;
-	free(tmp->name);
-	free(tmp->value);
-	free(tmp);
+	if (tmp && tmp->name)
+	{
+		free(tmp->name);
+		free(tmp->value);
+		free(tmp);
+	}
 }
 
 void	envdel_elem(char *arg, t_env *env)

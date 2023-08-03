@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/06 11:56:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/08/02 00:28:31 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 20:43:02 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ int	envadd_elem(t_env *env, char *name, char *value, int is_env)
 {
 	t_env	*new;
 
+	if (!env->name)
+	{
+		env->name = name;
+		env->value = value;
+		return (0);
+	}
 	new = env_create(name, value, is_env);
 	if (!new)
 		return (1);

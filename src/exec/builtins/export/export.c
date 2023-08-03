@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/12 16:04:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/24 17:08:13 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 21:09:08 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ int	export(t_env *env, char **arg, t_shell *shell)
 	int	ret_value;
 
 	ret_value = 0;
-	if (!env->name)
-		return (0);
 	if (!arg[1])
 		return (print_export(env, shell));
 	arg++;
@@ -83,7 +81,7 @@ int	check_arg2(char *arg, t_env *env, int i, t_shell *shell)
 
 static int	already_exists(char *name, char *value, t_env *env, t_shell *shell)
 {
-	while (env)
+	while (env && env->name)
 	{
 		if (ft_strcmp(env->name, name) == 0)
 		{
@@ -110,6 +108,8 @@ static int	print_export(t_env *env, t_shell *shell)
 	char	**env_str;
 
 	i = 0;
+	if (!env->name)
+		return (0);
 	env_str = env_to_str(env, TRUE);
 	if (!env_str)
 		malloc_err_exit(shell);
