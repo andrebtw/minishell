@@ -11,20 +11,21 @@
 /* ************************************************************************** */
 #include "minishell.h"
 
-int	already_exists(char *name, char *value, t_env *env, t_shell *shell);
+int			already_exists(char *name, char *value, t_env *env, t_shell *shell);
 char		*name_without_plus(char *arg);
 int			add_to_var(char *arg, t_env *env, t_shell *shell);
 
 int	check_plus(char *arg, t_env *env, t_shell *shell)
 {
 	int	i;
-	
+
 	i = -1;
 	while (arg[++i])
 	{
 		if (arg[i] == '=' && arg[i - 1] == '+')
 		{
-			if (already_exists(name_without_plus(arg), NULL, env, shell) == FALSE)
+			if (already_exists(name_without_plus(arg), \
+			NULL, env, shell) == FALSE)
 				return (envadd_elem(env, name_without_plus(arg), \
 					find_value(arg), TRUE));
 			else
@@ -36,8 +37,8 @@ int	check_plus(char *arg, t_env *env, t_shell *shell)
 
 char	*name_without_plus(char *arg)
 {
-	char *name;
-	int	i;
+	char	*name;
+	int		i;
 
 	i = -1;
 	name = find_name(arg);
@@ -69,4 +70,3 @@ int	add_to_var(char *arg, t_env *env, t_shell *shell)
 		env->value = value;
 	return (0);
 }
-

@@ -14,7 +14,7 @@
 
 static int	check_arg(char *arg, t_env *env, t_shell *shell);
 static int	print_export(t_env *env, t_shell *shell);
-int	already_exists(char *name, char*value, t_env *env, t_shell *shell);
+int			already_exists(char *name, char*value, t_env *env, t_shell *shell);
 int			check_arg2(char *arg, t_env *env, int i, t_shell *shell);
 int			check_plus(char *arg, t_env *env, t_shell *shell);
 
