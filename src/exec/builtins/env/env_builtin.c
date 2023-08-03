@@ -21,7 +21,7 @@ int	env_builtin(char **args, t_env *env, t_shell *shell)
 	if (!env->name)
 		return (0);
 	if (args[1])
-		return (ft_putstr_fd("env: too many arguments\n", STDERR_FILENO), 127);
+		return (ft_putstr_fd("env: too many arguments\n", STDERR_FILENO), 1);
 	env_str = env_to_str(env, FALSE);
 	if (!env_str)
 		malloc_err_exit(shell);

@@ -32,7 +32,7 @@ int	cd(t_env *env, char **args, t_shell *shell)
 		return (free(pwd_saved), cd_no_arg(env));
 	else if (len > 2)
 		return (free(pwd_saved), ft_putstr_fd(\
-		"cd: too many arguments\n", STDERR_FILENO), 127);
+		"cd: too many arguments\n", STDERR_FILENO), 1);
 	if (args[1][0] == '~')
 	{
 		free(args[1]);

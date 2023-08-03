@@ -43,10 +43,11 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 		return (free(cmd_path), malloc_err_exit(shell), 0);
 	ret_value = exec_fork(cmd_path, env_str, shell);
 	sig_check_cmd_signal(ret_value, shell);
+	ret_value = WEXITSTATUS(ret_value);
 	if ((g_code == 130 || g_code == 131))
 		ret_value = g_code;
-	return (g_code = WEXITSTATUS(ret_value), free(\
-	cmd_path), free_env_str(env_str), WEXITSTATUS(ret_value));
+	return (g_code = ret_value, free(\
+	cmd_path), free_env_str(env_str), ret_value);
 }
 
 int	find_slash(t_cmd *cmd, t_env *env, char **cmd_path, t_shell *shell)

@@ -32,4 +32,6 @@ void	pipes_g_code(t_shell *shell, int ret_value, int is_last)
 	}
 	else if (WEXITSTATUS(ret_value) && is_last)
 		g_code = WEXITSTATUS(ret_value) % 128;
+	else if (is_last)
+		g_code = 0;
 }

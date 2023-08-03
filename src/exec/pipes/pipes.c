@@ -50,6 +50,7 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	pid_t	pid;
 	int		ret_value;
 
+	ret_value = 0;
 	if (init_pipe(&pipe, shell, cmd_nb) != 0)
 		return (-1);
 	while (++(pipe.index) < cmd_nb && cmd)
