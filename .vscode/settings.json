@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "new": "c",
+        "stdexcept": "c",
+        "*.tcc": "c",
+        "tuple": "c",
+        "minishell.h": "c"
+    }
+}
