@@ -18,8 +18,7 @@ int			add_to_var(char *arg, t_env *env, t_shell *shell);
 int	check_plus(char *arg, t_env *env, t_shell *shell)
 {
 	int	i;
-
-	printf("HERE\n");
+	
 	i = -1;
 	while (arg[++i])
 	{
