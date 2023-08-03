@@ -49,7 +49,6 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	t_pipe	pipe;
 	pid_t	pid;
 	int		ret_value;
-	t_cmd	*tmp;
 
 	ret_value = 0;
 	if (init_pipe(&pipe, shell, cmd_nb) != 0)
@@ -57,13 +56,12 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 	while (++(pipe.index) < cmd_nb && cmd)
 	{
 		pid = exec_pipe(pid, shell, cmd, &pipe);
-		free_cmd_pipe(cmd, pid);
-		tmp = cmd;
-		cmd = cmd->next;
+		if (free_cmd_pipe(cmd, pid, shell) < 0)
+			break ;
 		shell->command = shell->command->next;
-		free(tmp);
+		free(cmd);
+		cmd = shell->command;
 	}
-	reset_fd(shell);
 	close_pipes(&pipe);
 	waitpid(pid, &ret_value, 0);
 	pipes_g_code(shell, ret_value, TRUE);
@@ -72,7 +70,6 @@ int	pipes(t_cmd *cmd, int cmd_nb, t_shell *shell)
 		waitpid(-1, &ret_value, 0);
 		pipes_g_code(shell, ret_value, FALSE);
 	}
-	pipes_g_code(shell, ret_value, FALSE);
 	return (free(pipe.pipes_tab), 0);
 }
 
@@ -102,7 +99,7 @@ int	exec_pipe(pid_t pid, t_shell *shell, t_cmd *cmd, t_pipe *pipe)
 		{
 			close_pipes(pipe);
 			free(pipe->pipes_tab);
-			exit_clean(1, shell);
+			exit_clean(g_code, shell);
 		}
 		pipes_dup(pipe, cmd);
 		close_pipes(pipe);

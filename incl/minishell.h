@@ -98,14 +98,14 @@ typedef struct s_env
 /* LINKED LISTS */
 typedef struct s_cmd
 {
-	int		type;
-	int		fd_in;
-	int		fd_out;
-	int		here_doc;
-	char	**content;
-	char	**in_out;
-	char	*in_out_code;
-	void	*next;
+	int				type;
+	int				fd_in;
+	int				fd_out;
+	int				here_doc;
+	char			**content;
+	char			**in_out;
+	char			*in_out_code;
+	struct s_cmd	*next;
 }	t_cmd;
 
 /* ERROR CODES PARSING */
@@ -152,7 +152,7 @@ void		prompt(t_shell *shell);
 
 void		sig_handler_prompt(const int signal);
 void		sig_handler_heredoc(const int signal);
-void		sig_check_cmd_signal(int status, t_shell *shell);
+int			sig_check_cmd_signal(int status, t_shell *shell);
 
 /* SIGNALS RESPONSE */
 # define CTRL_C 7000
@@ -220,7 +220,7 @@ void		exit_clean(long long return_value, t_shell *shell);
 
 /* FREE COMMANDS */
 void		cmd_free(t_shell *shell);
-void		free_cmd_pipe(t_cmd *cmd, pid_t pid);
+int			free_cmd_pipe(t_cmd *cmd, pid_t pid, t_shell *shell);
 
 /* COMMANDS */
 int			cmd_nb(t_shell *shell);

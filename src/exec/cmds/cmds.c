@@ -27,7 +27,6 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	char	**env_str;
 	int		fd;
 
-	ret_value = 0;
 	cmd_path = NULL;
 	if (find_slash(cmd, env, &cmd_path, shell) == 0)
 	{
@@ -43,9 +42,7 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	if (!env_str)
 		return (free(cmd_path), malloc_err_exit(shell), 0);
 	ret_value = exec_fork(cmd_path, env_str, shell);
-	sig_check_cmd_signal(ret_value, shell);
-	reset_fd(shell);
-	ret_value = WEXITSTATUS(ret_value);
+	ret_value = sig_check_cmd_signal(ret_value, shell);
 	if ((g_code == 130 || g_code == 131))
 		ret_value = g_code;
 	return (g_code = ret_value, free(\

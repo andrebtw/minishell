@@ -16,18 +16,24 @@ static int	is_in_redirect(char *in_out_code);
 
 extern int	g_code;
 
-void	free_cmd_pipe(t_cmd *cmd, pid_t pid)
+int	free_cmd_pipe(t_cmd *cmd, pid_t pid, t_shell *shell)
 {
 	int	ret_value;
 
+	(void) shell;
 	ret_value = 0;
 	if (cmd->in_out_code && is_in_redirect(cmd->in_out_code))
 		waitpid(pid, &ret_value, 0);
-	if (!cmd->next && ret_value != 0)
-		g_code = 1;
+	if (cmd->next && cmd->next->in_out_code)
+		waitpid(pid, &ret_value, 0);
+	if (WEXITSTATUS(ret_value))
+		g_code = WEXITSTATUS(ret_value);
+	if (WEXITSTATUS(ret_value) == 130)
+		return (-1);
 	ft_free_tab(cmd->content);
 	ft_free_tab(cmd->in_out);
 	free(cmd->in_out_code);
+	return (0);
 }
 
 void	free_cmd(t_cmd **cmd)

@@ -16,6 +16,7 @@ extern int	g_code;
 
 void	pipes_g_code(t_shell *shell, int ret_value, int is_last)
 {
+	reset_fd(shell);
 	if (WEXITSTATUS(ret_value) == 130 || \
 	WEXITSTATUS(ret_value) == 131)
 	{
@@ -27,8 +28,11 @@ void	pipes_g_code(t_shell *shell, int ret_value, int is_last)
 				ft_printf("\n");
 		}
 		shell->is_signal = TRUE;
-		g_code = WEXITSTATUS(ret_value);
+		if (is_last)
+			g_code = WEXITSTATUS(ret_value);
 	}
-	else if ((WEXITSTATUS(ret_value) && is_last) && !shell->is_signal)
+	else if (WEXITSTATUS(ret_value) && is_last)
 		g_code = WEXITSTATUS(ret_value) % 128;
+	else if (is_last)
+		g_code = 0;
 }

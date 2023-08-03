@@ -26,10 +26,9 @@ void	sig_handler_prompt(const int signal)
 	}
 }
 
-void	sig_check_cmd_signal(int status, t_shell *shell)
+int	sig_check_cmd_signal(int status, t_shell *shell)
 {
 	reset_fd(shell);
-	(void)status;
 	if (WIFSIGNALED(status) && !shell->is_signal)
 	{
 		if (WTERMSIG(status) == SIGINT)
@@ -37,6 +36,7 @@ void	sig_check_cmd_signal(int status, t_shell *shell)
 		else if (WTERMSIG(status) == SIGQUIT)
 			g_code = 131;
 	}
+	return (WEXITSTATUS(status));
 }
 
 void	sig_handler_heredoc(const int signal)
