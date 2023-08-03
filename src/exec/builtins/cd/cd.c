@@ -24,7 +24,6 @@ int	cd(t_env *env, char **args, t_shell *shell)
 	int		len;
 	char	*pwd_saved;
 
-	(void)shell;
 	pwd_saved = cd_save_pwd(shell);
 	if (!pwd_saved)
 		cd_no_arg(env);
@@ -62,7 +61,7 @@ static char	*replace_tilde(t_env *env)
 		}
 		env = env->next;
 	}
-	print_builtin_error("cd", "HOME not set");;
+	print_builtin_error("cd", "HOME not set");
 	return ("Home not set");
 }
 

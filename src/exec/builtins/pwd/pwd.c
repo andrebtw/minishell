@@ -15,7 +15,7 @@
 int	pwd(t_shell *shell)
 {
 	char	*buf;
-	
+
 	buf = NULL;
 	buf = getcwd(buf, 0);
 	if (!buf)

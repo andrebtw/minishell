@@ -29,7 +29,6 @@ void	sig_handler_prompt(const int signal)
 void	sig_check_cmd_signal(int status, t_shell *shell)
 {
 	reset_fd(shell);
-	(void)status;
 	if (WIFSIGNALED(status) && !shell->is_signal)
 	{
 		if (WTERMSIG(status) == SIGINT)
