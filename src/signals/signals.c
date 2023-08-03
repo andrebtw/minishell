@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/31 06:54:35 by anrodri2          #+#    #+#             */
-/*   Updated: 2023/08/02 22:35:24 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 00:14:45 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,35 +26,16 @@ void	sig_handler_prompt(const int signal)
 	}
 }
 
-void	sig_handler_cmd(const int signal)
-{
-	if (signal == SIGINT)
-	{
-		g_code = 130;
-		write(1, "\n", 1);
-	}
-	if (signal == SIGQUIT)
-	{
-		g_code = 131;
-		ft_putstr_fd("Quit\n", 1);
-	}
-}
-
 void	sig_check_cmd_signal(int status, t_shell *shell)
 {
 	reset_fd(shell);
-	if (WIFSIGNALED(status))
+	(void)status;
+	if (WIFSIGNALED(status) && !shell->is_signal)
 	{
 		if (WTERMSIG(status) == SIGINT)
-		{
 			g_code = 130;
-			ft_printf("\n");
-		}
-		if (WTERMSIG(status) == SIGQUIT)
-		{
+		else if (WTERMSIG(status) == SIGQUIT)
 			g_code = 131;
-			ft_printf("Quit\n");
-		}
 	}
 }
 

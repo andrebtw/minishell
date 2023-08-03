@@ -18,6 +18,7 @@ char	**find_path(t_env *env, t_shell *shell);
 char	*find_cmd(t_cmd *cmd, t_env *env, t_shell *shell);
 int		find_slash(t_cmd *cmd, t_env *env, char **cmd_path, t_shell *shell);
 pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell);
+void	check_if_print_signal(t_shell *shell);
 
 int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 {
@@ -42,6 +43,9 @@ int	exec_cmd(t_cmd *cmd, t_env *env, t_shell *shell)
 	if (!env_str)
 		return (free(cmd_path), malloc_err_exit(shell), 0);
 	ret_value = exec_fork(cmd_path, env_str, shell);
+	sig_check_cmd_signal(ret_value, shell);
+	reset_fd(shell);
+	ret_value = WEXITSTATUS(ret_value);
 	if ((g_code == 130 || g_code == 131))
 		ret_value = g_code;
 	return (g_code = ret_value, free(\
@@ -145,5 +149,5 @@ pid_t	exec_fork(char *cmd_path, char **env_str, t_shell *shell)
 		exit_clean(127, shell);
 	}
 	waitpid(pid, &ret_value, 0);
-	return (sig_check_cmd_signal(ret_value, shell), WEXITSTATUS(ret_value));
+	return (ret_value);
 }

@@ -131,6 +131,7 @@ typedef struct s_shell
 	int			fd_stdin;
 	int			fd_stdout;
 	t_env		*env;
+	int			is_signal;
 }	t_shell;
 
 /* LINKED LISTS */

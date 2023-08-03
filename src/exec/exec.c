@@ -6,7 +6,7 @@
 /*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/03 16:17:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/07/11 04:07:44 by anrodri2         ###   ########.fr       */
+/*   Updated: 2023/08/03 00:28:30 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 extern int	g_code;
 int			check_cmd(t_shell *shell, t_env *env, t_cmd *cmd);
 static int	check_pipe(t_shell *shell, int cmd_nb);
+void		check_if_print_signal(t_shell *shell);
 
 int	cmd_nb(t_shell *shell)
 {
@@ -36,6 +37,7 @@ int	cmd_nb(t_shell *shell)
 
 static int	check_pipe(t_shell *shell, int cmd_nb)
 {
+	shell->is_signal = FALSE;
 	if (cmd_nb > 1)
 	{
 		pipes(shell->command, cmd_nb, shell);
@@ -48,6 +50,7 @@ static int	check_pipe(t_shell *shell, int cmd_nb)
 			return (-1);
 		if (check_cmd(shell, shell->env, shell->command) != 0)
 			return (-1);
+		check_if_print_signal(shell);
 		reset_fd(shell);
 		unlink("/tmp/.here_doc");
 		return (0);

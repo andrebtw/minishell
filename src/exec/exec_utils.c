@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   exec_utils.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: marvin <marvin@student.42.fr>              +#+  +:+       +#+        */
+/*   By: anrodri2 <anrodri2@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/04 14:15:00 by mthibaul          #+#    #+#             */
-/*   Updated: 2023/05/06 17:22:35 by marvin           ###   ########.fr       */
+/*   Updated: 2023/08/03 00:29:33 by anrodri2         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
+
+extern int	g_code;
 
 int	ft_strcmp(char *str1, char *str2)
 {
@@ -59,4 +61,15 @@ long long	ft_atoll(const char *nptr)
 		index++;
 	}
 	return (result);
+}
+
+void	check_if_print_signal(t_shell *shell)
+{
+	if (!shell->is_signal)
+	{
+		if (g_code == 130)
+			ft_printf("\n");
+		else if (g_code == 131)
+			ft_printf("Quit\n");
+	}
 }
