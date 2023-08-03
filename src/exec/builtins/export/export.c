@@ -49,11 +49,10 @@ static int	check_arg(char *arg, t_env *env, t_shell *shell)
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
 		return (1);
 	}
+	if (check_plus(arg, env, shell) == 0)
+		return (0);
 	while (arg[i])
 	{
-		ret = check_plus(arg, env, shell);
-		if (ret == 0)
-			return (0);
 		ret = check_arg2(arg, env, i, shell);
 		if (ret == 0)
 			return (0);
@@ -76,7 +75,7 @@ int	check_arg2(char *arg, t_env *env, int i, t_shell *shell)
 					find_value(arg), TRUE));
 		return (0);
 	}
-	if (!ft_isalnum(arg[i]) && arg[i] != '_' && (arg[i] == '+' && arg[i + 1] != '='))
+	if (!ft_isalnum(arg[i]) && arg[i] != '_')
 	{
 		print_builtin_error("export", arg);
 		ft_putstr_fd("not a valid identifier\n", STDERR_FILENO);
