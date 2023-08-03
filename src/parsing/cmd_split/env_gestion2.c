@@ -86,6 +86,31 @@ int	find_env(t_shell *shell, int *state, char *env_name)
 	return (env_name = NULL, TRUE);
 }
 
+void	here_doc_check_quotes(t_shell *shell, size_t *i, int *state)
+{
+	if (*state == REDIRECT)
+	{
+		shell->parsing.current_redirect_str = ft_strjoin_free_char(
+				shell->parsing.current_redirect_str, SEPARATOR, 1);
+		if (!shell->parsing.current_redirect_str)
+			malloc_err_exit(shell);
+	}
+	if (*state == REDIRECT_SINGLE_QUOTE && shell->input[*i] == '\'')
+	{
+		shell->parsing.current_redirect_str = ft_strjoin_free_char(
+				shell->parsing.current_redirect_str, SEPARATOR, 1);
+		if (!shell->parsing.current_redirect_str)
+			malloc_err_exit(shell);
+	}
+	if (*state == REDIRECT_DOUBLE_QUOTE && shell->input[*i] == '\"')
+	{
+		shell->parsing.current_redirect_str = ft_strjoin_free_char(
+				shell->parsing.current_redirect_str, SEPARATOR, 1);
+		if (!shell->parsing.current_redirect_str)
+			malloc_err_exit(shell);
+	}
+}
+
 int	heredoc_env_remove(t_shell *shell, size_t *i, int *state)
 {
 	(void)*state;
@@ -101,10 +126,7 @@ int	heredoc_env_remove(t_shell *shell, size_t *i, int *state)
 			malloc_err_exit(shell);
 		*i = *i + 1;
 	}
-	shell->parsing.current_redirect_str = ft_strjoin_free_char(
-			shell->parsing.current_redirect_str, SEPARATOR, 1);
-	if (!shell->parsing.current_redirect_str)
-		malloc_err_exit(shell);
+	here_doc_check_quotes(shell, i, state);
 	shell->parsing.is_heredoc = FALSE;
 	return (TRUE);
 }

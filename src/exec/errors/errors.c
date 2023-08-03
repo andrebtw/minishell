@@ -24,7 +24,7 @@ int	error_cmd(char *cmd, char *file, t_shell *shell)
 		error = ft_strjoin_free(error, file, 1, 0);
 	}
 	else
-		error = file;
+		error = ft_strdup(file);
 	perror(error);
 	free(error);
 	return (-1);
