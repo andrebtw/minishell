@@ -38,11 +38,8 @@ int	find_here_doc(t_cmd *cmd, t_shell *shell)
 		else if (cmd->in_out_code[i] == IS_IN && i > last_here_doc)
 			last_here_doc = -1;
 	}
-	if (last_here_doc == -1)
-	{
-		close (tmp_fd);
+	if (last_here_doc == -1 && (!close(tmp_fd) || 1))
 		tmp_fd = STDIN_FILENO;
-	}
 	return (tmp_fd);
 }
 
