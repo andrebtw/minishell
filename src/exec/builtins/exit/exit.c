@@ -40,11 +40,7 @@ int	exit_builtin(t_shell *shell, char **args)
 
 void	exit_clean(long long return_value, t_shell *shell)
 {
-	if (shell->fd_stdout >= 0 && shell->fd_stdin >= 0)
-	{
-		close(shell->fd_stdout);
-		close(shell->fd_stdin);
-	}
+	reset_fd(shell);
 	if (shell && shell->env && shell->env->name != NULL)
 		free_env(shell->env);
 	if (shell && shell->input)
